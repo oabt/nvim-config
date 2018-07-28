@@ -1,0 +1,14 @@
+snippet al
+abbr always @()
+    always @(${1:*})
+    begin
+        ${2:TARGET}
+    end
+
+snippet alclk
+abbr always @(posedge clk)
+    always @(posedge ${1:clk})
+    begin
+        ${2:TARGET}
+    end
+
