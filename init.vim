@@ -768,7 +768,7 @@ call NERDTreeHighlightFile('bashprofile', 'Gray', 'none', '#686868', 'NONE')
 if has('win32')
     let g:neosnippet#snippets_directory = '$HOME/AppData/Local/nvim/snippets'
 elseif has('unix')
-    let g:neosnippet#snippets_directory = '$HOME/.nvim/snippets'
+    let g:neosnippet#snippets_directory = '$HOME/.config/nvim/snippets'
 endif
 imap <C-k>  <Plug>(neosnippet_expand_or_jump)
 smap <C-k>  <Plug>(neosnippet_expand_or_jump)
