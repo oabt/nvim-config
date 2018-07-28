@@ -407,6 +407,8 @@ colorscheme molokai
 
 let g:lightline = {}
 "let g:lightline.colorscheme = 'solarized'
+"
+let g:lightline.winwidth = 200
 
 let g:lightline.component = {}
 let g:lightline.component.lineinfo = '%1p%%  %2l:%-2v'
