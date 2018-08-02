@@ -796,7 +796,8 @@ xmap <C-k>  <Plug>(neosnippet_expand_target)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ncm2 settings
-autocmd BufEnter * call ncm2#enable_for_buffer()
+autocmd BufEnter * if getfsize(expand(@%)) < 4096000 
+            \| silent! call ncm2#enable_for_buffer() | endif
 set completeopt=noinsert,menuone,noselect
 
 " use enter to close the menu and start a new line
