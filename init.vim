@@ -815,7 +815,9 @@ let g:ncm2#complete_length = [[1, 4],[9, 3]]
 if has('win32')
     let g:ncm2_pyclang#library_path = 'C:\LLVM\bin\libclang.dll'
 elseif has('unix')
+    let g:ncm2_pyclang#library_path = '/usr/lib/llvm-3.8/lib/libclang.so.1'
 endif
 autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
 silent! call ncm2#override_source('bufword', {'complete_length': 2})
 silent! call ncm2#override_source('bufpath', {'complete_length': 10})
+silent! call ncm2#override_source('rootpath', {'priority': 9})
