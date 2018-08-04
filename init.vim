@@ -66,6 +66,7 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     "Plug 'junegunn/fzf.vim'
     "Plug 'majutsushi/tagbar' , {'on': 'TagbarToggle'}
     Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
+    Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
     Plug 'Lokaltog/vim-easymotion'
     Plug 'scrooloose/nerdtree' , {'on': 'NERDTreeToggle'}
     Plug 'ludovicchabant/vim-gutentags'
