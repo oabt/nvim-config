@@ -292,8 +292,11 @@ func! Run()
         endif
         exec "startinsert"
 	elseif &filetype == 'verilog'
-		"exec "!start cmd /c vvp %:r.vvp & pause"
         exec "split term://vvp %:r.vvp"
+        exec "startinsert"
+	elseif &filetype == 'tcl'
+		exec "w"
+        exec "split term://tclsh %:r.tcl"
         exec "startinsert"
 	elseif &filetype == 'python'
 		exec "w"
