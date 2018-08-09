@@ -526,8 +526,14 @@ autocmd User ALELint call lightline#update()
 
 " decide whether in git dir
 function! LightlineGitDir() abort
-    if finddir(".git", ";") != ""
-        return ""
+    let gitdir = finddir(".git", ";")
+    if gitdir != ""
+        if findfile(gitdir.'/HEAD') != ""
+            let branchinfo = split(readfile(gitdir.'/HEAD')[0], '/')[-1]
+        else
+            let branchinfo = ""
+        endif
+        return " ".branchinfo
     else
         return ""
     endif
