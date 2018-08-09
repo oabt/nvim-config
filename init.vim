@@ -295,7 +295,7 @@ func! Run()
         exec "startinsert"
 	elseif &filetype == 'tcl'
 		exec "w"
-        exec "split term://tclsh %:r.tcl"
+        exec "split term://tclsh %"
         exec "startinsert"
 	elseif &filetype == 'python'
 		exec "w"
