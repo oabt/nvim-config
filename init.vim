@@ -708,7 +708,7 @@ silent! call denite#custom#var('file/rec', 'command',  ['rg', '--files', '--no-i
 "silent! call denite#custom#source('file/rec', 'max_candidates', 30000)
 
 silent! call denite#custom#var('grep', 'command', ['rg'])
-silent! call denite#custom#var('grep', 'default_opts', ['--smart-case', '--vimgrep', '--no-heading'])
+silent! call denite#custom#var('grep', 'default_opts', ['--no-ignore', '--hidden', '--smart-case', '--vimgrep', '--no-heading'])
 silent! call denite#custom#var('grep', 'recursive_opts', [])
 silent! call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
 silent! call denite#custom#var('grep', 'separator', ['--'])
