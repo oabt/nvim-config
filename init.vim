@@ -677,6 +677,12 @@ let g:ale_linters = {
             \'asm' : [''],
             \'matlab' : ['']
             \}
+if has('win32')
+    let g:ale_linters.verilog = ['']
+elseif has('unix')
+    let g:ale_linters.verilog = ['iverilog']
+endif
+
 nmap <silent> <Leader>h <Plug>(ale_previous_wrap)
 nmap <silent> <Leader>l <Plug>(ale_next_wrap)
 nmap <M-e> :ALEToggle<CR>
