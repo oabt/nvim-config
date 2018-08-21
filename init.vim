@@ -224,6 +224,7 @@ map <C-Left> :tabprevious <CR>
 map <C-Right> :tabnext <CR>
 "nnoremap f<C-f> :split term://explorer .<cr>
 nnoremap <Leader>f :vimgrep //j %<Left><Left><Left><Left>
+nnoremap <Leader><Leader>f :execute "vimgrep /" . expand("<cword>") . "/j %"<cr>
 
 "<F5> to run,<F6>to compile,<F7> to clean <Leader>m to make
 map <Leader>m :wa<CR>:AsyncRun make <CR>
