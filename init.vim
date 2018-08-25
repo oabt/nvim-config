@@ -310,7 +310,7 @@ func! Run()
         if has('win32')
             exec "silent! !start Typora %"
         elseif has('unix')
-            exec "!typora % &"
+            exec "silent! !typora % &"
         endif
     elseif &filetype == 'html'
         if has('win32')
