@@ -7,7 +7,7 @@
 "call plug#begin('$HOME/nvimfiles/plugged') 
 silent! call plug#begin('$HOME/.nvim/plugged') 
     
-    """"""""""""""""""""""""""""git integration""""""""""""""""""""""""""""""""""
+    """"""""""""""""""""""""""""vcs integration""""""""""""""""""""""""""""""""""
     "Plug 'tpope/vim-fugitive'
     "Plug 'airblade/vim-gitgutter'
     Plug 'mhinz/vim-signify'
@@ -30,7 +30,7 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     "Plug 'ncm2/ncm2-jedi'
     "Plug 'ncm2/ncm2-pyclang'
 
-    Plug 'oabt/nvim-completion-manager'
+    Plug 'oabt/nvim-completion-manager', {'frozen': 1}
     Plug 'fgrsnau/ncm-otherbuf'
     Plug 'roxma/ncm-clang', {'for': ['c', 'cpp']}
     "Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for': ['javascript']}
@@ -53,7 +53,7 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     """"""""""""""""""""""""""editing"""""""""""""""""""""""""""""""""""""""
     "Plug 'iamcco/markdown-preview.vim', {'for': ['markdown']}
     "Plug 'iamcco/mathjax-support-for-mkdp', {'for': ['markdown']}
-    Plug 'junegunn/vim-easy-align'
+    "Plug 'junegunn/vim-easy-align'
     "Plug 'sjl/gundo.vim'
     "Plug 'mbbill/undotree' , {'on': 'UndotreeToggle'}
     Plug 'tpope/vim-surround'
