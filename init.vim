@@ -305,6 +305,10 @@ func! Run()
     elseif &filetype == 'matlab'
 		exec "w"
         exec "AsyncRun matlab -nodesktop -nosplash -r \"try, run(which('%')), end\" "
+    elseif &filetype == 'julia'
+        exec "w"
+        exec "split term://julia %"
+        exec "startinsert"
     elseif &filetype == 'markdown'
         exec "w"
         if has('win32')
