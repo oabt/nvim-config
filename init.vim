@@ -141,7 +141,7 @@ noremap gk k
 "noremap g$ $
 
 " automatically toggle between wrap and nowrap
-autocmd BufEnter * if &filetype == 'markdown' || &filetype == 'text'
+autocmd BufEnter * if &filetype == 'markdown' || &filetype == 'text' || &filetype == 'tex'
             \| set wrap | else | set nowrap | endif
 
 "when open buffer, automatically jump to the position of last access
