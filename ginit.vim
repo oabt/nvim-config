@@ -1,3 +1,5 @@
+" configuration of GUI nvim
+
 Guifont! DejaVuSansMono Nerd Font Mono:h11
 "Guifont! Consolas:h13
 "silent! call rpcnotify(1, 'Gui', 'Font', 'DejaVuSansMono Nerd Font Mono:h11')
