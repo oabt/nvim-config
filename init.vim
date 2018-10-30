@@ -271,6 +271,10 @@ func! Compile()
         endif
         "exec "!pandoc % -s -t html5 --katex=I:/katex/katex.js --katex-stylesheet=I:/katex/katex.css --css C:/Users/oabt/AppData/Roaming/Typora/themes/github.css -o %:r.html"
         "exec "AsyncRun pandoc % -t html5 --mathjax=I:/MathJax/MathJax.js?config=TeX-MML-AM_SVG --css C:/Users/oabt/AppData/Roaming/Typora/themes/github.css -o %:r.html"
+    elseif &filetype == 'autohotkey'
+        if has('win32')
+            exec "AsyncRun Ahk2Exe /in % /out %:r.exe"
+        endif
     endif
 endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -321,6 +325,10 @@ func! Run()
             exec "!chrome %"
         elseif has('unix')
             exec "!google-chrome %"
+        endif
+    elseif &filetype == 'autohotkey'
+        if has('win32')
+            exec "AsyncRun start AutoHotkeyU64 % &"
         endif
 	endif
 endfunc
