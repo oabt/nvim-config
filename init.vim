@@ -112,7 +112,7 @@ set smartcase
 set incsearch
 set inccommand=nosplit
 
-set mouse=v  "enable mouse in Normal mode"
+set mouse=a  "enable mouse in Normal mode"
 set selection=exclusive
 set selectmode=key,mouse
 set showcmd
@@ -162,7 +162,7 @@ map <Leader>w :w<cr>
 "set pastetoggle=<Leader>p
 nnoremap <Leader>s :AsyncRun 
 map <Leader>/ :nohlsearch<CR>
-nmap <F2> :tabnew $MYVIMRC<CR>:vs ginit.vim<CR><C-W>h
+nmap <F2> :tabnew<CR>:e $MYVIMRC<CR>:vs ginit.vim<CR><C-W>h
 nmap ;t :tabnew<cr>:Startify<cr>
 
 if has('win32')
@@ -328,6 +328,7 @@ func! Run()
         endif
     elseif &filetype == 'autohotkey'
         if has('win32')
+            exec "w"
             exec "AsyncRun start AutoHotkeyU64 % &"
         endif
 	endif
