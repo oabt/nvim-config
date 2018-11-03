@@ -7,7 +7,7 @@
 "call plug#begin('$HOME/nvimfiles/plugged') 
 silent! call plug#begin('$HOME/.nvim/plugged') 
     
-    """"""""""""""""""""""""""""git integration""""""""""""""""""""""""""""""""""
+    """"""""""""""""""""""""""""vcs integration""""""""""""""""""""""""""""""""""
     "Plug 'tpope/vim-fugitive'
     "Plug 'airblade/vim-gitgutter'
     Plug 'mhinz/vim-signify'
@@ -53,7 +53,7 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     """"""""""""""""""""""""""editing"""""""""""""""""""""""""""""""""""""""
     "Plug 'iamcco/markdown-preview.vim', {'for': ['markdown']}
     "Plug 'iamcco/mathjax-support-for-mkdp', {'for': ['markdown']}
-    Plug 'junegunn/vim-easy-align'
+    "Plug 'junegunn/vim-easy-align'
     "Plug 'sjl/gundo.vim'
     "Plug 'mbbill/undotree' , {'on': 'UndotreeToggle'}
     Plug 'tpope/vim-surround'
@@ -113,7 +113,7 @@ set smartcase
 set incsearch
 set inccommand=nosplit
 
-set mouse=v  "enable mouse in Normal mode"
+set mouse=a  "enable mouse in Normal mode"
 set selection=exclusive
 set selectmode=key,mouse
 set showcmd
@@ -142,7 +142,7 @@ noremap gk k
 "noremap g$ $
 
 " automatically toggle between wrap and nowrap
-autocmd BufEnter * if &filetype == 'markdown' || &filetype == 'text'
+autocmd BufEnter * if &filetype == 'markdown' || &filetype == 'text' || &filetype == 'tex'
             \| set wrap | else | set nowrap | endif
 
 "when open buffer, automatically jump to the position of last access
@@ -163,7 +163,7 @@ map <Leader>w :w<cr>
 "set pastetoggle=<Leader>p
 nnoremap <Leader>s :AsyncRun 
 map <Leader>/ :nohlsearch<CR>
-nmap <F2> :tabnew $MYVIMRC<CR>:vs ginit.vim<CR><C-W>h
+nmap <F2> :tabnew<CR>:e $MYVIMRC<CR>:vs ginit.vim<CR><C-W>h
 nmap ;t :tabnew<cr>:Startify<cr>
 
 if has('win32')
@@ -225,6 +225,7 @@ map <C-Left> :tabprevious <CR>
 map <C-Right> :tabnext <CR>
 "nnoremap f<C-f> :split term://explorer .<cr>
 nnoremap <Leader>f :vimgrep //j %<Left><Left><Left><Left>
+nnoremap <Leader><Leader>f *N:execute "vimgrep /" . expand("<cword>") . "/j %"<cr>
 
 "<F5> to run,<F6>to compile,<F7> to clean <Leader>m to make
 map <Leader>m :wa<CR>:AsyncRun make <CR>
@@ -271,6 +272,10 @@ func! Compile()
         endif
         "exec "!pandoc % -s -t html5 --katex=I:/katex/katex.js --katex-stylesheet=I:/katex/katex.css --css C:/Users/oabt/AppData/Roaming/Typora/themes/github.css -o %:r.html"
         "exec "AsyncRun pandoc % -t html5 --mathjax=I:/MathJax/MathJax.js?config=TeX-MML-AM_SVG --css C:/Users/oabt/AppData/Roaming/Typora/themes/github.css -o %:r.html"
+    elseif &filetype == 'autohotkey'
+        if has('win32')
+            exec "AsyncRun Ahk2Exe /in % /out %:r.exe"
+        endif
     endif
 endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -305,18 +310,27 @@ func! Run()
     elseif &filetype == 'matlab'
 		exec "w"
         exec "AsyncRun matlab -nodesktop -nosplash -r \"try, run(which('%')), end\" "
+    elseif &filetype == 'julia'
+        exec "w"
+        exec "split term://julia %"
+        exec "startinsert"
     elseif &filetype == 'markdown'
         exec "w"
         if has('win32')
             exec "silent! !start Typora %"
         elseif has('unix')
-            exec "!typora % &"
+            exec "silent! !typora % &"
         endif
     elseif &filetype == 'html'
         if has('win32')
             exec "!chrome %"
         elseif has('unix')
             exec "!google-chrome %"
+        endif
+    elseif &filetype == 'autohotkey'
+        if has('win32')
+            exec "w"
+            exec "AsyncRun start AutoHotkeyU64 % &"
         endif
 	endif
 endfunc
@@ -678,6 +692,12 @@ let g:ale_linters = {
             \'asm' : [''],
             \'matlab' : ['']
             \}
+if has('win32')
+    let g:ale_linters.verilog = ['']
+elseif has('unix')
+    let g:ale_linters.verilog = ['iverilog']
+endif
+
 nmap <silent> <Leader>h <Plug>(ale_previous_wrap)
 nmap <silent> <Leader>l <Plug>(ale_next_wrap)
 nmap <M-e> :ALEToggle<CR>
