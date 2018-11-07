@@ -30,7 +30,7 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     "Plug 'ncm2/ncm2-jedi'
     "Plug 'ncm2/ncm2-pyclang'
 
-    Plug 'oabt/nvim-completion-manager', {'frozen': 1, 'branch': 'py37'}
+    Plug 'oabt/nvim-completion-manager'
     Plug 'fgrsnau/ncm-otherbuf'
     Plug 'roxma/ncm-clang', {'for': ['c', 'cpp']}
     "Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for': ['javascript']}
