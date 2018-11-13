@@ -272,6 +272,9 @@ func! Compile()
         endif
         "exec "!pandoc % -s -t html5 --katex=I:/katex/katex.js --katex-stylesheet=I:/katex/katex.css --css C:/Users/oabt/AppData/Roaming/Typora/themes/github.css -o %:r.html"
         "exec "AsyncRun pandoc % -t html5 --mathjax=I:/MathJax/MathJax.js?config=TeX-MML-AM_SVG --css C:/Users/oabt/AppData/Roaming/Typora/themes/github.css -o %:r.html"
+    elseif &filetype == 'tex'
+        exec "AsyncRun xelatex % -job-name=output -output-directory=out 
+                    \& copy out\\output.pdf %:r.pdf"
     elseif &filetype == 'autohotkey'
         if has('win32')
             exec "AsyncRun Ahk2Exe /in % /out %:r.exe"
@@ -327,6 +330,8 @@ func! Run()
         elseif has('unix')
             exec "!google-chrome %"
         endif
+    elseif &filetype == 'tex'
+        exec "AsyncRun start %:r.pdf"
     elseif &filetype == 'autohotkey'
         if has('win32')
             exec "w"
