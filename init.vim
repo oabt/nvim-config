@@ -143,7 +143,7 @@ noremap gk k
 " automatically toggle between wrap and nowrap
 autocmd BufEnter * if &filetype == 'markdown' || &filetype == 'text' || &filetype == 'tex'
             \| set wrap | else | set nowrap | endif
-autocmd BufEnter * if &filetype == 'tex' | setlocal errorformat&
+autocmd BufEnter * if &filetype == 'tex' | setlocal errorformat& | endif
 
 "when open buffer, automatically jump to the position of last access
 autocmd BufReadPost * if line("'\"")>0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
