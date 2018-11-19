@@ -29,6 +29,7 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     Plug 'ncm2/ncm2-path'
     Plug 'ncm2/ncm2-jedi', {'for': 'python'}
     Plug 'ncm2/ncm2-pyclang', {'for': ['c', 'cpp']}
+    Plug 'fgrsnau/ncm2-otherbuf', {'branch': 'ncm2'}
 
     "Plug 'roxma/nvim-completion-manager'
     "Plug 'fgrsnau/ncm-otherbuf'
