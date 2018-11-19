@@ -31,7 +31,7 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     "Plug 'ncm2/ncm2-pyclang'
 
     Plug 'oabt/nvim-completion-manager'
-    Plug 'fgrsnau/ncm-otherbuf'
+    Plug 'fgrsnau/ncm-otherbuf', {'branch': 'ncm'}
     Plug 'roxma/ncm-clang', {'for': ['c', 'cpp']}
     "Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for': ['javascript']}
     "Plug 'Shougo/neco-vim', {'for': 'vim'}
