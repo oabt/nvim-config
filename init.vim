@@ -143,7 +143,7 @@ noremap gk k
 " automatically toggle between wrap and nowrap
 autocmd BufEnter * if &filetype == 'markdown' || &filetype == 'text' || &filetype == 'tex'
             \| set wrap | else | set nowrap | endif
-autocmd BufEnter * if &filetype == 'tex' | setlocal errorformat& | endif
+"autocmd BufEnter * if &filetype == 'tex' | setlocal errorformat& | endif
 
 "when open buffer, automatically jump to the position of last access
 autocmd BufReadPost * if line("'\"")>0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
@@ -162,6 +162,7 @@ map <Leader>w :w<cr>
 
 "set pastetoggle=<Leader>p
 nnoremap <Leader>s :AsyncRun 
+nnoremap <Leader>S :AsyncStop<Cr>
 map <Leader>/ :nohlsearch<CR>
 nmap <F2> :tabnew<CR>:e $MYVIMRC<CR>:vs ginit.vim<CR><C-W>h
 nmap ;t :tabnew<cr>:Startify<cr>
@@ -273,7 +274,8 @@ func! Compile()
         "exec "!pandoc % -s -t html5 --katex=I:/katex/katex.js --katex-stylesheet=I:/katex/katex.css --css C:/Users/oabt/AppData/Roaming/Typora/themes/github.css -o %:r.html"
         "exec "AsyncRun pandoc % -t html5 --mathjax=I:/MathJax/MathJax.js?config=TeX-MML-AM_SVG --css C:/Users/oabt/AppData/Roaming/Typora/themes/github.css -o %:r.html"
     elseif &filetype == 'tex'
-        exec "AsyncRun xelatex % -job-name=output -output-directory=out 
+        exec "AsyncRun xelatex % -job-name=output -output-directory=out -file-line-error 
+                    \-synctex=-1 -interaction=nonstopmode
                     \&& copy out\\output.pdf %:r.pdf"
     elseif &filetype == 'autohotkey'
         if has('win32')
