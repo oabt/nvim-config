@@ -169,7 +169,7 @@ nmap ;t :tabnew<cr>:Startify<cr>
 
 if has('win32')
     " open cwd in Explorer
-    nnoremap f<C-f> :silent! !start explorer . <cr><cr>
+    nnoremap f<C-f> :silent! !explorer . <cr>
     nmap <C-t> :split term://cmd <cr>i
     "nmap <C-t> :split term://powershell <cr>i
 elseif has('unix')
