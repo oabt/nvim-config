@@ -112,7 +112,7 @@ set smartcase
 set incsearch
 set inccommand=nosplit
 
-set mouse=a  "enable mouse in Normal mode"
+set mouse=n  "enable mouse in Normal mode"
 set selection=exclusive
 set selectmode=key,mouse
 set showcmd
