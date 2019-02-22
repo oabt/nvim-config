@@ -164,8 +164,15 @@ map <Leader>w :w<cr>
 nnoremap <Leader>s :AsyncRun 
 nnoremap <Leader>S :AsyncStop<Cr>
 map <Leader>/ :nohlsearch<CR>
-nmap <F2> :tabnew<CR>:e $MYVIMRC<CR>:vs ginit.vim<CR><C-W>h
 nmap ;t :tabnew<cr>:Startify<cr>
+nmap <F2> :call OpenVimrc()<CR><C-w>h
+function! OpenVimrc() abort
+    if &filetype != 'startify' || winnr('$') > 1
+        exec "tabnew"
+    endif
+    exec "e $MYVIMRC"
+    exec "vs ginit.vim"
+endfunction
 
 if has('win32')
     " open cwd in Explorer
