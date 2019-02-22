@@ -114,7 +114,7 @@ set smartcase
 set incsearch
 set inccommand=nosplit
 
-set mouse=a  "enable mouse in Normal mode"
+set mouse=n  "enable mouse in Normal mode"
 set selection=exclusive
 set selectmode=key,mouse
 set showcmd
@@ -145,6 +145,7 @@ noremap gk k
 " automatically toggle between wrap and nowrap
 autocmd BufEnter * if &filetype == 'markdown' || &filetype == 'text' || &filetype == 'tex'
             \| set wrap | else | set nowrap | endif
+"autocmd BufEnter * if &filetype == 'tex' | setlocal errorformat& | endif
 
 "when open buffer, automatically jump to the position of last access
 autocmd BufReadPost * if line("'\"")>0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
@@ -163,13 +164,21 @@ map <Leader>w :w<cr>
 
 "set pastetoggle=<Leader>p
 nnoremap <Leader>s :AsyncRun 
+nnoremap <Leader>S :AsyncStop<Cr>
 map <Leader>/ :nohlsearch<CR>
-nmap <F2> :tabnew<CR>:e $MYVIMRC<CR>:vs ginit.vim<CR><C-W>h
 nmap ;t :tabnew<cr>:Startify<cr>
+nmap <F2> :call OpenVimrc()<CR><C-w>h
+function! OpenVimrc() abort
+    if &filetype != 'startify' || winnr('$') > 1
+        exec "tabnew"
+    endif
+    exec "e $MYVIMRC"
+    exec "vs ginit.vim"
+endfunction
 
 if has('win32')
     " open cwd in Explorer
-    nnoremap f<C-f> :silent! !start explorer . <cr><cr>
+    nnoremap f<C-f> :silent! !explorer . <cr>
     nmap <C-t> :split term://cmd <cr>i
     "nmap <C-t> :split term://powershell <cr>i
 elseif has('unix')
@@ -273,6 +282,10 @@ func! Compile()
         endif
         "exec "!pandoc % -s -t html5 --katex=I:/katex/katex.js --katex-stylesheet=I:/katex/katex.css --css C:/Users/oabt/AppData/Roaming/Typora/themes/github.css -o %:r.html"
         "exec "AsyncRun pandoc % -t html5 --mathjax=I:/MathJax/MathJax.js?config=TeX-MML-AM_SVG --css C:/Users/oabt/AppData/Roaming/Typora/themes/github.css -o %:r.html"
+    elseif &filetype == 'tex'
+        exec "AsyncRun xelatex % -job-name=output -output-directory=out -file-line-error 
+                    \-synctex=-1 -interaction=nonstopmode
+                    \&& copy out\\output.pdf %:r.pdf"
     elseif &filetype == 'autohotkey'
         if has('win32')
             exec "AsyncRun Ahk2Exe /in % /out %:r.exe"
@@ -328,6 +341,8 @@ func! Run()
         elseif has('unix')
             exec "!google-chrome %"
         endif
+    elseif &filetype == 'tex'
+        exec "AsyncRun start %:r.pdf"
     elseif &filetype == 'autohotkey'
         if has('win32')
             exec "w"
