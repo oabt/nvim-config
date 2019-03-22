@@ -69,6 +69,7 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     Plug 'Lokaltog/vim-easymotion'
     Plug 'scrooloose/nerdtree' , {'on': 'NERDTreeToggle'}
     Plug 'ludovicchabant/vim-gutentags'
+    Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
 
 call plug#end()
 
@@ -760,9 +761,31 @@ nnoremap f<Leader><Leader>a :DeniteCursorWord grep -path=.. -highlight-matched-c
 "nnoremap c<C-p> :Denite -highlight-matched-char=CursorLineNr command<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Defx settings
+autocmd FileType defx call s:Defx_my_settings()
+nnoremap <F4> :Defx -toggle -split=vertical -winwidth=28 -direction=topleft<Cr>
+function! s:Defx_my_settings() abort
+    "nnoremap <silent><buffer><expr> e defx#do_action('drop')
+    nnoremap <silent><buffer><expr> o 
+                \ defx#is_directory() ?
+                \ defx#do_action('open_or_close_tree') :
+                \ defx#do_action('drop')
+    nnoremap <silent><buffer><expr> <Cr> 
+                \ defx#is_directory() ?
+                \ defx#do_action('open_or_close_tree') :
+                \ defx#do_action('drop')
+    nnoremap <silent><buffer><expr> v defx#do_action('open', 'vsplit')
+    nnoremap <silent><buffer><expr> t defx#do_action('open', 'tabnew')
+    nnoremap <silent><buffer><expr> s defx#do_action('open', 'split')
+    nnoremap <silent><buffer><expr> q defx#do_action('quit')
+    nnoremap <silent><buffer><expr> u defx#do_action('cd', '..')
+    nnoremap <silent><buffer><expr> R defx#do_action('redraw')
+    nnoremap <silent><buffer><expr> X defx#do_action('execute_system')
+endfunction
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "nerdtree settings
 "<F4> to show or hide nertree bar
-map <F4> :NERDTreeToggle<CR>
+"map <F4> :NERDTreeToggle<CR>
 
 let NERDTreeMapOpenSplit = 's'
 let NERDTreeMapOpenVSplit = 'v'
