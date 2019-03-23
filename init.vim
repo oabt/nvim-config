@@ -766,11 +766,11 @@ nnoremap f<Leader><Leader>a :DeniteCursorWord grep -path=.. -highlight-matched-c
 autocmd FileType defx silent! call s:Defx_my_settings()
 silent! call defx#custom#column('filename', {
             \'indent': '  ',
-            \'min_width': 13,
-            \'max_width': 23,
+            \'min_width': 15,
+            \'max_width': 25,
             \})
 nnoremap <silent><F4> :Defx -resume -toggle
-            \ -split=vertical -winwidth=28 -direction=topleft
+            \ -split=vertical -winwidth=30 -direction=topleft
             \ -columns=mark:filename:icons
             \<Cr>
 function! s:Defx_my_settings() abort
