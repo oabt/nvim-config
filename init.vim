@@ -18,6 +18,7 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     Plug 'mhinz/vim-startify'
     Plug 'sheerun/vim-polyglot'
     Plug 'ryanoasis/vim-devicons'
+    Plug 'kristijanhusak/defx-icons'
     
     """""""""""""""""""""""""""completion""""""""""""""""""""""""""""""""""
     Plug 'Shougo/neosnippet.vim'
@@ -762,10 +763,20 @@ nnoremap f<Leader><Leader>a :DeniteCursorWord grep -path=.. -highlight-matched-c
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Defx settings
-autocmd FileType defx call s:Defx_my_settings()
-nnoremap <F4> :Defx -toggle -split=vertical -winwidth=28 -direction=topleft<Cr>
+autocmd FileType defx silent! call s:Defx_my_settings()
+silent! call defx#custom#column('filename', {
+            \'indent': '  ',
+            \'min_width': 13,
+            \'max_width': 23,
+            \})
+nnoremap <silent><F4> :Defx -resume -toggle
+            \ -split=vertical -winwidth=28 -direction=topleft
+            \ -columns=mark:filename:icons
+            \<Cr>
 function! s:Defx_my_settings() abort
     "nnoremap <silent><buffer><expr> e defx#do_action('drop')
+    "nnoremap <silent><buffer><expr> j line('.') == line('$') ? 'gg' : 'j'
+    "nnoremap <silent><buffer><expr> k line('.') == 1 ? 'G' : 'k'
     nnoremap <silent><buffer><expr> o 
                 \ defx#is_directory() ?
                 \ defx#do_action('open_or_close_tree') :
@@ -774,13 +785,31 @@ function! s:Defx_my_settings() abort
                 \ defx#is_directory() ?
                 \ defx#do_action('open_or_close_tree') :
                 \ defx#do_action('drop')
-    nnoremap <silent><buffer><expr> v defx#do_action('open', 'vsplit')
+    nnoremap <silent><buffer><expr> v defx#do_action('multi', [['drop', 'vsplit']])
+    nnoremap <silent><buffer><expr> s defx#do_action('multi', [['drop', 'split']])
     nnoremap <silent><buffer><expr> t defx#do_action('open', 'tabnew')
-    nnoremap <silent><buffer><expr> s defx#do_action('open', 'split')
+    nnoremap <silent><buffer> T :call defx#call_action('open', 'tabnew')<Cr>gT
+    nnoremap <silent><buffer><expr> x defx#do_action('close_tree')
+    nnoremap <silent><buffer><expr> i defx#do_action('toggle_select')
     nnoremap <silent><buffer><expr> q defx#do_action('quit')
-    nnoremap <silent><buffer><expr> u defx#do_action('cd', '..')
-    nnoremap <silent><buffer><expr> R defx#do_action('redraw')
-    nnoremap <silent><buffer><expr> X defx#do_action('execute_system')
+
+    nnoremap <buffer><expr> CD defx#do_action('cd', '`pwd`') "TODO
+    nnoremap <buffer><expr> u defx#do_action('cd', '..')
+    nnoremap <buffer><expr> cd defx#do_action('change_vim_cwd')
+    nnoremap <buffer><expr> R defx#do_action('redraw')
+    nnoremap <buffer><expr> X defx#do_action('execute_system')
+    nnoremap <buffer><expr> I defx#do_action('toggle_ignored_files')
+    nnoremap <buffer> C
+                \ :call defx#call_action('toggle_columns', 'mark:filename:size:time')<Cr>
+
+    "basic file operation
+    nnoremap <silent><buffer><expr> cc defx#do_action('copy')
+    nnoremap <silent><buffer><expr> mm defx#do_action('move')
+    nnoremap <silent><buffer><expr> md defx#do_action('new_directory')
+    nnoremap <silent><buffer><expr> ml defx#do_action('print')
+    nnoremap <silent><buffer><expr> aa defx#do_action('new_file')
+    nnoremap <silent><buffer><expr> pp defx#do_action('paste')
+    nnoremap <silent><buffer><expr> dd defx#do_action('remove')
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "nerdtree settings
