@@ -763,16 +763,32 @@ nnoremap f<Leader><Leader>a :DeniteCursorWord grep -path=.. -highlight-matched-c
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Defx settings
+"nnoremap <F4> :Defx<Cr>:exec "vertical resize 30"<Cr>
+nnoremap <F4> :Defx<Cr>
 autocmd FileType defx silent! call s:Defx_my_settings()
+" close defx if it is the only exist window
+autocmd BufEnter * if (winnr('$') == 1 && &filetype == 'defx') | q | endif
 silent! call defx#custom#column('filename', {
-            \'indent': '  ',
-            \'min_width': 15,
-            \'max_width': 25,
-            \})
-nnoremap <silent><F4> :Defx -resume -toggle
-            \ -split=vertical -winwidth=30 -direction=topleft
-            \ -columns=mark:filename:icons
-            \<Cr>
+            \ 'indent': '  ',
+            \ 'min_width': 50,
+            \ 'max_width': 50,
+            \ })
+silent! call defx#custom#column('time', {'format': '%H:%M %m-%d %y'})
+silent! call defx#custom#option('_', {
+            \ 'resume': 1,
+            \ 'toggle': 1,
+            \ 'split': 'vertical',
+            \ 'winwidth': 30,
+            \ 'direction': 'topleft',
+            \ 'columns': 'mark:icons:filename:size:time'
+            \ })
+function! Defx_toggle_column() abort
+    if winwidth(0) < 40
+        vertical resize 80
+    else
+        vertical resize 30
+    endif
+endfunction
 function! s:Defx_my_settings() abort
     "nnoremap <silent><buffer><expr> e defx#do_action('drop')
     "nnoremap <silent><buffer><expr> j line('.') == line('$') ? 'gg' : 'j'
@@ -785,6 +801,7 @@ function! s:Defx_my_settings() abort
                 \ defx#is_directory() ?
                 \ defx#do_action('open_or_close_tree') :
                 \ defx#do_action('drop')
+    "window operation
     nnoremap <silent><buffer><expr> v defx#do_action('multi', [['drop', 'vsplit']])
     nnoremap <silent><buffer><expr> s defx#do_action('multi', [['drop', 'split']])
     nnoremap <silent><buffer><expr> t defx#do_action('open', 'tabnew')
@@ -792,22 +809,22 @@ function! s:Defx_my_settings() abort
     nnoremap <silent><buffer><expr> x defx#do_action('close_tree')
     nnoremap <silent><buffer><expr> i defx#do_action('toggle_select')
     nnoremap <silent><buffer><expr> q defx#do_action('quit')
-
-    nnoremap <buffer><expr> CD defx#do_action('cd', '`pwd`') "TODO
+    "navigation operations
+    nnoremap <buffer><expr> CD defx#do_action('cd', getcwd())
     nnoremap <buffer><expr> u defx#do_action('cd', '..')
     nnoremap <buffer><expr> cd defx#do_action('change_vim_cwd')
-    nnoremap <buffer><expr> R defx#do_action('redraw')
     nnoremap <buffer><expr> X defx#do_action('execute_system')
+    "defx menu options
+    nnoremap <buffer><expr> R defx#do_action('redraw')
     nnoremap <buffer><expr> I defx#do_action('toggle_ignored_files')
-    nnoremap <buffer> C
-                \ :call defx#call_action('toggle_columns', 'mark:filename:size:time')<Cr>
-
+    nnoremap <buffer> M :call Defx_toggle_column()<Cr>
     "basic file operation
-    nnoremap <silent><buffer><expr> cc defx#do_action('copy')
     nnoremap <silent><buffer><expr> mm defx#do_action('move')
     nnoremap <silent><buffer><expr> md defx#do_action('new_directory')
     nnoremap <silent><buffer><expr> ml defx#do_action('print')
-    nnoremap <silent><buffer><expr> aa defx#do_action('new_file')
+    nnoremap <silent><buffer><expr> ma defx#do_action('new_file')
+    nnoremap <silent><buffer><expr> rn defx#do_action('rename')
+    nnoremap <silent><buffer><expr> yy defx#do_action('copy')
     nnoremap <silent><buffer><expr> pp defx#do_action('paste')
     nnoremap <silent><buffer><expr> dd defx#do_action('remove')
 endfunction
