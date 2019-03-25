@@ -17,7 +17,7 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     Plug 'itchyny/lightline.vim'
     Plug 'mhinz/vim-startify'
     Plug 'sheerun/vim-polyglot'
-    Plug 'ryanoasis/vim-devicons'
+    "Plug 'ryanoasis/vim-devicons'
     Plug 'kristijanhusak/defx-icons'
     
     """""""""""""""""""""""""""completion""""""""""""""""""""""""""""""""""
@@ -68,7 +68,6 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     "Plug 'majutsushi/tagbar' , {'on': 'TagbarToggle'}
     Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
     Plug 'Lokaltog/vim-easymotion'
-    Plug 'scrooloose/nerdtree' , {'on': 'NERDTreeToggle'}
     Plug 'ludovicchabant/vim-gutentags'
     Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
 
@@ -501,10 +500,14 @@ endfunction
 
 " filformat symbol(unix, dos, mac)
 function! MyFileformat()
-    if exists('*WebDevIconsGetFileFormatSymbol')
-        return winwidth(0) > 70 ? (WebDevIconsGetFileFormatSymbol()) : ''
+    if &fileformat == 'unix'
+        return winwidth(0) > 70 ? '' : ''
+    elseif &fileformat == 'dos'
+        return winwidth(0) > 70 ? '' : ''
+    elseif &fileformat == 'mac'
+        return winwidth(0) > 70 ? '' : ''
     else
-        return winwidth(0) > 70 ? (&fileformat . ' ') : ''
+        return winwidth(0) > 70 ? &fileformat : ''
     endif
 endfunction
 
@@ -763,7 +766,6 @@ nnoremap f<Leader><Leader>a :DeniteCursorWord grep -path=.. -highlight-matched-c
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Defx settings
-"nnoremap <F4> :Defx<Cr>:exec "vertical resize 30"<Cr>
 nnoremap <F4> :Defx<Cr>
 autocmd FileType defx silent! call s:Defx_my_settings()
 " close defx if it is the only exist window
@@ -829,53 +831,6 @@ function! s:Defx_my_settings() abort
     nnoremap <silent><buffer><expr> dd defx#do_action('remove')
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"nerdtree settings
-"<F4> to show or hide nertree bar
-"map <F4> :NERDTreeToggle<CR>
-
-let NERDTreeMapOpenSplit = 's'
-let NERDTreeMapOpenVSplit = 'v'
-
-"automatically open nerdtree when vim open a directory(2 lines below)
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-
-"close vim if nerdtree is the only window left
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-"customize the 'arrow' of nerdtree
-let g:NERDTreeDirArrowExpandable = '▸'
-let g:NERDTreeDirArrowCollapsible = '▾'
-"let g:NERDTreeDirArrowExpandable = '+'
-"let g:NERDTreeDirArrowCollapsible = '-'
-
-let NERDTreeWinSize=27
-
-" NERDTree File highlighting
-function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-    exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-    exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-endfunction
-
-call NERDTreeHighlightFile('v', 'lightgreen', 'none', 'lightgreen', 'NONE')
-call NERDTreeHighlightFile('sh', 'lightgreen', 'none', 'lightgreen', 'NONE')
-call NERDTreeHighlightFile('py', 'yellow', 'none', 'yellow', 'NONE')
-call NERDTreeHighlightFile('js', 'yellow', 'none', 'yellow', 'NONE')
-call NERDTreeHighlightFile('yml', 'yellow', 'none', 'orange', 'NONE')
-call NERDTreeHighlightFile('json', 'yellow', 'none', 'orange', 'NONE')
-call NERDTreeHighlightFile('html', 'yellow', 'none', 'orange', 'NONE')
-call NERDTreeHighlightFile('md', 'cyan', 'none', 'cyan', 'NONE')
-call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', 'NONE')
-call NERDTreeHighlightFile('cpp', 'cyan', 'none', 'cyan', 'NONE')
-call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', 'NONE')
-call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', 'NONE')
-call NERDTreeHighlightFile('ds_store', 'Gray', 'none', '#686868', 'NONE')
-call NERDTreeHighlightFile('gitconfig', 'Gray', 'none', '#686868', 'NONE')
-call NERDTreeHighlightFile('gitignore', 'Gray', 'none', '#686868', 'NONE')
-call NERDTreeHighlightFile('bashrc', 'Gray', 'none', '#686868', 'NONE')
-call NERDTreeHighlightFile('bashprofile', 'Gray', 'none', '#686868', 'NONE')
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Neosnippet settings
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
 if has('win32')
