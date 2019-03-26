@@ -819,6 +819,9 @@ function! s:Defx_my_settings() abort
     "defx menu options
     nnoremap <buffer><expr> R defx#do_action('redraw')
     nnoremap <buffer><expr> I defx#do_action('toggle_ignored_files')
+    nnoremap <buffer> S
+                \ :call defx#call_action('toggle_sort', 'time')<Cr>
+                \ :call defx#call_action('redraw')<Cr>
     nnoremap <buffer> M :call Defx_toggle_column()<Cr>
     "basic file operation
     nnoremap <silent><buffer><expr> mm defx#do_action('move')
