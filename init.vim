@@ -771,10 +771,10 @@ autocmd FileType defx silent! call s:Defx_my_settings()
 " close defx if it is the only exist window
 autocmd BufEnter * if (winnr('$') == 1 && &filetype == 'defx') | q | endif
 silent! call defx#custom#column('filename', {
-            \ 'indent': '  ',
             \ 'min_width': 50,
             \ 'max_width': 50,
             \ })
+silent! call defx#custom#column('indent', {'indent': '  '})
 silent! call defx#custom#column('time', {'format': '%H:%M %m-%d %y'})
 silent! call defx#custom#option('_', {
             \ 'resume': 1,
@@ -782,7 +782,7 @@ silent! call defx#custom#option('_', {
             \ 'split': 'vertical',
             \ 'winwidth': 30,
             \ 'direction': 'topleft',
-            \ 'columns': 'mark:icons:filename:size:time'
+            \ 'columns': 'mark:indent:icons:filename:size:time'
             \ })
 function! Defx_toggle_column() abort
     if winwidth(0) < 40
