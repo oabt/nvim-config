@@ -17,7 +17,8 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     Plug 'itchyny/lightline.vim'
     Plug 'mhinz/vim-startify'
     Plug 'sheerun/vim-polyglot'
-    Plug 'ryanoasis/vim-devicons'
+    Plug 'kristijanhusak/defx-icons'
+    "Plug 'ryanoasis/vim-devicons'
     
     """""""""""""""""""""""""""completion""""""""""""""""""""""""""""""""""
     Plug 'Shougo/neosnippet.vim'
@@ -70,7 +71,7 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
     Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
     Plug 'Lokaltog/vim-easymotion'
-    Plug 'scrooloose/nerdtree' , {'on': 'NERDTreeToggle'}
+    "Plug 'scrooloose/nerdtree' , {'on': 'NERDTreeToggle'}
     Plug 'ludovicchabant/vim-gutentags'
 
 call plug#end()
@@ -763,52 +764,74 @@ nnoremap f<Leader><Leader>a :DeniteCursorWord grep -path=.. -highlight-matched-c
 "nnoremap c<C-p> :Denite -highlight-matched-char=CursorLineNr command<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"nerdtree settings
-"<F4> to show or hide nertree bar
-map <F4> :NERDTreeToggle<CR>
-
-let NERDTreeMapOpenSplit = 's'
-let NERDTreeMapOpenVSplit = 'v'
-
-"automatically open nerdtree when vim open a directory(2 lines below)
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-
-"close vim if nerdtree is the only window left
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-"customize the 'arrow' of nerdtree
-let g:NERDTreeDirArrowExpandable = '▸'
-let g:NERDTreeDirArrowCollapsible = '▾'
-"let g:NERDTreeDirArrowExpandable = '+'
-"let g:NERDTreeDirArrowCollapsible = '-'
-
-let NERDTreeWinSize=27
-
-" NERDTree File highlighting
-function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-    exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-    exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+"Defx settings
+nnoremap <F4> :Defx<Cr>
+autocmd FileType defx silent! call s:Defx_my_settings()
+" close defx if it is the only exist window
+autocmd BufEnter * if (winnr('$') == 1 && &filetype == 'defx') | q | endif
+silent! call defx#custom#column('filename', {
+            \ 'min_width': 50,
+            \ 'max_width': 50,
+            \ })
+silent! call defx#custom#column('indent', {'indent': '  '})
+silent! call defx#custom#column('time', {'format': '%H:%M %m-%d %y'})
+silent! call defx#custom#option('_', {
+            \ 'resume': 1,
+            \ 'toggle': 1,
+            \ 'split': 'vertical',
+            \ 'winwidth': 30,
+            \ 'direction': 'topleft',
+            \ 'columns': 'mark:indent:icons:filename:size:time'
+            \ })
+function! Defx_toggle_column() abort
+    if winwidth(0) < 40
+        vertical resize 80
+    else
+        vertical resize 30
+    endif
 endfunction
-
-call NERDTreeHighlightFile('v', 'lightgreen', 'none', 'lightgreen', 'NONE')
-call NERDTreeHighlightFile('sh', 'lightgreen', 'none', 'lightgreen', 'NONE')
-call NERDTreeHighlightFile('py', 'yellow', 'none', 'yellow', 'NONE')
-call NERDTreeHighlightFile('js', 'yellow', 'none', 'yellow', 'NONE')
-call NERDTreeHighlightFile('yml', 'yellow', 'none', 'orange', 'NONE')
-call NERDTreeHighlightFile('json', 'yellow', 'none', 'orange', 'NONE')
-call NERDTreeHighlightFile('html', 'yellow', 'none', 'orange', 'NONE')
-call NERDTreeHighlightFile('md', 'cyan', 'none', 'cyan', 'NONE')
-call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', 'NONE')
-call NERDTreeHighlightFile('cpp', 'cyan', 'none', 'cyan', 'NONE')
-call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', 'NONE')
-call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', 'NONE')
-call NERDTreeHighlightFile('ds_store', 'Gray', 'none', '#686868', 'NONE')
-call NERDTreeHighlightFile('gitconfig', 'Gray', 'none', '#686868', 'NONE')
-call NERDTreeHighlightFile('gitignore', 'Gray', 'none', '#686868', 'NONE')
-call NERDTreeHighlightFile('bashrc', 'Gray', 'none', '#686868', 'NONE')
-call NERDTreeHighlightFile('bashprofile', 'Gray', 'none', '#686868', 'NONE')
-
+function! s:Defx_my_settings() abort
+    "nnoremap <silent><buffer><expr> e defx#do_action('drop')
+    "nnoremap <silent><buffer><expr> j line('.') == line('$') ? 'gg' : 'j'
+    "nnoremap <silent><buffer><expr> k line('.') == 1 ? 'G' : 'k'
+    nnoremap <silent><buffer><expr> o 
+                \ defx#is_directory() ?
+                \ defx#do_action('open_or_close_tree') :
+                \ defx#do_action('drop')
+    nnoremap <silent><buffer><expr> <Cr> 
+                \ defx#is_directory() ?
+                \ defx#do_action('open_or_close_tree') :
+                \ defx#do_action('drop')
+    "window operation
+    nnoremap <silent><buffer><expr> v defx#do_action('multi', [['drop', 'vsplit']])
+    nnoremap <silent><buffer><expr> s defx#do_action('multi', [['drop', 'split']])
+    nnoremap <silent><buffer><expr> t defx#do_action('open', 'tabnew')
+    nnoremap <silent><buffer> T :call defx#call_action('open', 'tabnew')<Cr>gT
+    nnoremap <silent><buffer><expr> x defx#do_action('close_tree')
+    nnoremap <silent><buffer><expr> i defx#do_action('toggle_select')
+    nnoremap <silent><buffer><expr> q defx#do_action('quit')
+    "navigation operations
+    nnoremap <buffer><expr> CD defx#do_action('cd', getcwd())
+    nnoremap <buffer><expr> u defx#do_action('cd', '..')
+    nnoremap <buffer><expr> cd defx#do_action('change_vim_cwd')
+    nnoremap <buffer><expr> X defx#do_action('execute_system')
+    "defx menu options
+    nnoremap <buffer><expr> R defx#do_action('redraw')
+    nnoremap <buffer><expr> I defx#do_action('toggle_ignored_files')
+    nnoremap <buffer> S
+                \ :call defx#call_action('toggle_sort', 'time')<Cr>
+                \ :call defx#call_action('redraw')<Cr>
+    nnoremap <buffer> M :call Defx_toggle_column()<Cr>
+    "basic file operation
+    nnoremap <silent><buffer><expr> mm defx#do_action('move')
+    nnoremap <silent><buffer><expr> md defx#do_action('new_directory')
+    nnoremap <silent><buffer><expr> ml defx#do_action('print')
+    nnoremap <silent><buffer><expr> ma defx#do_action('new_file')
+    nnoremap <silent><buffer><expr> rn defx#do_action('rename')
+    nnoremap <silent><buffer><expr> yy defx#do_action('copy')
+    nnoremap <silent><buffer><expr> pp defx#do_action('paste')
+    nnoremap <silent><buffer><expr> dd defx#do_action('remove')
+endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Neosnippet settings
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
