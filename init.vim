@@ -856,8 +856,10 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 let g:ncm2#popup_delay = 0
 "let g:ncm2#matcher = 'abbrfuzzy'
-let g:ncm2#matcher = 'substrfuzzy'
-let g:ncm2#complete_length = [[1, 4],[9, 3]]
+let g:ncm2#matcher = {
+            \ 'name': 'combine',
+            \ 'matchers': ['abbrfuzzy', 'substrfuzzy']
+            \ }
 
 if has('win32')
     let g:ncm2_pyclang#library_path = 'C:\LLVM\bin\libclang.dll'
@@ -866,5 +868,6 @@ elseif has('unix')
 endif
 autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
 silent! call ncm2#override_source('bufword', {'complete_length': 2})
+silent! call ncm2#override_source('otherbuf', {'complete_length': 2})
 silent! call ncm2#override_source('bufpath', {'complete_length': 10})
 silent! call ncm2#override_source('rootpath', {'priority': 9})
