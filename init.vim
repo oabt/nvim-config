@@ -73,6 +73,7 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     Plug 'Lokaltog/vim-easymotion'
     "Plug 'scrooloose/nerdtree' , {'on': 'NERDTreeToggle'}
     Plug 'ludovicchabant/vim-gutentags'
+    Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
 
 call plug#end()
 
@@ -503,10 +504,14 @@ endfunction
 
 " filformat symbol(unix, dos, mac)
 function! MyFileformat()
-    if exists('*WebDevIconsGetFileFormatSymbol')
-        return winwidth(0) > 70 ? (WebDevIconsGetFileFormatSymbol()) : ''
+    if &fileformat == 'unix'
+        return winwidth(0) > 70 ? '' : ''
+    elseif &fileformat == 'dos'
+        return winwidth(0) > 70 ? '' : ''
+    elseif &fileformat == 'mac'
+        return winwidth(0) > 70 ? '' : ''
     else
-        return winwidth(0) > 70 ? (&fileformat . ' ') : ''
+        return winwidth(0) > 70 ? &fileformat : ''
     endif
 endfunction
 
@@ -832,7 +837,7 @@ function! s:Defx_my_settings() abort
     nnoremap <silent><buffer><expr> pp defx#do_action('paste')
     nnoremap <silent><buffer><expr> dd defx#do_action('remove')
 endfunction
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Neosnippet settings
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
 if has('win32')
