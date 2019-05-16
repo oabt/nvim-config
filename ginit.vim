@@ -17,3 +17,5 @@ function! ToggleFullScreen()
         call GuiWindowFullScreen(1)
     endif
 endfunction
+
+nnoremap <silent><RightMouse> :call GuiShowContextMenu()<CR>
