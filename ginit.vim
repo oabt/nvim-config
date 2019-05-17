@@ -19,3 +19,5 @@ function! ToggleFullScreen()
 endfunction
 
 nnoremap <silent><RightMouse> :call GuiShowContextMenu()<CR>
+vnoremap <silent><RightMouse> :call GuiShowContextMenu()<CR>gv
+"inoremap <silent><RightMouse> <Esc>:call GuiShowContextMenu()<CR>

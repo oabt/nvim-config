@@ -113,9 +113,9 @@ set smartcase
 set incsearch
 set inccommand=nosplit
 
-set mouse=n  "enable mouse in Normal mode"
+set mouse=nv  "enable mouse in Normal Mode and Visual Mode"
 set selection=exclusive
-set selectmode=key,mouse
+set selectmode= "unset the selectmode
 set showcmd
 set scrolloff=4  "left 4 lines below/above when scrolling below/above
 set cursorline
