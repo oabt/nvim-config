@@ -162,7 +162,7 @@ let mapleader=" "
 map <Leader>w :w<cr>
 
 "set pastetoggle=<Leader>p
-nnoremap <Leader>s :AsyncRun 
+nnoremap <Leader>s :AsyncRun -raw 
 nnoremap <Leader>S :AsyncStop<Cr>
 map <Leader>/ :nohlsearch<CR>
 nmap ;t :tabnew<cr>:Startify<cr>
