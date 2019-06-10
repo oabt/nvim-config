@@ -732,16 +732,30 @@ let g:neomake_open_list = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FZF/Denite settings
-silent! call denite#custom#map('insert', '<C-a>', '<Home>')
-silent! call denite#custom#map('insert', '<C-e>', '<End>')
-silent! call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>')
-silent! call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>')
-silent! call denite#custom#map('insert', '<C-i>', '<denite:toggle_select>')
-silent! call denite#custom#map('insert', '<C-s>', '<denite:do_action:split>')
-silent! call denite#custom#map('insert', '<C-v>', '<denite:do_action:vsplit>')
-silent! call denite#custom#map('insert', '<C-t>', '<denite:do_action:tabopen>')
-silent! call denite#custom#map('normal', 's', '<denite:do_action:split>')
-silent! call denite#custom#map('normal', 'v', '<denite:do_action:vsplit>')
+silent! call denite#custom#option('_', {
+            \'highlight_matched_char': 'CursorLineNr',
+            \'filter_split_direction': 'botright',
+            \'start_filter': 1,
+            \'filter_updatetime': 100,
+            \})
+
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+    nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
+    nnoremap <silent><buffer><expr> <C-c> denite#do_map('quit')
+    nnoremap <silent><buffer><expr> q denite#do_map('quit')
+    nnoremap <silent><buffer><expr> <Tab> denite#do_map('toggle_select')
+    nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+    nnoremap <silent><buffer><expr> v denite#do_map('do_action', 'vsplit')
+    nnoremap <silent><buffer><expr> s denite#do_map('do_action', 'split')
+    nnoremap <silent><buffer><expr> t denite#do_map('do_action', 'tabopen')
+    nnoremap <silent><buffer><expr> T denite#do_map('do_action', 'tabopen').'gT'
+endfunction
+
+autocmd FileType denite-filter call s:denite_filter_my_settings()
+function! s:denite_filter_my_settings() abort
+    imap <silent><buffer> <C-c> <Cr>q
+endfunction
 
 silent! call denite#custom#var('file/rec', 'command',  ['rg', '--files', '--no-ignore', '--follow', '--hidden', '--color', 'never'])
 "silent! call denite#custom#source('file/rec', 'max_candidates', 30000)
@@ -754,15 +768,15 @@ silent! call denite#custom#var('grep', 'separator', ['--'])
 silent! call denite#custom#var('grep', 'final_opts', [])
 "silent! call denite#custom#source('grep', 'max_candidates', 30000)
 
-nnoremap <Leader>d :Denite -highlight-matched-char=CursorLineNr 
-nnoremap <C-p> :Denite file/old -ignorecase -highlight-matched-char=CursorLineNr<cr>
-nnoremap f<C-p> :Denite file/rec -ignorecase -highlight-matched-char=CursorLineNr<cr>
-nnoremap ff<C-p> :Denite  file/rec -path=.. -ignorecase -highlight-matched-char=CursorLineNr<cr>
-nnoremap <Leader>a :Denite grep -highlight-matched-char=CursorLineNr -no-empty<cr>
-nnoremap f<Leader>a :Denite grep -path=.. -highlight-matched-char=CursorLineNr -no-empty<cr>
-nnoremap <Leader><Leader>a :DeniteCursorWord grep -highlight-matched-char=CursorLineNr -no-empty<cr>
-nnoremap f<Leader><Leader>a :DeniteCursorWord grep -path=.. -highlight-matched-char=CursorLineNr -no-empty<cr>
-"nnoremap c<C-p> :Denite -highlight-matched-char=CursorLineNr command<cr>
+nnoremap <Leader>d :Denite 
+nnoremap <C-p> :Denite file/old -ignorecase<cr>
+nnoremap f<C-p> :Denite file/rec -ignorecase<cr>
+nnoremap ff<C-p> :Denite  file/rec -path=.. -ignorecase<cr>
+nnoremap <Leader>a :Denite grep -no-start-filter -no-empty<cr>
+nnoremap f<Leader>a :Denite grep -no-start-filter -path=.. -no-empty<cr>
+nnoremap <Leader><Leader>a :DeniteCursorWord grep -no-start-filter -no-empty<cr>
+nnoremap f<Leader><Leader>a :DeniteCursorWord grep -no-start-filter -path=.. -no-empty<cr>
+"nnoremap c<C-p> :Denite command<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Defx settings
@@ -807,7 +821,7 @@ function! s:Defx_my_settings() abort
     nnoremap <silent><buffer><expr> v defx#do_action('multi', [['drop', 'vsplit']])
     nnoremap <silent><buffer><expr> s defx#do_action('multi', [['drop', 'split']])
     nnoremap <silent><buffer><expr> t defx#do_action('open', 'tabnew')
-    nnoremap <silent><buffer> T :call defx#call_action('open', 'tabnew')<Cr>gT
+    nnoremap <silent><buffer><expr> T defx#do_action('open', 'tabnew').'gT'
     nnoremap <silent><buffer><expr> x defx#do_action('close_tree')
     nnoremap <silent><buffer><expr> i defx#do_action('toggle_select')
     nnoremap <silent><buffer><expr> q defx#do_action('quit')
@@ -866,22 +880,3 @@ let g:cm_sources_override = {
             \ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ncm2 settings
-"autocmd BufEnter * call ncm2#enable_for_buffer()
-"set completeopt=noinsert,menuone,noselect
-
-"" use enter to close the menu and start a new line
-"inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-
-"" Use <TAB> to select the popup menu:
-"inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-"let g:ncm2#popup_delay = 0
-"let g:ncm2#matcher = 'abbrfuzzy'
-"let g:ncm2#complete_length = [[1, 2],[9, 3]]
-
-"if has('win32')
-"    let g:ncm2_pyclang#library_path = 'C:\LLVM\bin\libclang.dll'
-"endif
-"autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
