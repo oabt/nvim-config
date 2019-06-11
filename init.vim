@@ -741,8 +741,9 @@ silent! call denite#custom#option('_', {
 
 autocmd FileType denite call s:denite_my_settings()
 function! s:denite_my_settings() abort
-    nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
-    nnoremap <silent><buffer><expr> <C-c> denite#do_map('quit')
+    "nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
+    "nnoremap <silent><buffer><expr> <C-c> denite#do_map('quit')
+    nnoremap <silent><buffer> i <C-w>jA
     nnoremap <silent><buffer><expr> q denite#do_map('quit')
     nnoremap <silent><buffer><expr> <Tab> denite#do_map('toggle_select')
     nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
@@ -754,7 +755,13 @@ endfunction
 
 autocmd FileType denite-filter call s:denite_filter_my_settings()
 function! s:denite_filter_my_settings() abort
-    imap <silent><buffer> <C-c> <Cr>q
+    inoremap<silent><buffer> <C-c>
+                \ <Esc>:silent! call denite#call_map('quit')<Cr>:bwipeout denite-filter<Cr>
+    inoremap<silent><buffer> <Cr> <Esc><C-w>k
+    nnoremap<silent><buffer><expr> q
+                \ denite#do_map('quit').':bwipeout denite-filter<Cr>'
+    nnoremap<silent><buffer><expr> Q
+                \ denite#do_map('quit').':bwipeout denite-filter<Cr>'
 endfunction
 
 silent! call denite#custom#var('file/rec', 'command',  ['rg', '--files', '--no-ignore', '--follow', '--hidden', '--color', 'never'])
