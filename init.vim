@@ -741,16 +741,25 @@ silent! call denite#custom#option('_', {
 
 autocmd FileType denite call s:denite_my_settings()
 function! s:denite_my_settings() abort
-    "nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
     "nnoremap <silent><buffer><expr> <C-c> denite#do_map('quit')
-    nnoremap <silent><buffer> i <C-w>jA
-    nnoremap <silent><buffer><expr> q denite#do_map('quit')
-    nnoremap <silent><buffer><expr> <Tab> denite#do_map('toggle_select')
-    nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
-    nnoremap <silent><buffer><expr> v denite#do_map('do_action', 'vsplit')
-    nnoremap <silent><buffer><expr> s denite#do_map('do_action', 'split')
-    nnoremap <silent><buffer><expr> t denite#do_map('do_action', 'tabopen')
-    nnoremap <silent><buffer><expr> T denite#do_map('do_action', 'tabopen').'gT'
+    "nnoremap <silent><buffer> i <C-w>jA
+    nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer').'<Esc>kdggA'
+    nnoremap <silent><buffer><expr> q
+                \ denite#do_map('quit').':bwipeout denite-filter<Cr>'
+    nnoremap <silent><buffer><expr> Q
+                \ denite#do_map('quit').':bwipeout denite-filter<Cr>'
+    nnoremap <silent><buffer><expr> <CR>
+                \ denite#do_map('do_action').':bwipeout denite-filter<Cr>'
+    nnoremap <silent><buffer><expr> v
+                \ denite#do_map('do_action', 'vsplit').':bwipeout denite-filter<Cr>'
+    nnoremap <silent><buffer><expr> s
+                \ denite#do_map('do_action', 'split').':bwipeout denite-filter<Cr>'
+    nnoremap <silent><buffer><expr> t
+                \ denite#do_map('do_action', 'tabopen').':bwipeout denite-filter<Cr>'
+    nnoremap <silent><buffer><expr> T
+                \ denite#do_map('do_action', 'tabopen').'gT'.':bwipeout denite-filter<Cr>'
+    nnoremap <silent><buffer><expr> <Tab> denite#do_map('toggle_select').'j'
+    nnoremap <silent><buffer><expr> <S-Tab> denite#do_map('toggle_select').'k'
 endfunction
 
 autocmd FileType denite-filter call s:denite_filter_my_settings()
@@ -830,7 +839,8 @@ function! s:Defx_my_settings() abort
     nnoremap <silent><buffer><expr> t defx#do_action('open', 'tabnew')
     nnoremap <silent><buffer><expr> T defx#do_action('open', 'tabnew').'gT'
     nnoremap <silent><buffer><expr> x defx#do_action('close_tree')
-    nnoremap <silent><buffer><expr> i defx#do_action('toggle_select')
+    nnoremap <silent><buffer><expr> <Tab> defx#do_action('toggle_select').'j'
+    nnoremap <silent><buffer><expr> <S-Tab> defx#do_action('toggle_select').'k'
     nnoremap <silent><buffer><expr> q defx#do_action('quit')
     "navigation operations
     nnoremap <buffer><expr> CD defx#do_action('cd', getcwd())
