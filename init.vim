@@ -630,8 +630,8 @@ nnoremap <M-c> :scs find c <C-R>=expand("<cword>")<cr><cr>
 nnoremap <M-g> :scs find g <C-R>=expand("<cword>")<cr><cr>
 nnoremap <M-r> :silent! cs reset<cr>
 
-nnoremap <M-;> :tnext<cr>
-nnoremap <M-'> :tprevious<cr>
+nnoremap <M-;> :tprevious<cr>
+nnoremap <M-'> :tnext<cr>
 
 "let g:gutentags_define_advanced_commands = 1
 "let g:gutentags_trace = 1
