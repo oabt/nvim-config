@@ -47,7 +47,7 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     "if buffer size exceed 2048KB do not load 'ale'
     if getfsize(expand(@%)) < 2048000
         "Plug 'w0rp/ale', {'on': 'ALEToggle'}
-        Plug 'w0rp/ale'
+        Plug 'dense-analysis/ale'
     endif
     "Plug 'neomake/neomake'
 
