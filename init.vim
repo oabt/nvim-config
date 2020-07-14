@@ -416,6 +416,8 @@ let g:python_highlight_indent_errors = 0
 let g:python_highlight_space_errors = 0
 
 "let g:polyglot_disabled = ['markdown']
+
+autocmd BufNewFile,BufRead *.v set filetype=verilog
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "devicons settings
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
@@ -667,9 +669,9 @@ let g:gutentags_ctags_extra_args += ['--verilog-kinds=+px']
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "AsyncRun settings
 let g:asyncrun_auto = "make"
-if has('win32')
-    let g:asyncrun_encs = 'gbk'
-endif
+"if has('win32')
+"    let g:asyncrun_encs = 'gbk'
+"endif
 
 "augroup QuickfixStatus
 "    au! BufWinEnter quickfix setlocal
