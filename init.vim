@@ -24,16 +24,18 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     Plug 'Shougo/neosnippet.vim'
     Plug 'Shougo/neosnippet-snippets'
     
-    "Plug 'roxma/nvim-yarp'
-    "Plug 'ncm2/ncm2'
-    "Plug 'ncm2/ncm2-bufword'
-    "Plug 'ncm2/ncm2-path'
-    "Plug 'ncm2/ncm2-jedi'
-    "Plug 'ncm2/ncm2-pyclang'
+    Plug 'roxma/nvim-yarp'
+    Plug 'oabt/ncm2'
+    Plug 'ncm2/ncm2-bufword'
+    Plug 'ncm2/ncm2-path'
+    Plug 'ncm2/ncm2-jedi'
+    Plug 'ncm2/ncm2-pyclang'
+    Plug 'fgrsnau/ncm2-otherbuf'
+    Plug 'ncm2/ncm2-neosnippet'
 
-    Plug 'oabt/nvim-completion-manager'
-    Plug 'fgrsnau/ncm2-otherbuf', {'branch': 'ncm'}
-    Plug 'roxma/ncm-clang', {'for': ['c', 'cpp']}
+    "Plug 'oabt/nvim-completion-manager'
+    "Plug 'fgrsnau/ncm2-otherbuf', {'branch': 'ncm'}
+    "Plug 'roxma/ncm-clang', {'for': ['c', 'cpp']}
     "Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for': ['javascript']}
     "Plug 'Shougo/neco-vim', {'for': 'vim'}
     "Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
@@ -880,22 +882,48 @@ xmap <C-k>  <Plug>(neosnippet_expand_target)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NCM settings
     " tab for selection
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-    " enter to start a newline
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-let g:cm_buffer_size_limit = 10000000
-let g:cm_complete_start_delay = 0
-let g:cm_complete_popup_delay = 0
-let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'cases': 'smartcase'}
-"NOTE: default g:cm_refresh_length = [[1,4],[7,3]]
-"let g:cm_refresh_length = [[1, 2], [4, 2], [6, 10], [7, 3], [8, 2], [9, 4]]
-let g:cm_refresh_length = [[7, 3],[9, 3]]
-let g:cm_sources_override = {
-            \ 'cm-tag': {'enable':0},
-            \ 'cm-bufkeyword': {'cm_refresh_length':2},
-            \ 'cm-otherbuf': {'cm_refresh_length':2},
-            \ 'cm-filepath': {'cm_refresh_length':10}
-            \ }
+"inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"    " enter to start a newline
+"inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+"let g:cm_buffer_size_limit = 10000000
+"let g:cm_complete_start_delay = 0
+"let g:cm_complete_popup_delay = 0
+"let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'cases': 'smartcase'}
+""NOTE: default g:cm_refresh_length = [[1,4],[7,3]]
+""let g:cm_refresh_length = [[1, 2], [4, 2], [6, 10], [7, 3], [8, 2], [9, 4]]
+"let g:cm_refresh_length = [[7, 3],[9, 3]]
+"let g:cm_sources_override = {
+"            \ 'cm-tag': {'enable':0},
+"            \ 'cm-bufkeyword': {'cm_refresh_length':2},
+"            \ 'cm-otherbuf': {'cm_refresh_length':2},
+"            \ 'cm-filepath': {'cm_refresh_length':10}
+"            \ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" NCM2 settings
+autocmd BufEnter * if getfsize(expand(@%)) < 4096000 
+            \| silent! call ncm2#enable_for_buffer() | endif
+set completeopt=noinsert,menuone,noselect
+
+
+" use enter to close the menu and start a new line
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+
+" Use <TAB> to select the popup menu:
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+let g:ncm2#popup_delay = 0
+let g:ncm2#matcher = 'oabtfuzzy'
+
+if has('win32')
+    let g:ncm2_pyclang#library_path = 'C:\miniconda3\Library\bin\libclang.dll'
+elseif has('unix')
+    let g:ncm2_pyclang#library_path = '/usr/lib/llvm-3.8/lib/libclang.so.1'
+endif
+autocmd FileType c,cpp nnoremap <buffer> <C-]> :<c-u>call ncm2_pyclang#goto_declaration_split()<cr>
+silent! call ncm2#override_source('bufword', {'complete_length': 2})
+silent! call ncm2#override_source('otherbuf', {'complete_length': 2})
+silent! call ncm2#override_source('bufpath', {'complete_length': 10})
+silent! call ncm2#override_source('rootpath', {'priority': 9})
