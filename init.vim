@@ -372,8 +372,8 @@ function! DeleteInactiveBufs()
         endif
     endfor
     "create a unload buffer for complete otherbuf
-    exec "badd _ncm-otherbuf"
-    exec "bdelete _ncm-otherbuf"
+    "exec "badd _ncm-otherbuf"
+    "exec "bdelete _ncm-otherbuf"
     echomsg nWipeouts - 1 >= 0 ? nWipeouts - 1 . ' buffer(s) wiped out' : 0 . ' buffer(s) wiped out'
 endfunction
 "command! Bdi :call DeleteInactiveBufs()
