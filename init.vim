@@ -122,6 +122,8 @@ set showcmd
 set scrolloff=4  "left 4 lines below/above when scrolling below/above
 set cursorline
 
+set clipboard+=unnamedplus
+
 set expandtab
 set tabstop=4  "use 4 <space> to replace tab
 set shiftwidth=4  "width shift with >> or <<"
