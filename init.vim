@@ -31,7 +31,7 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     Plug 'ncm2/ncm2-jedi'
     Plug 'ncm2/ncm2-pyclang'
     Plug 'fgrsnau/ncm2-otherbuf'
-    Plug 'ncm2/ncm2-neosnippet'
+    Plug 'oabt/ncm2-neosnippet'
 
     "Plug 'oabt/nvim-completion-manager'
     "Plug 'fgrsnau/ncm2-otherbuf', {'branch': 'ncm'}
