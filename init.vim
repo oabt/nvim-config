@@ -925,7 +925,7 @@ elseif has('unix')
     let g:ncm2_pyclang#library_path = '/usr/lib/llvm-3.8/lib/libclang.so.1'
 endif
 autocmd FileType c,cpp nnoremap <buffer> <C-]> :<c-u>call ncm2_pyclang#goto_declaration_split()<cr>
-silent! call ncm2#override_source('bufword', {'complete_length': 2})
-silent! call ncm2#override_source('otherbuf', {'complete_length': 2})
-silent! call ncm2#override_source('bufpath', {'complete_length': 10})
+silent! call ncm2#override_source('bufword', {'complete_length': 2, 'mark': 'bufword'})
+silent! call ncm2#override_source('otherbuf', {'complete_length': 2, 'mark': 'otherbuf'})
+silent! call ncm2#override_source('bufpath', {'complete_length': 10, 'mark': 'path'})
 silent! call ncm2#override_source('rootpath', {'priority': 9})
