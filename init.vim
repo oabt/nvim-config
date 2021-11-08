@@ -123,6 +123,7 @@ set scrolloff=4  "left 4 lines below/above when scrolling below/above
 set cursorline
 
 set clipboard+=unnamedplus
+set sessionoptions+=localoptions
 
 set expandtab
 set tabstop=4  "use 4 <space> to replace tab
