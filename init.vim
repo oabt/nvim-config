@@ -79,7 +79,7 @@ call plug#end()
 if has('win32')
     let g:python3_host_prog='C:\miniconda3\python.exe'
 elseif has('unix')
-    let g:python3_host_prog='/home/oabt/miniconda3/bin/python'
+    let g:python3_host_prog='~/miniconda3/bin/python'
 endif
 syntax on
 syntax enable
@@ -135,6 +135,11 @@ set fileencoding=utf-8
 
 set foldmethod=indent  "fold/unfold base on the indentaion"
 set foldlevelstart=99  "disable indentatino when startup"
+
+set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+            \,a:blinkwait1000-blinkoff500-blinkon500-Cursor/lCursor
+            \,sm:block-blinkwait175-blinkoff150-blinkon175
+
 
 set nowrap  "no wrap in default, switching j and gj, k and gk
 noremap j gj
@@ -923,7 +928,7 @@ let g:ncm2#matcher = 'oabtfuzzy'
 if has('win32')
     let g:ncm2_pyclang#library_path = 'C:\miniconda3\Library\bin\libclang.dll'
 elseif has('unix')
-    let g:ncm2_pyclang#library_path = '/usr/lib/llvm-3.8/lib/libclang.so.1'
+    let g:ncm2_pyclang#library_path = '~/miniconda3/lib/libclang.so'
 endif
 autocmd FileType c,cpp nnoremap <buffer> <C-]> :<c-u>call ncm2_pyclang#goto_declaration_split()<cr>
 silent! call ncm2#override_source('bufword', {'complete_length': 2, 'mark': 'bufword'})
