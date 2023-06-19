@@ -67,7 +67,10 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     "Plug 'junegunn/vim-easy-align'
     "Plug 'sjl/gundo.vim'
     "Plug 'mbbill/undotree' , {'on': 'UndotreeToggle'}
-    Plug 'tpope/vim-surround'
+
+    "Plug 'tpope/vim-surround'
+    Plug 'kylechui/nvim-surround'
+
     Plug 'scrooloose/nerdcommenter'
 
     "Plug 'jiangmiao/auto-pairs'
@@ -908,3 +911,4 @@ silent! call ncm2#override_source('rootpath', {'priority': 9})
 lua require('nvim-cmp-setup')
 lua require('lspconfig-setup')
 lua require('nvim-autopairs-setup')
+lua require('nvim-surround-setup')
