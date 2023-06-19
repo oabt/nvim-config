@@ -70,7 +70,6 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     "Plug 'majutsushi/tagbar' , {'on': 'TagbarToggle'}
     Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
     Plug 'Lokaltog/vim-easymotion'
-    Plug 'ludovicchabant/vim-gutentags'
     Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
 
 call plug#end()
@@ -458,7 +457,6 @@ let g:lightline.winwidth = 200
 let g:lightline.component = {}
 let g:lightline.component.lineinfo = '%1p%%  %2l:%-2v'
 let g:lightline.component.modified = '%{LightlineModified()}'
-let g:lightline.component.gutentags = '%{gutentags#statusline()}'
 let g:lightline.component.asyncrun = '%{g:asyncrun_status}'
 
 let g:lightline.separator = { 'left': '', 'right': '' }
@@ -484,8 +482,7 @@ let g:lightline.component_type.linter_errors = 'error'
 
 let g:lightline.active = {
             \'left': [  ['mode', 'paste',],
-            \           ['readonly', 'gitdir', 'filename', 'filetype', 'modified'],
-            \           ['gutentags']] ,
+            \           ['readonly', 'gitdir', 'filename', 'filetype', 'modified'] ],
             \'right': [ ['lineinfo'],
             \           ['fileformat', 'fileencoding', 'linter_warnings', 'linter_errors'] ],
             \}
@@ -634,48 +631,6 @@ let g:NERDCustomDelimiters = {
             \}
 let g:NERDDefaultAlign = 'left'
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" gutentags settings
-"nnoremap <M-a> :scs find a <C-R>=expand("<cword>")<cr><cr>
-"nnoremap <M-d> :scs find d <C-R>=expand("<cword>")<cr><cr>
-nnoremap <M-c> :scs find c <C-R>=expand("<cword>")<cr><cr>
-nnoremap <M-g> :scs find g <C-R>=expand("<cword>")<cr><cr>
-nnoremap <M-r> :silent! cs reset<cr>
-
-nnoremap <M-;> :tprevious<cr>
-nnoremap <M-'> :tnext<cr>
-
-"let g:gutentags_define_advanced_commands = 1
-"let g:gutentags_trace = 1
-
-let g:gutentags_project_root = ['.root']
-let g:gutentags_add_default_project_roots = 0
-let g:gutentags_cache_dir = '~/.cache/tags/'
-let g:gutentags_modules = []
-
-"set cscopequickfix=s-,c-,d-,i-,t-,e-,a-,g-
-"set cscopetag 
-
-let g:gutentags_modules += ['gtags_cscope']
-"autocmd DirChanged * 
-"            \if exists(":GutentagsUpdate") | exec 'silent! cs reset' | endif
-let $GTAGSLABEL = 'native-pygments'
-if has('win32')
-    set cscopeprg="~/gnu_global/bin/gtags-cscope.exe"
-    let $GTAGSCONF = expand($HOME) . '\gnu_global\share\gtags\gtags.conf'
-elseif has('unix')
-    set cscopeprg="~/Public/gtags_build/bin/gtags-cscope"
-    let $GTAGSCONF = expand($HOME) . '/Public/gtags_build/share/gtags/gtags.conf'
-endif
-
-set cscopetagorder=1
-let g:gutentags_modules += ['ctags']
-let g:gutentags_ctags_extra_args = []
-let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
-let g:gutentags_ctags_extra_args += ['--fields=+niazS', '--extra=+q']
-let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-let g:gutentags_ctags_extra_args += ['--verilog-kinds=+px']
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "AsyncRun settings
 let g:asyncrun_auto = "make"
