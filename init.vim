@@ -24,14 +24,22 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     Plug 'Shougo/neosnippet.vim'
     Plug 'Shougo/neosnippet-snippets'
     
-    Plug 'roxma/nvim-yarp'
-    Plug 'oabt/ncm2'
-    Plug 'ncm2/ncm2-bufword'
-    Plug 'ncm2/ncm2-path'
-    Plug 'ncm2/ncm2-jedi'
-    Plug 'ncm2/ncm2-pyclang'
-    Plug 'fgrsnau/ncm2-otherbuf'
-    Plug 'oabt/ncm2-neosnippet'
+    "Plug 'roxma/nvim-yarp'
+    "Plug 'oabt/ncm2'
+    "Plug 'ncm2/ncm2-bufword'
+    "Plug 'ncm2/ncm2-path'
+    "Plug 'ncm2/ncm2-jedi'
+    "Plug 'ncm2/ncm2-pyclang'
+    "Plug 'fgrsnau/ncm2-otherbuf'
+    "Plug 'oabt/ncm2-neosnippet'
+
+    """"""""""""""nvim-cmp related"""""""""""""""""""
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-buffer'
+    Plug 'hrsh7th/cmp-path'
+    Plug 'hrsh7th/cmp-cmdline'
+    Plug 'notomo/cmp-neosnippet'
 
     "Plug 'oabt/nvim-completion-manager'
     "Plug 'fgrsnau/ncm2-otherbuf', {'branch': 'ncm'}
@@ -47,10 +55,10 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     "Plug 'vim-scripts/errormarker.vim'
     "Plug 'w0rp/ale'
     "if buffer size exceed 2048KB do not load 'ale'
-    if getfsize(expand(@%)) < 2048000
-        "Plug 'w0rp/ale', {'on': 'ALEToggle'}
-        Plug 'dense-analysis/ale'
-    endif
+    "if getfsize(expand(@%)) < 2048000
+    "    "Plug 'w0rp/ale', {'on': 'ALEToggle'}
+    "    Plug 'dense-analysis/ale'
+    "endif
     "Plug 'neomake/neomake'
 
     """"""""""""""""""""""""""editing"""""""""""""""""""""""""""""""""""""""
@@ -61,7 +69,9 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     "Plug 'mbbill/undotree' , {'on': 'UndotreeToggle'}
     Plug 'tpope/vim-surround'
     Plug 'scrooloose/nerdcommenter'
-    Plug 'jiangmiao/auto-pairs'
+
+    "Plug 'jiangmiao/auto-pairs'
+    Plug 'windwp/nvim-autopairs'
     
     """""""""""""""""""""""""Navigation""""""""""""""""""""""""""""""""""""""""""
     "Plug 'ctrlpvim/ctrlp.vim'
@@ -71,6 +81,9 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
     Plug 'Lokaltog/vim-easymotion'
     Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
+
+    """"""""""""""""""""""""""LSP configuration"""""""""""""""""""""""""""""""""
+    Plug 'neovim/nvim-lspconfig'
 
 call plug#end()
 
@@ -890,3 +903,8 @@ silent! call ncm2#override_source('bufword', {'complete_length': 2, 'mark': 'buf
 silent! call ncm2#override_source('otherbuf', {'complete_length': 2, 'mark': 'otherbuf'})
 silent! call ncm2#override_source('bufpath', {'complete_length': 10, 'mark': 'path'})
 silent! call ncm2#override_source('rootpath', {'priority': 9})
+
+""" Configure LSP test
+lua require('nvim-cmp-setup')
+lua require('lspconfig-setup')
+lua require('nvim-autopairs-setup')
