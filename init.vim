@@ -81,7 +81,11 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
     "Plug 'junegunn/fzf.vim'
     "Plug 'majutsushi/tagbar' , {'on': 'TagbarToggle'}
+
     Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim', {'branch': '0.1.x'}
+    Plug 'nvim-telescope/telescope-fzf-native.nvim', {'do': 'make'}
 
     "Plug 'Lokaltog/vim-easymotion'
     Plug 'phaazon/hop.nvim'
@@ -770,14 +774,14 @@ silent! call denite#custom#var('grep', 'separator', ['--'])
 silent! call denite#custom#var('grep', 'final_opts', [])
 "silent! call denite#custom#source('grep', 'max_candidates', 30000)
 
-nnoremap <Leader>d :Denite 
-nnoremap <C-p> :Denite file/old -ignorecase<cr>
-nnoremap f<C-p> :Denite file/rec -ignorecase<cr>
-nnoremap ff<C-p> :Denite  file/rec -path=.. -ignorecase<cr>
-nnoremap <Leader>a :Denite grep -no-start-filter -no-empty<cr>
-nnoremap f<Leader>a :Denite grep -no-start-filter -path=.. -no-empty<cr>
-nnoremap <Leader><Leader>a :DeniteCursorWord grep -no-start-filter -no-empty<cr>
-nnoremap f<Leader><Leader>a :DeniteCursorWord grep -no-start-filter -path=.. -no-empty<cr>
+"nnoremap <Leader>d :Denite 
+"nnoremap <C-p> :Denite file/old -ignorecase<cr>
+"nnoremap f<C-p> :Denite file/rec -ignorecase<cr>
+"nnoremap ff<C-p> :Denite  file/rec -path=.. -ignorecase<cr>
+"nnoremap <Leader>a :Denite grep -no-start-filter -no-empty<cr>
+"nnoremap f<Leader>a :Denite grep -no-start-filter -path=.. -no-empty<cr>
+"nnoremap <Leader><Leader>a :DeniteCursorWord grep -no-start-filter -no-empty<cr>
+"nnoremap f<Leader><Leader>a :DeniteCursorWord grep -no-start-filter -path=.. -no-empty<cr>
 "nnoremap c<C-p> :Denite command<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -912,8 +916,14 @@ silent! call ncm2#override_source('rootpath', {'priority': 9})
 
 """ setting up lua plugins
 lua require('nvim-cmp-setup')
-lua require('lspconfig-setup') "TODO: dense-analysis/ale may needless
-lua require('nvim-autopairs-setup') "subistitution of auto-pairs
-lua require('nvim-surround-setup') "subistitution of vim-surround
-lua require('hop-setup') "subistitution of vim-easymotion
+"TODO: dense-analysis/ale may needless
+lua require('lspconfig-setup')
+"subistitution of auto-pairs
+lua require('nvim-autopairs-setup')
+"subistitution of vim-surround
+lua require('nvim-surround-setup')
+"subistitution of vim-easymotion
+lua require('hop-setup')
+"subistitution of denite
+lua require('telescope-setup')
 
