@@ -34,7 +34,7 @@ cmp.setup({
             ['<C-p>'] = cmp.mapping(
                 function(fallback)
                     if cmp.visible() then
-                        cmp.mapping.select_prev_item()
+                        cmp.select_prev_item()
                     else
                         fallback()
                     end
