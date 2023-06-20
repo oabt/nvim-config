@@ -127,3 +127,5 @@ vim.keymap.set('n', 'f<Leader><Leader>a', function()
     })
 end)
 
+vim.cmd "autocmd User TelescopePreviewerLoaded setlocal number"
+
