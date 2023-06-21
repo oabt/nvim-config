@@ -21,6 +21,7 @@ telescope_config.setup({
                 ["v"] = actions.select_vertical,
                 ["s"] = actions.select_horizontal,
                 ["t"] = actions.select_tab,
+                ["T"] = {"tgT", type="command", opts={remap=true}},
                 ["p"] = require('telescope.actions.layout').toggle_preview,
                 ["<C-n>"] = actions.move_selection_next,
                 ["<C-p>"] = actions.move_selection_previous,

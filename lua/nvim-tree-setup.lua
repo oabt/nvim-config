@@ -8,6 +8,11 @@ local function my_on_attach(bufnr)
       return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
     end
 
+    local function tabnew_bg()
+        api.node.open.tab()
+        vim.cmd('tabprevious')
+    end
+
     -- copy default mappings here from defaults in next section
     --vim.keymap.set('n', '<C-]>', api.tree.change_root_to_node,          opts('CD'))
     --vim.keymap.set('n', '<C-e>', api.node.open.replace_tree_buffer,     opts('Open: In Place'))
@@ -30,6 +35,7 @@ local function my_on_attach(bufnr)
     vim.keymap.set('n', 's', api.node.open.horizontal, opts('Open: split'))
     vim.keymap.set('n', 'v', api.node.open.vertical, opts('Open: vsplit'))
     vim.keymap.set('n', 't', api.node.open.tab, opts('Open: tabnew'))
+    vim.keymap.set('n', 'T', tabnew_bg, opts('Open: tabnew'))
     vim.keymap.set('n', 'q', api.tree.close, opts('Close'))
 
     -- navigation: cd, ls
