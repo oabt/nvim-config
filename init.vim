@@ -18,7 +18,7 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     Plug 'mhinz/vim-startify'
     Plug 'sheerun/vim-polyglot'
     "Plug 'ryanoasis/vim-devicons'
-    Plug 'kristijanhusak/defx-icons'
+    "Plug 'kristijanhusak/defx-icons'
     
     """""""""""""""""""""""""""completion""""""""""""""""""""""""""""""""""
     Plug 'Shougo/neosnippet.vim'
@@ -71,7 +71,8 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     "Plug 'tpope/vim-surround'
     Plug 'kylechui/nvim-surround'
 
-    Plug 'scrooloose/nerdcommenter'
+    "Plug 'numToStr/Comment.nvim'
+    Plug 'preservim/nerdcommenter'
 
     "Plug 'jiangmiao/auto-pairs'
     Plug 'windwp/nvim-autopairs'
@@ -82,7 +83,7 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     "Plug 'junegunn/fzf.vim'
     "Plug 'majutsushi/tagbar' , {'on': 'TagbarToggle'}
 
-    Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
+    "Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim', {'branch': '0.1.x'}
     Plug 'nvim-telescope/telescope-fzf-native.nvim', {'do': 'make'}
@@ -90,7 +91,9 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     "Plug 'Lokaltog/vim-easymotion'
     Plug 'phaazon/hop.nvim'
 
-    Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
+    "Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
+    Plug 'nvim-tree/nvim-tree.lua'
+    Plug 'nvim-tree/nvim-web-devicons'
 
     """"""""""""""""""""""""""LSP configuration"""""""""""""""""""""""""""""""""
     Plug 'neovim/nvim-lspconfig'
@@ -786,7 +789,7 @@ silent! call denite#custom#var('grep', 'final_opts', [])
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Defx settings
-nnoremap <F4> :Defx<Cr>
+"nnoremap <F4> :Defx<Cr>
 autocmd FileType defx silent! call s:Defx_my_settings()
 " close defx if it is the only exist window
 autocmd BufEnter * if (winnr('$') == 1 && &filetype == 'defx') | q | endif
@@ -926,4 +929,7 @@ lua require('nvim-surround-setup')
 lua require('hop-setup')
 "subistitution of denite
 lua require('telescope-setup')
-
+"subistitution of nerdcommenter
+"lua require('comment-setup')
+"subistitution of defx
+lua require('nvim-tree-setup')
