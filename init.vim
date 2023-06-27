@@ -457,13 +457,6 @@ let g:python_highlight_space_errors = 0
 
 autocmd BufNewFile,BufRead *.v set filetype=verilog
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"devicons settings
-let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-let g:DevIconsEnableFoldersOpenClose = 1
-let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
-let g:webdevicons_conceal_nerdtree_brackets = 1
-let g:webdevicons_enable_denite = 1
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "AutoPairs settings
 let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'}
 "au Filetype markdown let b:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"','$':'$'}
@@ -610,32 +603,6 @@ function! LightlineGitDir() abort
         return ""
     endif
 endfunction
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"easy-align settings
-nmap ga <Plug>(EasyAlign)
-xmap ga <Plug>(EasyAlign)
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" EasyMotion settings
-"map <Leader><Leader> <Plug>(easymotion-prefix)
-map <Leader>e <Plug>(easymotion-prefix)
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" gitgutter/fugitive/signify settings
-"let g:gitgutter_grep = 'rg --color never'
-"highlight GitGutterAdd      cterm=bold ctermbg=None ctermfg=119 guibg=None guifg=#87ff5f
-"highlight GitGutterDelete   cterm=bold ctermbg=None ctermfg=198 guibg=None guifg=#ff0087
-"highlight GitGutterChange   cterm=bold ctermbg=None ctermfg=227 guibg=None guifg=#ffff5f
-
-let g:signify_sign_add               = '+'
-let g:signify_sign_delete            = '-'
-let g:signify_sign_delete_first_line = '‾'
-let g:signify_sign_change            = '~'
-highlight SignifySignAdd      cterm=bold ctermbg=None ctermfg=119 guibg=None guifg=#87ff5f
-highlight SignifySignDelete   cterm=bold ctermbg=None ctermfg=167 guibg=None guifg=#d75f5f
-highlight SignifySignChange   cterm=bold ctermbg=None ctermfg=227 guibg=None guifg=#ffff5f
-"command! Gvdiff exec "SignifyDiff"
-"command! Glist exec "SignifyList"
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "nerdcommenter settings
 "" Add spaces after comment delimiters by default
@@ -725,141 +692,6 @@ endif
 
 "silent! call neomake#configure#automake('nrw', 0)
 let g:neomake_open_list = 0
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" FZF/Denite settings
-"silent! call denite#custom#option('_', {
-"            \'highlight_matched_char': 'CursorLineNr',
-"            \'filter_split_direction': 'botright',
-"            \'start_filter': 1,
-"            \'filter_updatetime': 100,
-"            \})
-
-"autocmd FileType denite call s:denite_my_settings()
-"function! s:denite_my_settings() abort
-"    "nnoremap <silent><buffer><expr> <C-c> denite#do_map('quit')
-"    "nnoremap <silent><buffer> i <C-w>jA
-"    nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer').'<Esc>kdggA'
-"    nnoremap <silent><buffer><expr> q
-"                \ denite#do_map('quit').':bwipeout denite-filter<Cr>'
-"    nnoremap <silent><buffer><expr> Q
-"                \ denite#do_map('quit').':bwipeout denite-filter<Cr>'
-"    nnoremap <silent><buffer><expr> <CR>
-"                \ denite#do_map('do_action').':bwipeout denite-filter<Cr>'
-"    nnoremap <silent><buffer><expr> v
-"                \ denite#do_map('do_action', 'vsplit').':bwipeout denite-filter<Cr>'
-"    nnoremap <silent><buffer><expr> s
-"                \ denite#do_map('do_action', 'split').':bwipeout denite-filter<Cr>'
-"    nnoremap <silent><buffer><expr> t
-"                \ denite#do_map('do_action', 'tabopen').':bwipeout denite-filter<Cr>'
-"    nnoremap <silent><buffer><expr> T
-"                \ denite#do_map('do_action', 'tabopen').'gT'.':bwipeout denite-filter<Cr>'
-"    nnoremap <silent><buffer><expr> <Tab> denite#do_map('toggle_select').'j'
-"    nnoremap <silent><buffer><expr> <S-Tab> denite#do_map('toggle_select').'k'
-"endfunction
-
-"autocmd FileType denite-filter call s:denite_filter_my_settings()
-"function! s:denite_filter_my_settings() abort
-"    inoremap<silent><buffer> <C-c>
-"                \ <Esc>:silent! call denite#call_map('quit')<Cr>:bwipeout denite-filter<Cr>
-"    inoremap<silent><buffer> <Cr> <Esc><C-w>k
-"    nnoremap<silent><buffer><expr> q
-"                \ denite#do_map('quit').':bwipeout denite-filter<Cr>'
-"    nnoremap<silent><buffer><expr> Q
-"                \ denite#do_map('quit').':bwipeout denite-filter<Cr>'
-"endfunction
-
-"silent! call denite#custom#var('file/rec', 'command',  ['rg', '--files', '--no-ignore', '--follow', '--hidden', '--color', 'never'])
-""silent! call denite#custom#source('file/rec', 'max_candidates', 30000)
-
-"silent! call denite#custom#var('grep', 'command', ['rg'])
-"silent! call denite#custom#var('grep', 'default_opts', ['--no-ignore', '--hidden', '--smart-case', '--vimgrep', '--no-heading'])
-"silent! call denite#custom#var('grep', 'recursive_opts', [])
-"silent! call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-"silent! call denite#custom#var('grep', 'separator', ['--'])
-"silent! call denite#custom#var('grep', 'final_opts', [])
-""silent! call denite#custom#source('grep', 'max_candidates', 30000)
-
-"nnoremap <Leader>d :Denite 
-"nnoremap <C-p> :Denite file/old -ignorecase<cr>
-"nnoremap f<C-p> :Denite file/rec -ignorecase<cr>
-"nnoremap ff<C-p> :Denite  file/rec -path=.. -ignorecase<cr>
-"nnoremap <Leader>a :Denite grep -no-start-filter -no-empty<cr>
-"nnoremap f<Leader>a :Denite grep -no-start-filter -path=.. -no-empty<cr>
-"nnoremap <Leader><Leader>a :DeniteCursorWord grep -no-start-filter -no-empty<cr>
-"nnoremap f<Leader><Leader>a :DeniteCursorWord grep -no-start-filter -path=.. -no-empty<cr>
-"nnoremap c<C-p> :Denite command<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""Defx settings
-""nnoremap <F4> :Defx<Cr>
-"autocmd FileType defx silent! call s:Defx_my_settings()
-"" close defx if it is the only exist window
-"autocmd BufEnter * if (winnr('$') == 1 && &filetype == 'defx') | q | endif
-"silent! call defx#custom#column('filename', {
-"            \ 'min_width': 50,
-"            \ 'max_width': 50,
-"            \ })
-"silent! call defx#custom#column('indent', {'indent': '  '})
-"silent! call defx#custom#column('time', {'format': '%H:%M %m-%d %y'})
-"silent! call defx#custom#option('_', {
-"            \ 'resume': 1,
-"            \ 'toggle': 1,
-"            \ 'split': 'vertical',
-"            \ 'winwidth': 30,
-"            \ 'direction': 'topleft',
-"            \ 'columns': 'mark:indent:icons:filename:size:time'
-"            \ })
-"function! Defx_toggle_column() abort
-"    if winwidth(0) < 40
-"        vertical resize 80
-"    else
-"        vertical resize 30
-"    endif
-"endfunction
-"function! s:Defx_my_settings() abort
-"    "nnoremap <silent><buffer><expr> e defx#do_action('drop')
-"    "nnoremap <silent><buffer><expr> j line('.') == line('$') ? 'gg' : 'j'
-"    "nnoremap <silent><buffer><expr> k line('.') == 1 ? 'G' : 'k'
-"    nnoremap <silent><buffer><expr> o 
-"                \ defx#is_directory() ?
-"                \ defx#do_action('open_or_close_tree') :
-"                \ defx#do_action('drop')
-"    nnoremap <silent><buffer><expr> <Cr> 
-"                \ defx#is_directory() ?
-"                \ defx#do_action('open_or_close_tree') :
-"                \ defx#do_action('drop')
-"    "window operation
-"    nnoremap <silent><buffer><expr> v defx#do_action('multi', [['drop', 'vsplit']])
-"    nnoremap <silent><buffer><expr> s defx#do_action('multi', [['drop', 'split']])
-"    nnoremap <silent><buffer><expr> t defx#do_action('open', 'tabnew')
-"    nnoremap <silent><buffer><expr> T defx#do_action('open', 'tabnew').'gT'
-"    nnoremap <silent><buffer><expr> x defx#do_action('close_tree')
-"    nnoremap <silent><buffer><expr> <Tab> defx#do_action('toggle_select').'j'
-"    nnoremap <silent><buffer><expr> <S-Tab> defx#do_action('toggle_select').'k'
-"    nnoremap <silent><buffer><expr> q defx#do_action('quit')
-"    "navigation operations
-"    nnoremap <buffer><expr> CD defx#do_action('cd', getcwd())
-"    nnoremap <buffer><expr> u defx#do_action('cd', '..')
-"    nnoremap <buffer><expr> cd defx#do_action('change_vim_cwd')
-"    nnoremap <buffer><expr> X defx#do_action('execute_system')
-"    "defx menu options
-"    nnoremap <buffer><expr> R defx#do_action('redraw')
-"    nnoremap <buffer><expr> I defx#do_action('toggle_ignored_files')
-"    nnoremap <buffer> S
-"                \ :call defx#call_action('toggle_sort', 'time')<Cr>
-"                \ :call defx#call_action('redraw')<Cr>
-"    nnoremap <buffer> M :call Defx_toggle_column()<Cr>
-"    "basic file operation
-"    nnoremap <silent><buffer><expr> mm defx#do_action('move')
-"    nnoremap <silent><buffer><expr> md defx#do_action('new_directory')
-"    nnoremap <silent><buffer><expr> ml defx#do_action('print')
-"    nnoremap <silent><buffer><expr> ma defx#do_action('new_file')
-"    nnoremap <silent><buffer><expr> rn defx#do_action('rename')
-"    nnoremap <silent><buffer><expr> yy defx#do_action('copy')
-"    nnoremap <silent><buffer><expr> pp defx#do_action('paste')
-"    nnoremap <silent><buffer><expr> dd defx#do_action('remove')
-"endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Neosnippet settings
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
@@ -871,54 +703,6 @@ endif
 imap <C-k>  <Plug>(neosnippet_expand_or_jump)
 smap <C-k>  <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>  <Plug>(neosnippet_expand_target)
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" NCM settings
-    " tab for selection
-"inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-"    " enter to start a newline
-"inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-"let g:cm_buffer_size_limit = 10000000
-"let g:cm_complete_start_delay = 0
-"let g:cm_complete_popup_delay = 0
-"let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'cases': 'smartcase'}
-""NOTE: default g:cm_refresh_length = [[1,4],[7,3]]
-""let g:cm_refresh_length = [[1, 2], [4, 2], [6, 10], [7, 3], [8, 2], [9, 4]]
-"let g:cm_refresh_length = [[7, 3],[9, 3]]
-"let g:cm_sources_override = {
-"            \ 'cm-tag': {'enable':0},
-"            \ 'cm-bufkeyword': {'cm_refresh_length':2},
-"            \ 'cm-otherbuf': {'cm_refresh_length':2},
-"            \ 'cm-filepath': {'cm_refresh_length':10}
-"            \ }
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" NCM2 settings
-"autocmd BufEnter * if getfsize(expand(@%)) < 4096000 
-"            \| silent! call ncm2#enable_for_buffer() | endif
-"set completeopt=noinsert,menuone,noselect
-
-
-"" use enter to close the menu and start a new line
-"inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-
-"" Use <TAB> to select the popup menu:
-"inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-"let g:ncm2#popup_delay = 0
-"let g:ncm2#matcher = 'oabtfuzzy'
-
-"if has('win32')
-"    let g:ncm2_pyclang#library_path = 'C:\miniconda3\Library\bin\libclang.dll'
-"elseif has('unix')
-"    let g:ncm2_pyclang#library_path = '~/miniconda3/lib/libclang.so'
-"endif
-"autocmd FileType c,cpp nnoremap <buffer> <C-]> :<c-u>call ncm2_pyclang#goto_declaration_split()<cr>
-"silent! call ncm2#override_source('bufword', {'complete_length': 2, 'mark': 'bufword'})
-"silent! call ncm2#override_source('otherbuf', {'complete_length': 2, 'mark': 'otherbuf'})
-"silent! call ncm2#override_source('bufpath', {'complete_length': 10, 'mark': 'path'})
-"silent! call ncm2#override_source('rootpath', {'priority': 9})
 
 """""""""""""""""""""""""""""""" setting up lua plugins
 lua require('nvim-cmp-setup')
