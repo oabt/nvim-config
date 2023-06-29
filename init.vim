@@ -722,3 +722,7 @@ lua require('telescope-setup')
 lua require('nvim-tree-setup')
 "substantial of vim-signify
 lua require('gitsigns-setup')
+
+if exists('g:neovide')
+    lua require('neovide-setup')
+endif
