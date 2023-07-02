@@ -8,10 +8,10 @@ bufferline.setup({
         numbers = function(opts)
             return string.format('%s', opts.ordinal)
         end,
-        indicator = {
-            icon = '▎',
-            style = 'underline',
-        },
+        --indicator = {
+        --    icon = '▎',
+        --    style = 'underline',
+        --},
 
         modified_icon = '',
         show_buffer_close_icons = true,
@@ -60,6 +60,9 @@ bufferline.setup({
         },
         close_button_selected = {
             fg = '#111111',
+            bg = '#888888',
+        },
+        indicator_selected = {
             bg = '#888888',
         },
     }
