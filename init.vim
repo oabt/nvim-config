@@ -17,7 +17,11 @@ silent! call plug#begin('$HOME/.nvim/plugged')
     """"""""""""""""""""""""""""user interface""""""""""""""""""""""""""""""""""
     "Plug 'equalsraf/neovim-gui-shim'
     "Plug 'morhetz/gruvbox'
-    Plug 'itchyny/lightline.vim'
+
+    "Plug 'itchyny/lightline.vim'
+    Plug 'nvim-lualine/lualine.nvim'
+    Plug 'akinsho/bufferline.nvim'
+
     Plug 'mhinz/vim-startify'
     Plug 'sheerun/vim-polyglot'
     "Plug 'ryanoasis/vim-devicons'
@@ -720,8 +724,12 @@ lua require('telescope-setup')
 "lua require('comment-setup')
 "subistitution of defx
 lua require('nvim-tree-setup')
-"substantial of vim-signify
+"subistitution of vim-signify
 lua require('gitsigns-setup')
+"subistitution of lightline statusline
+lua require('lualine-setup')
+" subistitution of lightline tabline
+lua require('bufferline-setup')
 
 if exists('g:neovide')
     lua require('neovide-setup')
