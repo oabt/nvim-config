@@ -1,8 +1,8 @@
 vim.cmd('set title titlestring=Neovim')
 vim.o.guifont = "DejaVuSansM Nerd Font Mono:h12:#e-antialias"
 vim.opt.linespace = 0
-vim.g.neovide_cursor_animation_length = 0
-vim.g.neovide_cursor_trail_size = 0.01
+vim.g.neovide_cursor_animation_length = 0.06
+vim.g.neovide_cursor_trail_size = 0.1
 vim.g.neovide_scroll_animation_length = 0.3
 
 vim.g.neovide_scale_factor = 1.0
