@@ -43,20 +43,22 @@ lualine_config.setup({
                 shorting_target = 40,
                 symbols = {
                     modified = '',      -- Text to show when the file is modified.
-                    readonly = '',      -- Text to show when the file is non-modifiable or readonly.
+                    readonly = '',      -- Text to show when the file is non-modifiable or readonly.
                     unnamed = '[No Name]', -- Text to show for unnamed buffers.
                     newfile = '[New]',     -- Text to show for newly created file before first write
                 }
             },
             {'filetype'}
         },
-        lualine_c = {'diff', 'diagnostics'},
+        --lualine_c = {'diff', 'diagnostics'},
+        lualine_c = {'diff'},
 
         lualine_x = {'searchcount'},
         lualine_y = {'encoding', 'fileformat',},
 
         --lualine_z = {'progress', 'location'}
-        lualine_z = {{'%1p%%  %2l:%-2v'}}
+        --lualine_z = {{'%1p%%  %2l:%-2v'}}
+        lualine_z = {{'%1p%% %2l:%-2v'}}
     },
 
     ---------------------------inactive buffer line section-------------------------
@@ -68,7 +70,7 @@ lualine_config.setup({
                 path = 1, --0: only filename, 1: relative path, 2:absolute path
                 symbols = {
                     modified = '',      -- Text to show when the file is modified.
-                    readonly = '',      -- Text to show when the file is non-modifiable or readonly.
+                    readonly = '',      -- Text to show when the file is non-modifiable or readonly.
                     unnamed = '[No Name]', -- Text to show for unnamed buffers.
                     newfile = '[New]',     -- Text to show for newly created file before first write
                 },
