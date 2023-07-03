@@ -56,7 +56,7 @@ gitsigns_config.setup({
     end
 })
 
-vim.cmd('command! Gvdiff exec "Gitsigns diffthis"')
+vim.cmd([[command! Gvdiff exec "tabnew % | Gitsigns diffthis"]])
 vim.cmd([[
     highlight GitSignsAdd      cterm=bold ctermbg=None ctermfg=119 guibg=None guifg=#87ff5f
     highlight GitSignsDelete   cterm=bold ctermbg=None ctermfg=167 guibg=None guifg=#d75f5f
