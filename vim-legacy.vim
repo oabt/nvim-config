@@ -204,8 +204,6 @@ let mapleader=" "
 map <Leader>w :w<cr>
 
 "set pastetoggle=<Leader>p
-nnoremap <Leader>s :AsyncRun -raw 
-nnoremap <Leader>S :AsyncStop<Cr>
 map <Leader>/ :nohlsearch<CR>
 nmap ;t :tabnew<cr>:Startify<cr>
 nmap <F2> :call OpenVimrc()<CR><C-w>h
@@ -214,7 +212,7 @@ function! OpenVimrc() abort
         exec "tabnew"
     endif
     exec "e $MYVIMRC"
-    exec "vs ginit.vim"
+    exec "vs vim-legacy.vim"
 endfunction
 
 if has('win32')
@@ -651,6 +649,9 @@ augroup END
 "<Leader>q to toggle quickfix
 noremap <Leader>q :call asyncrun#quickfix_toggle(15)<CR>
 "noremap Q :call asyncrun#quickfix_toggle(20)<CR>
+
+nnoremap <Leader>s :AsyncRun -raw 
+nnoremap <Leader>S :AsyncStop<Cr>
 
 "autumatically close quickfix if it is the only window left
 aug QFClose
