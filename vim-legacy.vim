@@ -708,29 +708,3 @@ imap <C-k>  <Plug>(neosnippet_expand_or_jump)
 smap <C-k>  <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>  <Plug>(neosnippet_expand_target)
 
-"""""""""""""""""""""""""""""""" setting up lua plugins
-lua require('nvim-cmp-setup')
-"TODO: dense-analysis/ale may needless
-lua require('lspconfig-setup')
-"subistitution of auto-pairs
-lua require('nvim-autopairs-setup')
-"subistitution of vim-surround
-lua require('nvim-surround-setup')
-"subistitution of vim-easymotion
-lua require('hop-setup')
-"subistitution of denite
-lua require('telescope-setup')
-"subistitution of nerdcommenter
-"lua require('comment-setup')
-"subistitution of defx
-lua require('nvim-tree-setup')
-"subistitution of vim-signify
-lua require('gitsigns-setup')
-"subistitution of lightline statusline
-lua require('lualine-setup')
-" subistitution of lightline tabline
-lua require('bufferline-setup')
-
-if exists('g:neovide')
-    lua require('neovide-setup')
-endif
