@@ -5,107 +5,107 @@
     "call plug#begin('$VIM/../../plugins') 
 "call plug#begin('$HOME/nvimfiles/plugins') 
 "call plug#begin('$HOME/nvimfiles/plugged') 
-silent! call plug#begin('$HOME/.nvim/plugged') 
+"silent! call plug#begin('$HOME/.nvim/plugged') 
     
-    """"""""""""""""""""""""""""vcs integration""""""""""""""""""""""""""""""""""
-    "Plug 'tpope/vim-fugitive'
-    "Plug 'airblade/vim-gitgutter'
+"    """"""""""""""""""""""""""""vcs integration""""""""""""""""""""""""""""""""""
+"    "Plug 'tpope/vim-fugitive'
+"    "Plug 'airblade/vim-gitgutter'
 
-    "Plug 'mhinz/vim-signify'
-    Plug 'lewis6991/gitsigns.nvim'
+"    "Plug 'mhinz/vim-signify'
+"    Plug 'lewis6991/gitsigns.nvim'
 
-    """"""""""""""""""""""""""""user interface""""""""""""""""""""""""""""""""""
-    "Plug 'equalsraf/neovim-gui-shim'
-    "Plug 'morhetz/gruvbox'
+"    """"""""""""""""""""""""""""user interface""""""""""""""""""""""""""""""""""
+"    "Plug 'equalsraf/neovim-gui-shim'
+"    "Plug 'morhetz/gruvbox'
 
-    "Plug 'itchyny/lightline.vim'
-    Plug 'nvim-lualine/lualine.nvim'
-    Plug 'akinsho/bufferline.nvim'
+"    "Plug 'itchyny/lightline.vim'
+"    Plug 'nvim-lualine/lualine.nvim'
+"    Plug 'akinsho/bufferline.nvim'
 
-    Plug 'mhinz/vim-startify'
-    Plug 'sheerun/vim-polyglot'
-    "Plug 'ryanoasis/vim-devicons'
-    "Plug 'kristijanhusak/defx-icons'
+"    Plug 'mhinz/vim-startify'
+"    Plug 'sheerun/vim-polyglot'
+"    "Plug 'ryanoasis/vim-devicons'
+"    "Plug 'kristijanhusak/defx-icons'
     
-    """""""""""""""""""""""""""completion""""""""""""""""""""""""""""""""""
-    Plug 'Shougo/neosnippet.vim'
-    Plug 'Shougo/neosnippet-snippets'
+"    """""""""""""""""""""""""""completion""""""""""""""""""""""""""""""""""
+"    Plug 'Shougo/neosnippet.vim'
+"    Plug 'Shougo/neosnippet-snippets'
     
-    "Plug 'roxma/nvim-yarp'
-    "Plug 'oabt/ncm2'
-    "Plug 'ncm2/ncm2-bufword'
-    "Plug 'ncm2/ncm2-path'
-    "Plug 'ncm2/ncm2-jedi'
-    "Plug 'ncm2/ncm2-pyclang'
-    "Plug 'fgrsnau/ncm2-otherbuf'
-    "Plug 'oabt/ncm2-neosnippet'
+"    "Plug 'roxma/nvim-yarp'
+"    "Plug 'oabt/ncm2'
+"    "Plug 'ncm2/ncm2-bufword'
+"    "Plug 'ncm2/ncm2-path'
+"    "Plug 'ncm2/ncm2-jedi'
+"    "Plug 'ncm2/ncm2-pyclang'
+"    "Plug 'fgrsnau/ncm2-otherbuf'
+"    "Plug 'oabt/ncm2-neosnippet'
 
-    """"""""""""""nvim-cmp related"""""""""""""""""""
-    Plug 'hrsh7th/nvim-cmp'
-    Plug 'hrsh7th/cmp-nvim-lsp'
-    Plug 'hrsh7th/cmp-buffer'
-    Plug 'hrsh7th/cmp-path'
-    Plug 'hrsh7th/cmp-cmdline'
-    Plug 'notomo/cmp-neosnippet'
+"    """"""""""""""nvim-cmp related"""""""""""""""""""
+"    Plug 'hrsh7th/nvim-cmp'
+"    Plug 'hrsh7th/cmp-nvim-lsp'
+"    Plug 'hrsh7th/cmp-buffer'
+"    Plug 'hrsh7th/cmp-path'
+"    Plug 'hrsh7th/cmp-cmdline'
+"    Plug 'notomo/cmp-neosnippet'
 
-    "Plug 'oabt/nvim-completion-manager'
-    "Plug 'fgrsnau/ncm2-otherbuf', {'branch': 'ncm'}
-    "Plug 'roxma/ncm-clang', {'for': ['c', 'cpp']}
-    "Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for': ['javascript']}
-    "Plug 'Shougo/neco-vim', {'for': 'vim'}
-    "Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-    "Plug 'tweekmonster/deoplete-clang2', {'for': ['c', 'cpp']}
-    "Plug 'zchee/deoplete-jedi', {'for': 'python'}
+"    "Plug 'oabt/nvim-completion-manager'
+"    "Plug 'fgrsnau/ncm2-otherbuf', {'branch': 'ncm'}
+"    "Plug 'roxma/ncm-clang', {'for': ['c', 'cpp']}
+"    "Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for': ['javascript']}
+"    "Plug 'Shougo/neco-vim', {'for': 'vim'}
+"    "Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+"    "Plug 'tweekmonster/deoplete-clang2', {'for': ['c', 'cpp']}
+"    "Plug 'zchee/deoplete-jedi', {'for': 'python'}
     
-    """""""""""""""""""""""""linters""""""""""""""""""""""""""""""""""""""""""
-    Plug 'skywind3000/asyncrun.vim'
-    "Plug 'vim-scripts/errormarker.vim'
-    "Plug 'w0rp/ale'
-    "if buffer size exceed 2048KB do not load 'ale'
-    "if getfsize(expand(@%)) < 2048000
-    "    "Plug 'w0rp/ale', {'on': 'ALEToggle'}
-    "    Plug 'dense-analysis/ale'
-    "endif
-    "Plug 'neomake/neomake'
+"    """""""""""""""""""""""""linters""""""""""""""""""""""""""""""""""""""""""
+"    Plug 'skywind3000/asyncrun.vim'
+"    "Plug 'vim-scripts/errormarker.vim'
+"    "Plug 'w0rp/ale'
+"    "if buffer size exceed 2048KB do not load 'ale'
+"    "if getfsize(expand(@%)) < 2048000
+"    "    "Plug 'w0rp/ale', {'on': 'ALEToggle'}
+"    "    Plug 'dense-analysis/ale'
+"    "endif
+"    "Plug 'neomake/neomake'
 
-    """"""""""""""""""""""""""editing"""""""""""""""""""""""""""""""""""""""
-    "Plug 'iamcco/markdown-preview.vim', {'for': ['markdown']}
-    "Plug 'iamcco/mathjax-support-for-mkdp', {'for': ['markdown']}
-    "Plug 'junegunn/vim-easy-align'
-    "Plug 'sjl/gundo.vim'
-    "Plug 'mbbill/undotree' , {'on': 'UndotreeToggle'}
+"    """"""""""""""""""""""""""editing"""""""""""""""""""""""""""""""""""""""
+"    "Plug 'iamcco/markdown-preview.vim', {'for': ['markdown']}
+"    "Plug 'iamcco/mathjax-support-for-mkdp', {'for': ['markdown']}
+"    "Plug 'junegunn/vim-easy-align'
+"    "Plug 'sjl/gundo.vim'
+"    "Plug 'mbbill/undotree' , {'on': 'UndotreeToggle'}
 
-    "Plug 'tpope/vim-surround'
-    Plug 'kylechui/nvim-surround'
+"    "Plug 'tpope/vim-surround'
+"    Plug 'kylechui/nvim-surround'
 
-    "Plug 'numToStr/Comment.nvim'
-    Plug 'preservim/nerdcommenter'
+"    "Plug 'numToStr/Comment.nvim'
+"    Plug 'preservim/nerdcommenter'
 
-    "Plug 'jiangmiao/auto-pairs'
-    Plug 'windwp/nvim-autopairs'
+"    "Plug 'jiangmiao/auto-pairs'
+"    Plug 'windwp/nvim-autopairs'
     
-    """""""""""""""""""""""""Navigation""""""""""""""""""""""""""""""""""""""""""
-    "Plug 'ctrlpvim/ctrlp.vim'
-    "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-    "Plug 'junegunn/fzf.vim'
-    "Plug 'majutsushi/tagbar' , {'on': 'TagbarToggle'}
+"    """""""""""""""""""""""""Navigation""""""""""""""""""""""""""""""""""""""""""
+"    "Plug 'ctrlpvim/ctrlp.vim'
+"    "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+"    "Plug 'junegunn/fzf.vim'
+"    "Plug 'majutsushi/tagbar' , {'on': 'TagbarToggle'}
 
-    "Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-telescope/telescope.nvim', {'branch': '0.1.x'}
-    Plug 'nvim-telescope/telescope-fzf-native.nvim', {'do': 'make'}
+"    "Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
+"    Plug 'nvim-lua/plenary.nvim'
+"    Plug 'nvim-telescope/telescope.nvim', {'branch': '0.1.x'}
+"    Plug 'nvim-telescope/telescope-fzf-native.nvim', {'do': 'make'}
 
-    "Plug 'Lokaltog/vim-easymotion'
-    Plug 'phaazon/hop.nvim'
+"    "Plug 'Lokaltog/vim-easymotion'
+"    Plug 'phaazon/hop.nvim'
 
-    "Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
-    Plug 'nvim-tree/nvim-tree.lua'
-    Plug 'nvim-tree/nvim-web-devicons'
+"    "Plug 'Shougo/defx.nvim', {'do': ':UpdateRemotePlugins'}
+"    Plug 'nvim-tree/nvim-tree.lua'
+"    Plug 'nvim-tree/nvim-web-devicons'
 
-    """"""""""""""""""""""""""LSP configuration"""""""""""""""""""""""""""""""""
-    Plug 'neovim/nvim-lspconfig'
+"    """"""""""""""""""""""""""LSP configuration"""""""""""""""""""""""""""""""""
+"    Plug 'neovim/nvim-lspconfig'
 
-call plug#end()
+"call plug#end()
 
 "let $NVIM_PYTHON_LOG_FILE="nvimlog"
 if has('win32')
