@@ -76,7 +76,8 @@ lualine_config.setup({
                 },
             }
         },
-        lualine_x = {{'%1p%%  %2l:%-2v'}},
+        --lualine_x = {{'%1p%%  %2l:%-2v'}},
+        lualine_x = {{'%1p%% %2l:%-2v'}},
         lualine_y = {},
         lualine_z = {}
     },
