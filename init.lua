@@ -64,7 +64,7 @@ require("lazy").setup(
 
         ------------------ edit ----------------------------------
         {"preservim/nerdcommenter",
-            keys = {"<Leader>c",},
+            keys = {{"<Leader>c", mode={"n", "v"}},},
         },
         {"windwp/nvim-autopairs",
             event = "InsertEnter",
@@ -96,7 +96,7 @@ require("lazy").setup(
             build = 'make',
         },
         {"phaazon/hop.nvim",
-            keys = {"<Leader>e",},
+            keys = {{"<Leader>e", mode={"n", "v"}},},
             config = function() require('hop-setup') end,
         },
         {"nvim-tree/nvim-tree.lua",
@@ -115,7 +115,6 @@ require("lazy").setup(
         ---------------------- misc ------------------------------
         {"skywind3000/asyncrun.vim",
             cmd = "AsyncRun",
-            keys = {"<Leader>s",},
         },
         {"lewis6991/gitsigns.nvim",
             event = "VeryLazy",
