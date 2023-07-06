@@ -50,7 +50,7 @@ local oabt_hl_group = {
     },
 
     NormalFloat = {
-        bg = oabt_scheme.oabt_pmenu_bg,
+        bg = oabt_scheme.pmenu_bg,
     },
     FloatBorder = {
         fg = monokai.scheme.aqua,
@@ -69,7 +69,7 @@ local oabt_hl_group = {
     },
     LualineDiffChange = {
         fg = monokai.scheme.yellow,
-    }
+    },
 
 }
 
