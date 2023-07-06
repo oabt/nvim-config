@@ -32,7 +32,7 @@ hi Normal guifg=#F8F8F2 guibg=#2D2E28 guisp=#2D2E28 gui=NONE ctermfg=255 ctermbg
 "hi CTagsClass -- no settings --
 "hi TabLine -- no settings --
 "hi clear -- no settings --
-hi IncSearch guifg=#C4BE89 guibg=#000000 guisp=#000000 gui=NONE ctermfg=186 ctermbg=0 cterm=NONE
+hi IncSearch guifg=#D7AF5F guibg=#000000 guisp=#000000 gui=NONE ctermfg=186 ctermbg=0 cterm=NONE
 hi WildMenu guifg=#66D9EF guibg=#000000 guisp=#000000 gui=NONE ctermfg=81 ctermbg=NONE cterm=NONE
 hi SignColumn guifg=#A6E22E guibg=#2D2E28 guisp=#232526 gui=NONE ctermfg=112 ctermbg=236 cterm=NONE
 hi SpecialComment guifg=#465457 guibg=NONE guisp=NONE gui=bold ctermfg=240 ctermbg=NONE cterm=bold
@@ -88,7 +88,7 @@ hi Type guifg=#66D9EF guibg=NONE guisp=NONE gui=NONE ctermfg=81 ctermbg=NONE cte
 hi DiffChange guifg=#89807D guibg=#4C4745 guisp=#4C4745 gui=NONE ctermfg=245 ctermbg=239 cterm=NONE
 hi Cursor guifg=#000000 guibg=#F8F8F0 guisp=#F8F8F0 gui=NONE ctermfg=NONE ctermbg=230 cterm=NONE
 hi Error guifg=#FF0000 guibg=NONE guisp=#F44747 gui=bold ctermfg=9 ctermbg=NONE cterm=bold
-hi PMenu guifg=#BBBBBB guibg=#3A3A32 guisp=#000000 gui=NONE ctermfg=250 ctermbg=238 cterm=NONE
+hi PMenu guifg=#BBBBBB guibg=#424136 guisp=#000000 gui=NONE ctermfg=250 ctermbg=238 cterm=NONE
 hi SpecialKey guifg=#66D9EF guibg=NONE guisp=NONE gui=italic ctermfg=81 ctermbg=NONE cterm=NONE
 hi Constant guifg=#AE81FF guibg=NONE guisp=NONE gui=bold ctermfg=141 ctermbg=NONE cterm=bold
 hi Tag guifg=#F92672 guibg=NONE guisp=NONE gui=italic ctermfg=161 ctermbg=NONE cterm=NONE
