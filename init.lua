@@ -25,12 +25,17 @@ require("lazy").setup(
             --pin = true,
         },
 
-        ------------ UI related ------------------------------
-        {"mhinz/vim-startify",
-            lazy = false,
+        ------------- themes/color scheme/highlight-------------------
+        {"ofirgall/ofirkai.nvim",
+            config = function() require('monokai-setup') end,
         },
         {"sheerun/vim-polyglot",
             event = "VeryLazy",
+        },
+
+        ------------ UI related ------------------------------
+        {"mhinz/vim-startify",
+            lazy = false,
         },
         {"nvim-tree/nvim-web-devicons",
             lazy = true,
