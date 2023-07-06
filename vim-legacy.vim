@@ -464,147 +464,147 @@ let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'}
 "au Filetype markdown let b:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"','$':'$'}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" lightline settings
-"set noshowmode
-"colorscheme codedark
-"colorscheme gruvbox
+"" lightline settings
+""set noshowmode
+""colorscheme codedark
+""colorscheme gruvbox
 
-colorscheme molokai
-"colorscheme neosolarized
-"set background=light
+"colorscheme molokai
+""colorscheme neosolarized
+""set background=light
 
-let g:lightline = {}
-"let g:lightline.colorscheme = 'solarized'
-"
-let g:lightline.winwidth = 200
-
-let g:lightline.component = {}
-let g:lightline.component.lineinfo = '%1p%%  %2l:%-2v'
-let g:lightline.component.modified = '%{LightlineModified()}'
-let g:lightline.component.asyncrun = '%{g:asyncrun_status}'
-
-let g:lightline.separator = { 'left': '', 'right': '' }
-let g:lightline.subseparator = { 'left': '', 'right': '' }
-
-let g:lightline.component_function = {}
-let g:lightline.component_function.gitdir = 'LightlineGitDir'
-let g:lightline.component_function.filetype = 'MyFiletype'
-let g:lightline.component_function.fileformat = 'MyFileformat'
-
-let g:lightline.tab_component_function = {}
-let g:lightline.tab_component_function.tabmodified = 'LightlineTablineModified'
-
-let g:lightline.component_expand = {}
-let g:lightline.component_expand.readonly = 'LightlineReadonly'
-let g:lightline.component_expand.linter_warnings = 'LightlineLinterWarnings'
-let g:lightline.component_expand.linter_errors = 'LightlineLinterErrors'
-
-let g:lightline.component_type = {}
-let g:lightline.component_type.readonly = 'error'
-let g:lightline.component_type.linter_warnings = 'warning'
-let g:lightline.component_type.linter_errors = 'error'
-
-let g:lightline.active = {
-            \'left': [  ['mode', 'paste',],
-            \           ['readonly', 'gitdir', 'filename', 'filetype', 'modified'] ],
-            \'right': [ ['lineinfo'],
-            \           ['fileformat', 'fileencoding', 'linter_warnings', 'linter_errors'] ],
-            \}
-
-let g:lightline.inactive = {
-            \'left': [[], ['relativepath', 'filetype'],  ['modified'] ],
-            \'right': [ [ 'lineinfo' ], ],
-            \}
-
-let g:lightline.tab = {
-            \'active': [ 'tabnum', 'filename', 'tabmodified',],
-            \'inactive': [ 'tabnum', 'filename', 'tabmodified',],
-            \}
 "let g:lightline = {}
+""let g:lightline.colorscheme = 'solarized'
+""
+"let g:lightline.winwidth = 200
 
-" filetype symbol
-function! MyFiletype()
-    if exists('*WebDevIconsGetFileTypeSymbol')
-        return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : '') : ''
-    else
-        return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' : '') : ''
-    endif
-endfunction
+"let g:lightline.component = {}
+"let g:lightline.component.lineinfo = '%1p%%  %2l:%-2v'
+"let g:lightline.component.modified = '%{LightlineModified()}'
+"let g:lightline.component.asyncrun = '%{g:asyncrun_status}'
 
-" filformat symbol(unix, dos, mac)
-function! MyFileformat()
-    if &fileformat == 'unix'
-        return winwidth(0) > 70 ? '' : ''
-    elseif &fileformat == 'dos'
-        return winwidth(0) > 70 ? '' : ''
-    elseif &fileformat == 'mac'
-        return winwidth(0) > 70 ? '' : ''
-    else
-        return winwidth(0) > 70 ? &fileformat : ''
-    endif
-endfunction
+"let g:lightline.separator = { 'left': '', 'right': '' }
+"let g:lightline.subseparator = { 'left': '', 'right': '' }
 
-" Readonly symbol
-function! LightlineReadonly()
-    return &readonly ? '' : ''
-endfunction
+"let g:lightline.component_function = {}
+"let g:lightline.component_function.gitdir = 'LightlineGitDir'
+"let g:lightline.component_function.filetype = 'MyFiletype'
+"let g:lightline.component_function.fileformat = 'MyFileformat'
 
-" tab modified(if any window within tab modified)
-function! LightlineTablineModified(n)
-	let l:window_number = tabpagewinnr(a:n, '$')
-	let l:modified = v:false
-	let l:unmodifiable = v:true
-	for winnr in range(1, l:window_number)
-		let l:modified = l:modified || gettabwinvar(a:n, winnr, '&modified')
-		let l:unmodifiable = l:unmodifiable && !gettabwinvar(a:n, winnr, '&modifiable')
-	endfor
-	let l:string = ''
-	if l:modified
-		let l:string .= ''
-	elseif l:unmodifiable
-		let l:string .= '-'
-	endif
-	return l:string
-endfunction
+"let g:lightline.tab_component_function = {}
+"let g:lightline.tab_component_function.tabmodified = 'LightlineTablineModified'
 
-" customize modified sign
-function! LightlineModified()
-    "return &modified ? '' : ''  "/f111
-    "return &modified ? '' : ''   "/f055
-    return &modified ? '' : ''  "/f067
-endfunction
+"let g:lightline.component_expand = {}
+"let g:lightline.component_expand.readonly = 'LightlineReadonly'
+"let g:lightline.component_expand.linter_warnings = 'LightlineLinterWarnings'
+"let g:lightline.component_expand.linter_errors = 'LightlineLinterErrors'
 
-" ale warnings
-function! LightlineLinterWarnings() abort
-    let l:counts = ale#statusline#Count(bufnr(''))
-    let l:all_errors = l:counts.error + l:counts.style_error
-    let l:all_non_errors = l:counts.total - l:all_errors
-    return l:counts.total == 0 ? '' : printf('%d ', all_non_errors)
-endfunction
+"let g:lightline.component_type = {}
+"let g:lightline.component_type.readonly = 'error'
+"let g:lightline.component_type.linter_warnings = 'warning'
+"let g:lightline.component_type.linter_errors = 'error'
 
-" ale errors
-function! LightlineLinterErrors() abort
-    let l:counts = ale#statusline#Count(bufnr(''))
-    let l:all_errors = l:counts.error + l:counts.style_error
-    let l:all_non_errors = l:counts.total - l:all_errors
-    return l:counts.total == 0 ? '' : printf('%d ✖', all_errors)
-endfunction
-autocmd User ALELint call lightline#update()
+"let g:lightline.active = {
+"            \'left': [  ['mode', 'paste',],
+"            \           ['readonly', 'gitdir', 'filename', 'filetype', 'modified'] ],
+"            \'right': [ ['lineinfo'],
+"            \           ['fileformat', 'fileencoding', 'linter_warnings', 'linter_errors'] ],
+"            \}
 
-" decide whether in git dir
-function! LightlineGitDir() abort
-    let gitdir = finddir(".git", ";")
-    if gitdir != ""
-        if findfile(gitdir.'/HEAD') != ""
-            let branchinfo = split(readfile(gitdir.'/HEAD')[0], '/')[-1]
-        else
-            let branchinfo = ""
-        endif
-        return " ".branchinfo
-    else
-        return ""
-    endif
-endfunction
+"let g:lightline.inactive = {
+"            \'left': [[], ['relativepath', 'filetype'],  ['modified'] ],
+"            \'right': [ [ 'lineinfo' ], ],
+"            \}
+
+"let g:lightline.tab = {
+"            \'active': [ 'tabnum', 'filename', 'tabmodified',],
+"            \'inactive': [ 'tabnum', 'filename', 'tabmodified',],
+"            \}
+""let g:lightline = {}
+
+"" filetype symbol
+"function! MyFiletype()
+"    if exists('*WebDevIconsGetFileTypeSymbol')
+"        return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : '') : ''
+"    else
+"        return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' : '') : ''
+"    endif
+"endfunction
+
+"" filformat symbol(unix, dos, mac)
+"function! MyFileformat()
+"    if &fileformat == 'unix'
+"        return winwidth(0) > 70 ? '' : ''
+"    elseif &fileformat == 'dos'
+"        return winwidth(0) > 70 ? '' : ''
+"    elseif &fileformat == 'mac'
+"        return winwidth(0) > 70 ? '' : ''
+"    else
+"        return winwidth(0) > 70 ? &fileformat : ''
+"    endif
+"endfunction
+
+"" Readonly symbol
+"function! LightlineReadonly()
+"    return &readonly ? '' : ''
+"endfunction
+
+"" tab modified(if any window within tab modified)
+"function! LightlineTablineModified(n)
+"    let l:window_number = tabpagewinnr(a:n, '$')
+"    let l:modified = v:false
+"    let l:unmodifiable = v:true
+"    for winnr in range(1, l:window_number)
+"        let l:modified = l:modified || gettabwinvar(a:n, winnr, '&modified')
+"        let l:unmodifiable = l:unmodifiable && !gettabwinvar(a:n, winnr, '&modifiable')
+"    endfor
+"    let l:string = ''
+"    if l:modified
+"        let l:string .= ''
+"    elseif l:unmodifiable
+"        let l:string .= '-'
+"    endif
+"    return l:string
+"endfunction
+
+"" customize modified sign
+"function! LightlineModified()
+"    "return &modified ? '' : ''  "/f111
+"    "return &modified ? '' : ''   "/f055
+"    return &modified ? '' : ''  "/f067
+"endfunction
+
+"" ale warnings
+"function! LightlineLinterWarnings() abort
+"    let l:counts = ale#statusline#Count(bufnr(''))
+"    let l:all_errors = l:counts.error + l:counts.style_error
+"    let l:all_non_errors = l:counts.total - l:all_errors
+"    return l:counts.total == 0 ? '' : printf('%d ', all_non_errors)
+"endfunction
+
+"" ale errors
+"function! LightlineLinterErrors() abort
+"    let l:counts = ale#statusline#Count(bufnr(''))
+"    let l:all_errors = l:counts.error + l:counts.style_error
+"    let l:all_non_errors = l:counts.total - l:all_errors
+"    return l:counts.total == 0 ? '' : printf('%d ✖', all_errors)
+"endfunction
+"autocmd User ALELint call lightline#update()
+
+"" decide whether in git dir
+"function! LightlineGitDir() abort
+"    let gitdir = finddir(".git", ";")
+"    if gitdir != ""
+"        if findfile(gitdir.'/HEAD') != ""
+"            let branchinfo = split(readfile(gitdir.'/HEAD')[0], '/')[-1]
+"        else
+"            let branchinfo = ""
+"        endif
+"        return " ".branchinfo
+"    else
+"        return ""
+"    endif
+"endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "nerdcommenter settings
 "" Add spaces after comment delimiters by default
@@ -660,43 +660,43 @@ aug QFClose
 aug END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"ale settings
-"let g:ale_lint_on_enter = 1
-let g:ale_maximum_file_size = 2048000
-let g:ale_lint_on_save = 0
-let g:ale_lint_on_insert_leave = 1
-let g:ale_lint_on_text_changed = 'normal'
-let g:ale_lint_delay = 0
-let g:ale_set_quickfix = 0
-let g:ale_sign_column_always = 1
-let g:ale_sign_error="✖" "/0x2715~0x2718
-let g:ale_sign_warning="" "/uf071
-let g:ale_linters = {
-            \'c' : ['clang'],
-            \'cpp' : ['clang'],
-            \'verilog' : ['iverilog'],
-            \'python'  : ['flake8'],
-            \'asm' : [''],
-            \'matlab' : ['']
-            \}
-if has('win32')
-    let g:ale_linters.verilog = ['']
-elseif has('unix')
-    let g:ale_linters.verilog = ['iverilog']
-endif
+""ale settings
+""let g:ale_lint_on_enter = 1
+"let g:ale_maximum_file_size = 2048000
+"let g:ale_lint_on_save = 0
+"let g:ale_lint_on_insert_leave = 1
+"let g:ale_lint_on_text_changed = 'normal'
+"let g:ale_lint_delay = 0
+"let g:ale_set_quickfix = 0
+"let g:ale_sign_column_always = 1
+"let g:ale_sign_error="✖" "/0x2715~0x2718
+"let g:ale_sign_warning="" "/uf071
+"let g:ale_linters = {
+"            \'c' : ['clang'],
+"            \'cpp' : ['clang'],
+"            \'verilog' : ['iverilog'],
+"            \'python'  : ['flake8'],
+"            \'asm' : [''],
+"            \'matlab' : ['']
+"            \}
+"if has('win32')
+"    let g:ale_linters.verilog = ['']
+"elseif has('unix')
+"    let g:ale_linters.verilog = ['iverilog']
+"endif
 
-nmap <silent> <Leader>h <Plug>(ale_previous_wrap)
-nmap <silent> <Leader>l <Plug>(ale_next_wrap)
-nmap <M-e> :ALEToggle<CR>
-let g:ale_python_flake8_options = 
-    \'--ignore=E301,E303,E305,E405,E501,W391,F401,E731,E128,E402,E702,F841,E722'
-if has('win32')
-    "let g:ale_c_clang_options = "-std=c11 -Wall --target=x86_64-windows-gnu"
-    "let g:ale_cpp_clang_options = "-std=c++14 -Wall --target=x86_64-windows-gnu"
-endif
+"nmap <silent> <Leader>h <Plug>(ale_previous_wrap)
+"nmap <silent> <Leader>l <Plug>(ale_next_wrap)
+"nmap <M-e> :ALEToggle<CR>
+"let g:ale_python_flake8_options = 
+"    \'--ignore=E301,E303,E305,E405,E501,W391,F401,E731,E128,E402,E702,F841,E722'
+"if has('win32')
+"    "let g:ale_c_clang_options = "-std=c11 -Wall --target=x86_64-windows-gnu"
+"    "let g:ale_cpp_clang_options = "-std=c++14 -Wall --target=x86_64-windows-gnu"
+"endif
 
-"silent! call neomake#configure#automake('nrw', 0)
-let g:neomake_open_list = 0
+""silent! call neomake#configure#automake('nrw', 0)
+"let g:neomake_open_list = 0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Neosnippet settings
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
