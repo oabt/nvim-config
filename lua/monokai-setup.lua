@@ -44,6 +44,10 @@ local oabt_hl_group = {
     StorageClass = {
         fg = monokai.scheme.aqua,
     },
+    Special = {
+        fg = monokai.scheme.aqua,
+        italic = true,
+    },
     Macro = {
         fg = oabt_scheme.oabt_macro,
         italic = true,
