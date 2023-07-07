@@ -1,5 +1,37 @@
 local bufferline = require("bufferline")
 
+local function exist_devicons()
+    if package.loaded['nvim-web-devicons'] == nil then
+        return false
+    else
+        return true
+    end
+end
+
+local function oabt_tab_style()
+    if exist_devicons() then
+        return "slant"
+    else
+        return "thin"
+    end
+end
+
+local function oabt_modified_icon()
+    if exist_devicons() then
+        return ''
+    else
+        return '[+]'
+    end
+end
+
+local function oabt_close_icon()
+    if exist_devicons() then
+        return '󰅖'
+    else
+        return '[X]'
+    end
+end
+
 --vim.cmd("set mousemoveevent")
 bufferline.setup({
     options = {
@@ -13,8 +45,10 @@ bufferline.setup({
         --    style = 'underline',
         --},
 
-        modified_icon = '',
+        modified_icon = oabt_modified_icon(),
         show_buffer_close_icons = true,
+        buffer_close_icon =  oabt_close_icon(),
+
         show_close_icon = false,
         show_buffer_icons = true,  -- whether to show the filetype icon
         color_icons = true, -- whether or not to add the filetype icon highlights
@@ -27,7 +61,7 @@ bufferline.setup({
         --enforce_regular_tabs = true,
 
         show_tab_indicators = false,
-        separator_style = "slant",
+        separator_style = oabt_tab_style(),
         show_duplicate_prefix = false, -- whether to show duplicate buffer prefix
 
         right_mouse_command = false,

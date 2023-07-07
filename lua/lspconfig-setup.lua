@@ -56,6 +56,29 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end
     })
 
+local function exist_devicons()
+    if package.loaded['nvim-web-devicons'] == nil then
+        return false
+    else
+        return true
+    end
+end
+
+local function oabt_error_icon()
+    if exist_devicons() then
+        return "✖"
+    else
+        return "E"
+    end
+end
+
+local function oabt_warn_icon()
+    if exist_devicons() then
+        return ""
+    else
+        return "W"
+    end
+end
 
 local signs = {
     {name = "DiagnosticSignError", text = ✖},
@@ -72,13 +95,16 @@ local diagnostic_config = {
 
 vim.diagnostic.config(diagnostic_config)
 
+-- disable the highlight based on LSP
 for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
     vim.api.nvim_set_hl(0, group, {})
 end
 
-vim.cmd([[
-    sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=
-    sign define DiagnosticSignError text=✖ texthl=DiagnosticSignError linehl= numhl=
-    ]]
-)
+vim.cmd([[sign define DiagnosticSignWarn text=]]
+    .. oabt_warn_icon() ..
+    [[ texthl=DiagnosticSignWarn linehl= numhl= ]])
+
+vim.cmd([[ sign define DiagnosticSignError text=]]
+    .. oabt_error_icon() ..
+    [[ texthl=DiagnosticSignError linehl= numhl= ]])
 

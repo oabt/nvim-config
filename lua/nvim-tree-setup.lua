@@ -61,6 +61,14 @@ end
 
 vim.keymap.set('n', '<F4>', ':NvimTreeToggle<Cr>', {remap=false})
 
+local function exist_devicons()
+    if package.loaded['nvim-web-devicons'] == nil then
+        return false
+    else
+        return true
+    end
+end
+
 require("nvim-tree").setup({
     sort_by = "case_sensitive",
     view = {
@@ -72,6 +80,18 @@ require("nvim-tree").setup({
     renderer = {
         full_name = true,
         highlight_modified = 'all',
+        icons = {
+            show = {
+                file = exist_devicons(),
+                folder = exist_devicons(),
+            },
+            glyphs = {
+                folder = {
+                    arrow_closed = '+',
+                    arrow_open = '-',
+                }
+            }
+        },
     },
     filters = {
         dotfiles = true,

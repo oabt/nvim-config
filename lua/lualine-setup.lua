@@ -9,12 +9,52 @@ local lualine_config = require('lualine')
 --    end
 --end
 
+local function exist_devicons()
+    if package.loaded['nvim-web-devicons'] == nil then
+        return false
+    else
+        return true
+    end
+end
+
+local function oabt_component_separators()
+    if exist_devicons() then
+        return { left = '', right = ''}
+    else
+        return { left = '|', right = '|'}
+    end
+end
+
+local function oabt_section_separators()
+    if exist_devicons() then
+        return { left = '', right = ''}
+    else
+        return { left = '', right = ''}
+    end
+end
+
+local function oabt_modified_icon()
+    if exist_devicons() then
+        return ''
+    else
+        return '[+]'
+    end
+end
+
+local function oabt_readonly_icon()
+    if exist_devicons() then
+        return ''
+    else
+        return '[-]'
+    end
+end
+
 lualine_config.setup({
     options = {
-        icons_enabled = true,
+        icons_enabled = exist_devicons(),
         theme = 'powerline',
-        component_separators = { left = '', right = ''},
-        section_separators = { left = '', right = ''},
+        component_separators = oabt_component_separators(),
+        section_separators = oabt_section_separators(),
         disabled_filetypes = {
             statusline = {},
             winbar = {},
@@ -37,13 +77,13 @@ lualine_config.setup({
             },
         },
         lualine_b = {
-            {'branch'},
+            {'branch', icon=''},
             {'filename',
                 path = 1, --0: only filename, 1: relative path, 2:absolute path
                 shorting_target = 40,
                 symbols = {
-                    modified = '',      -- Text to show when the file is modified.
-                    readonly = '',      -- Text to show when the file is non-modifiable or readonly.
+                    modified = oabt_modified_icon(),      -- Text to show when the file is modified.
+                    readonly = oabt_readonly_icon(),      -- Text to show when the file is non-modifiable or readonly.
                     unnamed = '[No Name]', -- Text to show for unnamed buffers.
                     newfile = '[New]',     -- Text to show for newly created file before first write
                 }
@@ -69,8 +109,8 @@ lualine_config.setup({
             {'filename',
                 path = 1, --0: only filename, 1: relative path, 2:absolute path
                 symbols = {
-                    modified = '',      -- Text to show when the file is modified.
-                    readonly = '',      -- Text to show when the file is non-modifiable or readonly.
+                    modified = oabt_modified_icon(),      -- Text to show when the file is modified.
+                    readonly = oabt_readonly_icon(),      -- Text to show when the file is non-modifiable or readonly.
                     unnamed = '[No Name]', -- Text to show for unnamed buffers.
                     newfile = '[New]',     -- Text to show for newly created file before first write
                 },
