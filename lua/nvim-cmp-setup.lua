@@ -13,6 +13,16 @@ cmp.setup({
         window = {
             -- completion = cmp.config.window.bordered(),
             -- documentation = cmp.config.window.bordered(),
+            completion = {
+                border = 'single',
+                winhighlight = 'Normal:CmpFloat,FloatBorder:CmpFloatBorder,CursorLine:PmenuSel,Search:None',
+                zindex = 1001,
+            },
+            documentation = {
+                border = 'single',
+                winhighlight = 'Normal:CmpFloat,FloatBorder:CmpFloatBorder,CursorLine:PmenuSel,Search:None',
+                zindex = 1001,
+            },
         },
         mapping = {
             ['<Tab>'] = function(fallback)
