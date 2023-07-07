@@ -57,7 +57,7 @@ local oabt_hl_group = {
     },
 
     NormalFloat = {
-        bg = oabt_scheme.background,
+        bg = oabt_scheme.pmenu_bg,
     },
     FloatBorder = {
         fg = monokai.scheme.white,
