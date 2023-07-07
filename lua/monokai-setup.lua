@@ -52,13 +52,16 @@ local oabt_hl_group = {
         fg = oabt_scheme.oabt_macro,
         italic = true,
     },
+    Identifier = {
+        fg = monokai.scheme.orange,
+    },
 
     NormalFloat = {
-        bg = oabt_scheme.pmenu_bg,
+        bg = oabt_scheme.background,
     },
     FloatBorder = {
-        fg = monokai.scheme.aqua,
-        bg = monokai.scheme.ui_bg,
+        fg = monokai.scheme.white,
+        bg = oabt_scheme.ui_bg,
     },
 
     -- hl groups specified for telescope.nvim
@@ -71,9 +74,11 @@ local oabt_hl_group = {
     TelescopeResultsTitle = {
         fg = monokai.scheme.white,
     },
-    LualineDiffChange = {
-        fg = monokai.scheme.yellow,
-    },
+
+    -- hl groups specified for Gitsigns
+    GitSignsAdd = { fg = '#87ff5f', ctermfg = 119,},
+    GitSignsDelete = { fg = '#d75f5f', ctermfg = 167,},
+    GitSignsChange = { fg = '#ffff5f', ctermfg = 227,},
 
 }
 
