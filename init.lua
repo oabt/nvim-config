@@ -37,6 +37,9 @@ require("lazy").setup(
         ------------ UI related ------------------------------
         {"mhinz/vim-startify",
             lazy = false,
+            config = function()
+                vim.cmd([[runtime vim_plugins_config/startify-setup.vim]])
+            end,
         },
         {"nvim-tree/nvim-web-devicons",
             --enabled = false,
