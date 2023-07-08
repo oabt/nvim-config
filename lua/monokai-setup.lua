@@ -55,6 +55,10 @@ local oabt_hl_group = {
     Identifier = {
         fg = monokai.scheme.orange,
     },
+    Type = {
+        fg = monokai.scheme.aqua,
+        italic = true,
+    },
 
     NormalFloat = {
         bg = oabt_scheme.pmenu_bg,
