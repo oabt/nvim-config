@@ -13,9 +13,10 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- <Leader> is required by several plugins,
--- setup here before plugins loaded.
-vim.g.mapleader = ' ' 
+---- <Leader> is required by several plugins,
+---- setup here before plugins loaded.
+--vim.g.mapleader = ' ' 
+vim.cmd([[runtime vim-legacy.vim]])
 
 require("lazy").setup(
     { -- plugins
@@ -32,6 +33,9 @@ require("lazy").setup(
         },
         {"sheerun/vim-polyglot",
             event = "VeryLazy",
+            config = function()
+                vim.cmd([[runtime vim_plugins_config/vim-polyglot-setup.vim]])
+            end,
         },
 
         ------------ UI related ------------------------------
@@ -76,6 +80,9 @@ require("lazy").setup(
         ------------------ edit ----------------------------------
         {"preservim/nerdcommenter",
             keys = {{"<Leader>c", mode={"n", "v"}},},
+            config = function()
+                vim.cmd([[runtime vim_plugins_config/nerdcommenter-setup.vim]])
+            end,
         },
         {"windwp/nvim-autopairs",
             event = "InsertEnter",
@@ -126,6 +133,10 @@ require("lazy").setup(
         ---------------------- misc ------------------------------
         {"skywind3000/asyncrun.vim",
             cmd = "AsyncRun",
+            keys = {"<Leader>s", "<Leader>q"},
+            config = function()
+                vim.cmd([[runtime vim_plugins_config/asyncrun-setup.vim]])
+            end,
         },
         {"lewis6991/gitsigns.nvim",
             event = "VeryLazy",
@@ -146,6 +157,4 @@ end
 --if exists("g:neovide")
 --  lua require('neovide-setup')
 --endif
-
-vim.cmd([[runtime vim-legacy.vim]])
 

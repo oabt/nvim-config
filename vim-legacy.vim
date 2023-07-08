@@ -417,17 +417,6 @@ endfunction
 "command! Bdi :call DeleteInactiveBufs()
 nnoremap <F3> :call DeleteInactiveBufs()<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim-polyglot settings
-
-" disable part of python highlight
-let g:python_highlight_exceptions = 0
-let g:python_highlight_indent_errors = 0
-let g:python_highlight_space_errors = 0
-
-"let g:polyglot_disabled = ['markdown']
-
-autocmd BufNewFile,BufRead *.v set filetype=verilog
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "AutoPairs settings
 let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'}
 "au Filetype markdown let b:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"','$':'$'}
@@ -574,60 +563,6 @@ let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'}
 "        return ""
 "    endif
 "endfunction
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"nerdcommenter settings
-"" Add spaces after comment delimiters by default
-" let g:NERDSpaceDelims = 1
-" " Use compact syntax for prettified multi-line comments
-" let g:NERDCompactSexyComs = 1
-" " Align line-wise comment delimiters flush left instead of following code indentation
-" commet delimiters insert from the 'start' of lines
-" let g:NERDDefaultAlign = 'start'
-" " Set a language to use its alternate delimiters by default
-" let g:NERDAltDelims_java = 1
-" " Add your own custom formats or override the defaults
-" let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
-" " Allow commenting and inverting empty lines (useful when commenting a region)
-" let g:NERDCommentEmptyLines = 1
-" " Enable trimming of trailing whitespace when uncommenting
-" let g:NERDTrimTrailingWhitespace = 1
-
-"let g:NERDAltDelims_c = 1
-let g:NERDCustomDelimiters = {
-            \'c': {'left': '//'}
-            \}
-let g:NERDDefaultAlign = 'left'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"AsyncRun settings
-let g:asyncrun_auto = "make"
-"if has('win32')
-"    let g:asyncrun_encs = 'gbk'
-"endif
-
-"augroup QuickfixStatus
-"    au! BufWinEnter quickfix setlocal
-"        \ statusline=%t\ [%{g:asyncrun_status}]\ %{exists('w:quickfix_title')?\ '\ '.w:quickfix_title\ :\ ''}\ %=%-15(%l,%c%V%)\ %P
-"augroup END
-
-"open quickfix when something adds to it
-augroup vimrc
-    autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(15, 1)
-augroup END
-
-"<Leader>q to toggle quickfix
-noremap <Leader>q :call asyncrun#quickfix_toggle(15)<CR>
-"noremap Q :call asyncrun#quickfix_toggle(20)<CR>
-
-nnoremap <Leader>s :AsyncRun -raw 
-nnoremap <Leader>S :AsyncStop<Cr>
-
-"autumatically close quickfix if it is the only window left
-aug QFClose
-    au!
-    au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
-aug END
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""ale settings
 ""let g:ale_lint_on_enter = 1
