@@ -149,12 +149,6 @@ require("lazy").setup(
     }
 )
 
-
-if vim.g.neovide then
-    require('neovide-setup')
-end
-
---if exists("g:neovide")
---  lua require('neovide-setup')
---endif
+-- the configs of the GUIs
+require('gui_config')
 
