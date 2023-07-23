@@ -1,20 +1,29 @@
 --local lsp_installer = require "nvim-lsp-installer"
 local lspconfig = require('lspconfig')
 
-lspconfig.pylsp.setup{
-  settings = {
-    pylsp = {
-      plugins = {
-        pycodestyle = {
-          ignore = {'W391','E301','E303','E305','E405','E501','W391','F401','E731','E128','E402','E702','F841','E722'},
-          maxLineLength = 100
-        }
-      }
-    }
-  }
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+lspconfig.pyright.setup{
+    capabilities = capabilities,
 }
 
-lspconfig.clangd.setup{}
+lspconfig.clangd.setup{
+    capabilities = capabilities,
+}
+
+--lspconfig.pylsp.setup{
+--  settings = {
+--    pylsp = {
+--      plugins = {
+--        pycodestyle = {
+--          ignore = {'W391','E301','E303','E305','E405','E501','W391','F401','E731','E128','E402','E702','F841','E722'},
+--          maxLineLength = 100
+--        }
+--      }
+--    }
+--  }
+--}
+
 
 vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('UserLspConfig', {}),
@@ -40,7 +49,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
             --vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
             --vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
             --vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-            --vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+            vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
             --vim.keymap.set('n', '<space>f', function()
             --    vim.lsp.buf.format { async = true }
             --end, opts)
