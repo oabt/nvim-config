@@ -126,7 +126,9 @@ require("lazy").setup(
 
         ------------------- LSP configs --------------------------
         {"neovim/nvim-lspconfig",
-            lazy = true,
+            --lazy = true,
+            dependencies = {"nvim-tree/nvim-web-devicons"},
+            event = {"VeryLazy"},
             config = function() require('lspconfig-setup') end,
         },
 
