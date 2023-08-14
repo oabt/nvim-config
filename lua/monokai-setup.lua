@@ -84,6 +84,10 @@ local oabt_hl_group = {
     GitSignsDelete = { fg = '#d75f5f', ctermfg = 167,},
     GitSignsChange = { fg = '#ffff5f', ctermfg = 227,},
 
+    LuaLineDiffAdd = {link = 'GitSignsAdd'},
+    LuaLineDiffDelete = {link = 'GitSignsDelete'},
+    LuaLineDiffChange = {link = 'GitSignsChange'},
+
 }
 
 monokai.setup({
