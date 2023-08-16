@@ -26,7 +26,7 @@ end
 
 local function oabt_close_icon()
     if exist_devicons() then
-        return '󰅖'
+        return ''
     else
         return '[X]'
     end
