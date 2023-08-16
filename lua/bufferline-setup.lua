@@ -67,12 +67,18 @@ bufferline.setup({
         right_mouse_command = false,
     },
     highlights = {
+        fill = {
+            bg = '#000000',
+        },
         --tab_separator_selected = {
         --    --fg = '#111111',
         --    bg = '#888888',
         --},
+        separator = {  -- separator of unselected tabs
+            fg = '#000000',  -- same as the 'fill'
+        },
         separator_selected = {
-            --fg = '#111111',
+            fg = '#000000',  -- same as the 'fill'
             bg = '#888888'
         },
         buffer_selected = {
@@ -86,7 +92,6 @@ bufferline.setup({
             bg = '#888888',
             bold = true,
             italic = false,
-
         },
         modified_selected = {
             --fg = '#111111',
