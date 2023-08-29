@@ -132,6 +132,21 @@ require("lazy").setup(
             config = function() require('lspconfig-setup') end,
         },
 
+        ------------------- DAP configs --------------------------
+        {"mfussenegger/nvim-dap",
+            lazy = true,
+            config = function() require('dap-setup') end,
+        },
+        
+        {"rcarriga/nvim-dap-ui",
+            cmd = {
+                "DapContinue",
+                "DapToggleBreakpoint",
+            },
+            dependencies = {"mfussenegger/nvim-dap"},
+            config = function() require('dapui-setup') end,
+        },
+
         ---------------------- misc ------------------------------
         {"skywind3000/asyncrun.vim",
             cmd = "AsyncRun",
