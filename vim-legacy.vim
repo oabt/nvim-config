@@ -290,19 +290,19 @@ func! Compile()
     exec "w"
     if &filetype == 'c'
         if has('win32')
-            "exec "AsyncRun gcc % -g -O2 -Wall -o %:r.exe"
-            exec "AsyncRun clang % -O2 -Wall -o %:r.exe"
+            "exec "AsyncRun gcc % -g -Wall -o %:r.exe"
+            exec "AsyncRun clang % -g -Wall -o %:r.exe"
         elseif has('unix')
-            exec "AsyncRun gcc % -g -O2 -Wall -o %:r.run"
-            "exec "AsyncRun clang % -O2 -Wall -o %:r.run"
+            exec "AsyncRun gcc % -g -Wall -o %:r.run"
+            "exec "AsyncRun clang % -Wall -o %:r.run"
         endif
     elseif &filetype == 'cpp'
         if has('win32')
-            "exec "AsyncRun g++ % -g -O2 -Wall -o %:r.exe"
-            exec "AsyncRun clang++ % -O2 -Wall -o %:r.exe"
+            "exec "AsyncRun g++ % -g -Wall -o %:r.exe"
+            exec "AsyncRun clang++ % -g -Wall -o %:r.exe"
         elseif has('unix')
-            exec "AsyncRun g++ % -g -O2 -Wall -o %:r.run"
-            "exec "AsyncRun clang++ % -O2 -Wall -o %:r.run"
+            exec "AsyncRun g++ % -g -Wall -o %:r.run"
+            "exec "AsyncRun clang++ % -Wall -o %:r.run"
         endif
     elseif &filetype == 'verilog' 
 		exec "AsyncRun iverilog -Wall -o %:r.vvp %" 
