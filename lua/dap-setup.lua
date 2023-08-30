@@ -57,21 +57,50 @@ dap.configurations.cpp = {
 
         program = function()
             -- input the path of the executable
-            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+            local exe_path = ""
+            vim.ui.input(
+                {
+                    prompt = 'Path to executable: ',
+                    default = vim.fn.getcwd() .. '/',
+                    copmletion = 'file', -- TODO: not working with nvim-cmp
+                },
+                function(input) exe_path = input end
+            )
+            return exe_path
         end,
 
         args = function ()
             -- input the args
-            args_str = vim.fn.input('args to be passed to program: ')
-            args_list = {}
-
-            -- %S represents the non-space characters, %w represents all alphanumeric characters
-            for arg in args_str:gmatch("%S+") do table.insert(args_list, arg) end
+            local args_list = {}
+            vim.ui.input(
+                {
+                    prompt = 'args to be passed to program: ',
+                    default = '',
+                    --copmletion = 'file',
+                },
+                function(input) -- split the input by 'space'
+                    -- %S represents the non-space characters, %w represents all alphanumeric characters
+                    for arg in input:gmatch("%S+") do table.insert(args_list, arg) end
+                end
+            )
 
             return args_list
         end,
 
-        cwd = '${workspaceFolder}',
+        cwd = function()
+            -- input the CWD for execution
+            local cwd_input = ""
+            vim.ui.input(
+                {
+                    prompt = 'Enter the CWD: ',
+                    default = vim.fn.getcwd(),
+                    completion = 'file', -- TODO: not working with nvim-cmp
+                },
+                function(input) cwd_input = input end
+            )
+            return cwd_input
+        end,
+
         stopOnEntry = false,
     },
 
@@ -130,3 +159,4 @@ dap.configurations.cpp = {
 }
 
 dap.configurations.c = dap.configurations.cpp
+
