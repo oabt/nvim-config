@@ -2,7 +2,9 @@ local hop_config = require('hop')
 
 local directions = require('hop.hint').HintDirection
 
-hop_config.setup({})
+hop_config.setup({
+   multi_windows = true,
+})
 
 -- mapping of hop
 
