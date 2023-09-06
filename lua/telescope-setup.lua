@@ -30,13 +30,15 @@ telescope_config.setup({
                 ["<C-c>"] = actions.close,
             }
         },
-        --layout_strategy = 'center',
-        layout_strategy = 'bottom_pane',
+        layout_strategy = 'center',
+        --layout_strategy = 'bottom_pane',
         sorting_strategy = "ascending",
         --winblend = 30, -- transparence of the telescope UI
         layout_config = {
+            anchor = "S", -- "S" for South: align to the bottom edge, not working for 'bottom_pane'
             height = 0.5,
             width = 0.5, -- not working for 'bottom_pane' layout
+            preview_cutoff = 2,
         },
 
     },
@@ -71,8 +73,8 @@ telescope_config.setup({
 
 -- launch the telescope builtin
 vim.keymap.set('n', '<Leader>d', function()
-    builtin.builtin(picker_theme{
-        layout_config = theme_layout,
+    builtin.builtin({
+        --layout_config = theme_layout,
         previewer = false,
     })
 end)
@@ -128,5 +130,6 @@ vim.keymap.set('n', 'f<Leader><Leader>a', function()
     })
 end)
 
+-- automatically setlocal number in Telescope preview window
 vim.cmd "autocmd User TelescopePreviewerLoaded setlocal number"
 
