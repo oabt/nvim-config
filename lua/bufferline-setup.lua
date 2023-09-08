@@ -70,39 +70,75 @@ bufferline.setup({
         fill = {
             bg = '#000000',
         },
-        --tab_separator_selected = {
-        --    --fg = '#111111',
-        --    bg = '#888888',
-        --},
+
         separator = {  -- separator of unselected tabs
             fg = '#000000',  -- same as the 'fill'
+            bg = '#111111'
         },
+        background = {
+            bg = '#111111',
+        },
+        numbers = {
+            bg = '#111111',
+        },
+        modified = {
+            bg = '#111111',
+        },
+        close_button = {
+            bg = '#111111',
+        },
+
+        --tab_separator_selected = {
+        --    --fg = '#FFFFFF',
+        --    bg = {
+        --    attribute = "bg",
+        --    highlight = "Normal",
+        --    },
+        --},
         separator_selected = {
             fg = '#000000',  -- same as the 'fill'
-            bg = '#888888'
+            bg = {
+                attribute = "bg",
+                highlight = "Normal",
+            },
         },
         buffer_selected = {
-            fg = '#111111',
-            bg = '#888888',
+            fg = '#FFFFFF',
+            bg = {
+                attribute = "bg",
+                highlight = "Normal",
+            },
             bold = true,
-            italic = false,
+            italic = true,
         },
         numbers_selected = {
-            fg = '#111111',
-            bg = '#888888',
+            fg = '#FFFFFF',
+            bg = {
+                attribute = "bg",
+                highlight = "Normal",
+            },
             bold = true,
-            italic = false,
+            italic = true,
         },
         modified_selected = {
-            --fg = '#111111',
-            bg = '#888888',
+            --fg = '#FFFFFF',
+            bg = {
+                attribute = "bg",
+                highlight = "Normal",
+            },
         },
         close_button_selected = {
-            fg = '#111111',
-            bg = '#888888',
+            fg = '#FFFFFF',
+            bg = {
+                attribute = "bg",
+                highlight = "Normal",
+            },
         },
         indicator_selected = {
-            bg = '#888888',
+            bg = {
+                attribute = "bg",
+                highlight = "Normal",
+            },
         },
     }
 })

@@ -12,6 +12,11 @@ nvim_web_devicons.setup({
             --color = "#A6E22E",
             name = "Log",
         },
+        ["md"] = {
+            icon = "", --e609
+            color = "#519aba",
+            name = "Log",
+        },
     },
 })
 
