@@ -1,8 +1,9 @@
 -- the detail config of goneovim is located at $HOME/.config/goneovim/settings.toml
 -- some typical settings to be set
 --      RestoreWindowGeometry = true
+--      Margin = 0
 --      FontFamily = "DejaVuSansM Nerd Font Mono"
---      FontSize = 12
+--      FontSize = 13
 --      ModeEnablingIME = ["insert", "cmdline_normal"] 
 --      HideMouseWhenTyping = true
 --      SmoothScroll = true

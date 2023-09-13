@@ -73,11 +73,19 @@ lualine_config.setup({
     sections = {
         lualine_a = {
             {'mode',
-                --fmt = function(str) return str:sub(1,1) end -- show only the first letter of mode
+                fmt = function(str) -- show only the first letter when winwidth is small
+                    if vim.fn.winwidth(0) < 70 then
+                        return str:sub(1,1)
+                    else
+                        return str
+                    end
+                end
             },
         },
         lualine_b = {
-            {'branch', icon=''},
+            {'branch',
+                icon='',
+            },
             {'filename',
                 path = 1, --0: only filename, 1: relative path, 2:absolute path
                 shorting_target = 40,
@@ -88,7 +96,15 @@ lualine_config.setup({
                     newfile = '[New]',     -- Text to show for newly created file before first write
                 }
             },
-            {'filetype'}
+            {'filetype',
+                fmt = function(str) -- hide the filetype when winwidth is small
+                    if vim.fn.winwidth(0) < 70 then
+                        return ''
+                    else
+                        return str
+                    end
+                end
+            },
         },
         --lualine_c = {'diff', 'diagnostics'},
         lualine_c = {'diff'},
@@ -98,7 +114,15 @@ lualine_config.setup({
 
         --lualine_z = {'progress', 'location'}
         --lualine_z = {{'%1p%%  %2l:%-2v'}}
-        lualine_z = {{'%1p%% %2l:%-2v'}}
+        lualine_z = {{'%1p%% %2l:%-2v',
+                fmt = function(str)
+                    if vim.fn.winwidth(0) < 70 then
+                        return str:sub(7)
+                    else
+                        return str
+                    end
+                end
+        }},
     },
 
     ---------------------------inactive buffer line section-------------------------
