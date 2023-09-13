@@ -85,6 +85,13 @@ lualine_config.setup({
         lualine_b = {
             {'branch',
                 icon='',
+                fmt = function(str) -- show only the first letter when winwidth is small
+                    if vim.fn.winwidth(0) < 60 and string.len(str) > 2 then
+                        return '..'
+                    else
+                        return str
+                    end
+                end
             },
             {'filename',
                 path = 1, --0: only filename, 1: relative path, 2:absolute path
@@ -98,7 +105,7 @@ lualine_config.setup({
             },
             {'filetype',
                 fmt = function(str) -- hide the filetype when winwidth is small
-                    if vim.fn.winwidth(0) < 70 then
+                    if vim.fn.winwidth(0) < 50 then
                         return ''
                     else
                         return str
@@ -110,7 +117,18 @@ lualine_config.setup({
         lualine_c = {'diff'},
 
         lualine_x = {'searchcount'},
-        lualine_y = {'encoding', 'fileformat',},
+        lualine_y = {
+            {'encoding',
+                fmt = function(str)
+                    if vim.fn.winwidth(0) < 70 then
+                        return ''
+                    else
+                        return str
+                    end
+                end
+            },
+            'fileformat',
+        },
 
         --lualine_z = {'progress', 'location'}
         --lualine_z = {{'%1p%%  %2l:%-2v'}}
