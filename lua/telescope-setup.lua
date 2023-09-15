@@ -109,8 +109,8 @@ vim.keymap.set('n', 'ff<C-p>',
     function()
         builtin.find_files({
             previewer = false,
-            prompt_title = 'Finding files in ./',
-            cwd = '.',
+            prompt_title = 'Finding files in ../',
+            cwd = '..',
         })
     end,
     {desc="finding files from ../"}
