@@ -75,7 +75,7 @@ end
 
 local function oabt_error_icon()
     if exist_devicons() then
-        return "✖"
+        return ""
     else
         return "E"
     end
@@ -88,11 +88,6 @@ local function oabt_warn_icon()
         return "W"
     end
 end
-
-local signs = {
-    {name = "DiagnosticSignError", text = ✖},
-    {name = "DiagnosticSignWarn", text = }
-}
 
 local diagnostic_config = {
     virtual_text = false,

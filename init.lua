@@ -142,6 +142,7 @@ require("lazy").setup(
             cmd = {
                 "DapContinue",
                 "DapToggleBreakpoint",
+                "DapToggleUI",
             },
             dependencies = {"mfussenegger/nvim-dap"},
             config = function() require('dapui-setup') end,

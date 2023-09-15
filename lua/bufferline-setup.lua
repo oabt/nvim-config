@@ -128,7 +128,10 @@ bufferline.setup({
             },
         },
         close_button_selected = {
-            fg = '#FFFFFF',
+            fg = {
+                attribute = "fg",
+                highlight = "Error",
+            },
             bg = {
                 attribute = "bg",
                 highlight = "Normal",

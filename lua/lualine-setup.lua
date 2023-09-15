@@ -21,7 +21,7 @@ local function oabt_component_separators()
     if exist_devicons() then
         return { left = '', right = ''}
     else
-        return { left = '|', right = '|'}
+        return { left = '▎', right = '▎'}
     end
 end
 
@@ -56,7 +56,9 @@ lualine_config.setup({
         component_separators = oabt_component_separators(),
         section_separators = oabt_section_separators(),
         disabled_filetypes = {
-            statusline = {},
+            statusline = {
+                'NvimTree',
+            },
             winbar = {},
         },
         ignore_focus = {},
