@@ -72,63 +72,110 @@ telescope_config.setup({
 ------------------------ Key Mappings of telescope
 
 -- launch the telescope builtin
-vim.keymap.set('n', '<Leader>d', function()
-    builtin.builtin({
-        --layout_config = theme_layout,
-        previewer = false,
-    })
-end)
+vim.keymap.set('n', '<Leader>d',
+    function()
+        builtin.builtin({
+            --layout_config = theme_layout,
+            previewer = false,
+        })
+    end,
+    {desc="launch the telescope builtin"}
+)
 
 -- finding oldfiles
-vim.keymap.set('n', '<C-p>', function()
-    builtin.oldfiles({
-        previewer = false,
-    })
-end)
+vim.keymap.set('n', '<C-p>', 
+    function()
+        builtin.oldfiles({
+            previewer = false,
+        })
+    end,
+    {desc="finding oldfiles"}
+)
 
 -- finidng files from ./
-vim.keymap.set('n', 'f<C-p>', function()
-    builtin.find_files({
-        previewer = false,
-        prompt_title = 'Finding files in ./',
-        cwd = '.',
-    })
-end)
+vim.keymap.set('n', 'f<C-p>',
+    function()
+        builtin.find_files({
+            previewer = false,
+            prompt_title = 'Finding files in ./',
+            cwd = '.',
+        })
+    end,
+    {desc="finding files from ./"}
+)
 
 -- finding files from ../
-vim.keymap.set('n', 'ff<C-p>', function()
-    builtin.find_files({
-        previewer = false,
-        prompt_title = 'Finding file in ../',
-        cwd = '..',
-    })
-end)
+vim.keymap.set('n', 'ff<C-p>',
+    function()
+        builtin.find_files({
+            previewer = false,
+            prompt_title = 'Finding files in ./',
+            cwd = '.',
+        })
+    end,
+    {desc="finding files from ../"}
+)
+
+-- function for typing string or using word under cursor for grep
+local function input_string_for_grep()
+    local input_str = ""
+    vim.ui.input(
+        {
+            prompt = 'String to search ("' ..
+                vim.fn.expand("<cword>") ..
+                '" under cursor in default): ',
+
+            default = nil,
+            --completion = 'file', -- TODO: not working with nvim-cmp
+        },
+        function(input)
+            if type(input) == 'nil' then -- input is aborted
+                input_str = nil
+            else
+                if string.len(input) == 0 then
+                    input_str = vim.fn.expand("<cword>")
+                else
+                    input_str = input
+                end
+            end
+        end
+    )
+    return input_str
+end
 
 -- typing the word to be searched in ./
-vim.keymap.set(
-    'n', '<Leader>a', ':Telescope grep_string previewer=false search='
+vim.keymap.set('n', '<Leader>a',
+    function()
+        local input_str = input_string_for_grep()
+        if type(input_str) == 'nil' then
+            -- do nothing since the input was aborted
+        else
+            builtin.grep_string({
+                previewer = false,
+                cwd = './',
+                search = input_str,
+            })
+        end
+    end,
+    {desc="grep string in ./"}
 )
 
 -- typing the word to be searched in ../
-vim.keymap.set(
-    'n', 'f<Leader>a', ":Telescope grep_string previewer=false cwd=.. search="
+vim.keymap.set('n', 'f<Leader>a',
+    function()
+        local input_str = input_string_for_grep()
+        if type(input_str) == 'nil' then
+            -- do nothing since the input was aborted
+        else
+            builtin.grep_string({
+                previewer = false,
+                cwd = '../',
+                search = input_str,
+            })
+        end
+    end,
+    {desc="grep string in ../"}
 )
-
--- searching the cursor word in ./
-vim.keymap.set('n', '<Leader><Leader>a', function()
-    builtin.grep_string({
-        previewer = false,
-        cwd = './',
-    })
-end)
-
--- searching the cursor word in ../
-vim.keymap.set('n', 'f<Leader><Leader>a', function()
-    builtin.grep_string({
-        previewer = false,
-        cwd = '../'
-    })
-end)
 
 -- automatically setlocal number in Telescope preview window
 vim.cmd "autocmd User TelescopePreviewerLoaded setlocal number"
