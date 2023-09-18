@@ -103,7 +103,14 @@ lualine_config.setup({
                     readonly = oabt_readonly_icon(),      -- Text to show when the file is non-modifiable or readonly.
                     unnamed = '[No Name]', -- Text to show for unnamed buffers.
                     newfile = '[New]',     -- Text to show for newly created file before first write
-                }
+                },
+                color = function(section)
+                    if vim.bo.modified then
+                        return {fg = '#e6db74', gui='italic,bold'}
+                    else
+                        return 'lualine_b_normal'
+                    end
+                end,
             },
             {'filetype',
                 fmt = function(str) -- hide the filetype when winwidth is small
@@ -158,6 +165,13 @@ lualine_config.setup({
                     unnamed = '[No Name]', -- Text to show for unnamed buffers.
                     newfile = '[New]',     -- Text to show for newly created file before first write
                 },
+                color = function(section)
+                    if vim.bo.modified then
+                        return {fg = '#e6db74', gui='italic,bold'}
+                    else
+                        return 'lualine_c_inactive'
+                    end
+                end,
             }
         },
         --lualine_x = {{'%1p%%  %2l:%-2v'}},
