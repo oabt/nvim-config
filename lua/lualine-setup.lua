@@ -58,6 +58,7 @@ lualine_config.setup({
         disabled_filetypes = {
             statusline = {
                 'NvimTree',
+                'startify',
             },
             winbar = {},
         },
@@ -108,7 +109,7 @@ lualine_config.setup({
                     if vim.bo.modified then
                         return {fg = '#e6db74', gui='italic,bold'}
                     else
-                        return 'lualine_b_normal'
+                        return nil
                     end
                 end,
             },
