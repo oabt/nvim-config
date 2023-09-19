@@ -21,7 +21,7 @@ local function oabt_component_separators()
     if exist_devicons() then
         return { left = '', right = ''}
     else
-        return { left = '▎', right = '▎'}
+        return { left = '│', right = '│'}
     end
 end
 
