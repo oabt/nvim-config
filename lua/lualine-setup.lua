@@ -126,9 +126,31 @@ lualine_config.setup({
         --lualine_c = {'diff', 'diagnostics'},
         lualine_c = {'diff'},
 
-        lualine_x = {'searchcount'},
+        lualine_x = {
+            {'searchcount',
+                separator = '',
+                fmt = function(str)
+                    if exist_devicons() and string.len(str) > 0 then
+                        return ':' .. str:sub(2,-2)
+                    else
+                        return str
+                    end
+                end,
+            }, 
+            --{'selectioncount',
+            --    separator = '',
+            --    fmt = function(str)
+            --        if exist_devicons() and string.len(str) > 0 then
+            --            return '' .. str
+            --        else
+            --            return str
+            --        end
+            --    end,
+            --},
+        },
         lualine_y = {
             {'encoding',
+                separator = '',
                 fmt = function(str)
                     if vim.fn.winwidth(0) < 70 then
                         return ''
