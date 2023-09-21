@@ -59,13 +59,21 @@ local function my_on_attach(bufnr)
 
 end
 
-vim.keymap.set('n', '<F4>', ':NvimTreeToggle<Cr>', {remap=false})
+vim.keymap.set('n', '<F4>', '<cmd>NvimTreeToggle<Cr>', {remap=false})
 
 local function exist_devicons()
     if package.loaded['nvim-web-devicons'] == nil then
         return false
     else
         return true
+    end
+end
+
+local function folder_arrow_glyphs()
+    if exist_devicons() then
+        return {arrow_closed = '', arrow_open = ''}
+    else
+        return {arrow_closed = '+', arrow_open = '-'}
     end
 end
 
@@ -77,19 +85,32 @@ require("nvim-tree").setup({
     git = {
         enable = false,
     },
+    modified = {
+        enable = true,
+        show_on_dirs = false,
+        show_on_open_dirs = false,
+    },
     renderer = {
         full_name = true,
         highlight_modified = 'all',
+        root_folder_label = false,
+        indent_markers = {
+            enable = true,
+            inline_arrows = true,
+            icons = {
+                edge = '┆',
+                item = "┆",
+            },
+        },
         icons = {
             show = {
                 file = exist_devicons(),
                 folder = exist_devicons(),
+                modified = exist_devicons(),
             },
             glyphs = {
-                folder = {
-                    arrow_closed = '+',
-                    arrow_open = '-',
-                }
+                modified = '',
+                folder = folder_arrow_glyphs()
             }
         },
     },

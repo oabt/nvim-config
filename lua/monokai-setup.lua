@@ -88,6 +88,9 @@ local oabt_hl_group = {
     LuaLineDiffDelete = {link = 'GitSignsDelete'},
     LuaLineDiffChange = {link = 'GitSignsChange'},
 
+    -- hl groups specified for nvim-tree
+    NvimTreeIndentMarker = {link = 'NonText'},
+
 }
 
 monokai.setup({
