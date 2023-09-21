@@ -57,7 +57,7 @@ lualine_config.setup({
         section_separators = oabt_section_separators(),
         disabled_filetypes = {
             statusline = {
-                'NvimTree',
+                --'NvimTree', -- using lualine nvim-tree extension
                 'startify',
             },
             winbar = {},
@@ -137,16 +137,16 @@ lualine_config.setup({
                     end
                 end,
             }, 
-            --{'selectioncount',
-            --    separator = '',
-            --    fmt = function(str)
-            --        if exist_devicons() and string.len(str) > 0 then
-            --            return '' .. str
-            --        else
-            --            return str
-            --        end
-            --    end,
-            --},
+            {'selectioncount',
+                separator = '',
+                fmt = function(str)
+                    if exist_devicons() and string.len(str) > 0 then
+                        return '' .. str
+                    else
+                        return str
+                    end
+                end,
+            },
         },
         lualine_y = {
             {'encoding',
@@ -209,7 +209,10 @@ lualine_config.setup({
     },
     inactive_winbar = {
     },
-    extensions = {}
+    extensions = {
+        'nvim-tree',
+        'nvim-dap-ui',
+    }
 
 })
 
