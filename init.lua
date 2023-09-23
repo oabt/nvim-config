@@ -17,6 +17,9 @@ vim.opt.rtp:prepend(lazypath)
 ---- setup here before plugins loaded.
 --vim.g.mapleader = ' ' 
 vim.cmd([[runtime vim-legacy.vim]])
+-- require('auto_commands')
+-- require('settings')
+-- require('keymappings')
 
 require("lazy").setup(
     { -- plugins
@@ -164,6 +167,21 @@ require("lazy").setup(
     { -- lazy.nvim configs
         root = vim.env.HOME .. "/.nvim/lazy_plug",
         lockfile = vim.env.HOME .. "/.nvim/lazy_plug/lazy-lock.json",
+        performance = {
+            rtp = {
+                disabled_plugins = {
+                    "gzip",
+                    "matchit",
+                    --"matchparen",
+                    "netrwPlugin",
+                    "tarPlugin",
+                    "tohtml",
+                    "tutor",
+                    "zipPlugin",
+                    "spellfile",
+                },
+            },
+        },
     }
 )
 
