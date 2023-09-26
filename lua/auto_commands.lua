@@ -9,7 +9,7 @@ vim.api.nvim_create_autocmd( -- automatically change cwd to the file in current 
 )
 
 vim.api.nvim_create_autocmd( -- jump to the position of last access
-    {"BufEnter"},
+    {"BufReadPost"},
     {
         pattern = {"*"},
         callback = function(ev)
