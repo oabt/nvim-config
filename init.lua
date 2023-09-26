@@ -16,10 +16,10 @@ vim.opt.rtp:prepend(lazypath)
 ---- <Leader> is required by several plugins,
 ---- setup here before plugins loaded.
 --vim.g.mapleader = ' ' 
-vim.cmd([[runtime vim-legacy.vim]])
--- require('auto_commands')
--- require('settings')
--- require('keymappings')
+--vim.cmd([[runtime vim-legacy.vim]])
+require('auto_commands')
+require('settings')
+require('keymaps')
 
 require("lazy").setup(
     { -- plugins
@@ -37,7 +37,7 @@ require("lazy").setup(
         {"sheerun/vim-polyglot",
             event = "VeryLazy",
             config = function()
-                vim.cmd([[runtime vim_plugins_config/vim-polyglot-setup.vim]])
+                vim.cmd([[runtime vim_legacy/vim-polyglot-setup.vim]])
             end,
         },
 
@@ -45,7 +45,7 @@ require("lazy").setup(
         {"mhinz/vim-startify",
             lazy = false,
             config = function()
-                vim.cmd([[runtime vim_plugins_config/startify-setup.vim]])
+                vim.cmd([[runtime vim_legacy/startify-setup.vim]])
             end,
         },
         {"nvim-tree/nvim-web-devicons",
@@ -80,11 +80,18 @@ require("lazy").setup(
             config = function() require('nvim-cmp-setup') end,
         },
 
+        {"Shougo/neosnippet.vim",
+            lazy = true,
+            config = function()
+                vim.cmd("runtime vim_legacy/neosnippet-setup.vim")
+            end,
+        },
+
         ------------------ edit ----------------------------------
         {"preservim/nerdcommenter",
             keys = {{"<Leader>c", mode={"n", "v"}},},
             config = function()
-                vim.cmd([[runtime vim_plugins_config/nerdcommenter-setup.vim]])
+                vim.cmd([[runtime vim_legacy/nerdcommenter-setup.vim]])
             end,
         },
         {"windwp/nvim-autopairs",
@@ -156,7 +163,7 @@ require("lazy").setup(
             cmd = "AsyncRun",
             keys = {"<Leader>s", "<Leader>q"},
             config = function()
-                vim.cmd([[runtime vim_plugins_config/asyncrun-setup.vim]])
+                vim.cmd([[runtime vim_legacy/asyncrun-setup.vim]])
             end,
         },
         {"lewis6991/gitsigns.nvim",
