@@ -5,6 +5,7 @@ local oabt_scheme = {
     background = '#2D2E28',
     ui_bg = '#2D2E28',
     winbar_bg = '#2D2E28',
+    sidebar_bg = '#2D2E28',
     comment_fg = '#75715E',
     cursor_line_bg = '#424136',
     pmenu_bg = '#424136',
