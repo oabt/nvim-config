@@ -27,6 +27,7 @@ if os_uname == 'Windows_NT' then
 else if os_uname == 'Linux' then
     keymap('n', '<C-t>', '<cmd>split term://bash<cr>i') end
 end
+keymap('n', '<Leader>t', ':split term://', {remap=false})
 
 keymap('t', 'fd', '<C-\\><C-n>', {remap=false})
 keymap('t', '<C-w>h', '<C-\\><C-n><C-w>h', {remap=false})
@@ -172,7 +173,7 @@ local function DeleteInactiveBufs()
 
         -- if buf No. exists and buf not modified and buf not appears in any tabs, then wipe out
         if vim.fn.bufexists(buf) and vim.fn.getbufvar(buf, "&mod")==0 and not_in_tabs then
-            vim.cmd("silent exec 'bwipeout'" .. tostring(buf))
+            vim.cmd("silent exec 'bwipeout!'" .. tostring(buf))
             nWipeouts = nWipeouts + 1
         end
     end
