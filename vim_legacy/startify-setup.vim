@@ -32,6 +32,11 @@ function s:startify_plugin_list() "the list of Plugin Manager Operations
                 \]
 endfunction
 
+let g:startify_session_savevars = [
+            \ '$CPLUS_INCLUDE_PATH',
+            \ '$C_INCLUDE_PATH',
+            \ ]
+
 let g:startify_lists = [
             \{
             \   'type': function('s:startify_plugin_list'),
