@@ -3,7 +3,7 @@
 local comment_config = require('Comment')
 
 comment_config.setup({
-	padding = false,
+	padding = true,
 	ignore = '^$', -- ignore empty lines
     toggler = {
         line = '<Leader>cl',

@@ -32,7 +32,7 @@ require("lazy").setup(
         ------------- themes/color scheme/highlight-------------------
         {"ofirgall/ofirkai.nvim",
             lazy = false,
-            config = function() require('monokai-setup') end,
+            config = function() require('monokai_setup') end,
         },
         {"sheerun/vim-polyglot",
             event = "VeryLazy",
@@ -51,18 +51,18 @@ require("lazy").setup(
         {"nvim-tree/nvim-web-devicons",
             --enabled = false,
             lazy = true,
-            config = function() require('nvim-web-devicons-setup') end,
+            config = function() require('nvim_webdevicons_setup') end,
         },
         {'nvim-lualine/lualine.nvim',
             event = "VeryLazy",
             dependencies = {"nvim-tree/nvim-web-devicons"},
-            config = function() require('lualine-setup') end,
+            config = function() require('lualine_setup') end,
         },
         {"akinsho/bufferline.nvim",
             event = "VeryLazy",
             dependencies = {"nvim-tree/nvim-web-devicons"},
             version = "*",
-            config = function() require('bufferline-setup') end,
+            config = function() require('bufferline_setup') end,
         },
 
         ------------------ auto completion ----------------------
@@ -77,7 +77,7 @@ require("lazy").setup(
                 "Shougo/neosnippet.vim",
                 "Shougo/neosnippet-snippets",
             },
-            config = function() require('nvim-cmp-setup') end,
+            config = function() require('nvim_cmp_setup') end,
         },
 
         {"Shougo/neosnippet.vim",
@@ -96,16 +96,16 @@ require("lazy").setup(
         --},
         {"numToStr/Comment.nvim",
             keys = {{"<Leader>c", mode={"n", "v"}},},
-            config = function() require('comment-setup') end,
+            config = function() require('comment_setup') end,
         },
         {"windwp/nvim-autopairs",
             event = "InsertEnter",
-            config = function() require('nvim-autopairs-setup') end,
+            config = function() require('nvim_autopairs_setup') end,
         },
         {"kylechui/nvim-surround",
             version = "*",
             event = "VeryLazy",
-            config = function() require('nvim-surround-setup') end,
+            config = function() require('nvim_surround_setup') end,
         },
 
         ---------------- navigation -----------------------------
@@ -121,7 +121,7 @@ require("lazy").setup(
             dependencies = {
                 "nvim-lua/plenary.nvim",
             },
-            config = function() require('telescope-setup') end,
+            config = function() require('telescope_setup') end,
         },
         {"nvim-telescope/telescope-fzf-native.nvim",
             lazy = true,
@@ -129,13 +129,13 @@ require("lazy").setup(
         },
         {"phaazon/hop.nvim",
             keys = {{"<Leader>e", mode={"n", "v"}},},
-            config = function() require('hop-setup') end,
+            config = function() require('hop_setup') end,
         },
         {"nvim-tree/nvim-tree.lua",
             version = "*",
             cmd = "NvimTreeToggle",
             keys = "<F4>",
-            config = function() require('nvim-tree-setup') end,
+            config = function() require('nvim_tree_setup') end,
         },
 
         ------------------- LSP configs --------------------------
@@ -143,7 +143,7 @@ require("lazy").setup(
             --lazy = true,
             dependencies = {"nvim-tree/nvim-web-devicons"},
             event = {"VeryLazy"},
-            config = function() require('lspconfig-setup') end,
+            config = function() require('lspconfig_setup') end,
         },
 
         ------------------- DAP configs --------------------------
@@ -172,7 +172,7 @@ require("lazy").setup(
         },
         {"lewis6991/gitsigns.nvim",
             event = "VeryLazy",
-            config = function() require('gitsigns-setup') end,
+            config = function() require('gitsigns_setup') end,
         }
     },
     { -- lazy.nvim configs
