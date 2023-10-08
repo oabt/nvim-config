@@ -55,4 +55,9 @@ local function toggle_full_screen()
     end
 end
 vim.keymap.set('n', '<F11>', function() toggle_full_screen() end)
+vim.api.nvim_create_user_command("NeovideToggleFullscreen",
+    function() toggle_full_screen() end,
+    {desc = "Toglle Fullscreen in Neovide gui",}
+)
+
 
