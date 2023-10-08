@@ -88,11 +88,15 @@ require("lazy").setup(
         },
 
         ------------------ edit ----------------------------------
-        {"preservim/nerdcommenter",
+        --{"preservim/nerdcommenter",
+        --    keys = {{"<Leader>c", mode={"n", "v"}},},
+        --    config = function()
+        --        vim.cmd([[runtime vim_legacy/nerdcommenter-setup.vim]])
+        --    end,
+        --},
+        {"numToStr/Comment.nvim",
             keys = {{"<Leader>c", mode={"n", "v"}},},
-            config = function()
-                vim.cmd([[runtime vim_legacy/nerdcommenter-setup.vim]])
-            end,
+            config = function() require('comment-setup') end,
         },
         {"windwp/nvim-autopairs",
             event = "InsertEnter",
