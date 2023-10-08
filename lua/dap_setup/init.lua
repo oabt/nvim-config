@@ -156,7 +156,12 @@ dap.configurations.cpp = {
         --    ignoreFailures = false 
         --},
     },
+
+    -- load the dap configs for specific project
+    require("dap_setup.config_template"), -- this is only a template, DO NOT launch
 }
 
 dap.configurations.c = dap.configurations.cpp
+
+vim.cmd[[au FileType dap-repl lua require('dap.ext.autocompl').attach()]]
 

@@ -149,7 +149,7 @@ require("lazy").setup(
         ------------------- DAP configs --------------------------
         {"mfussenegger/nvim-dap",
             lazy = true,
-            config = function() require('dap-setup') end,
+            config = function() require('dap_setup') end,
         },
         
         {"rcarriga/nvim-dap-ui",
@@ -159,7 +159,7 @@ require("lazy").setup(
                 "DapToggleUI",
             },
             dependencies = {"mfussenegger/nvim-dap"},
-            config = function() require('dapui-setup') end,
+            config = function() require('dap_setup.dapui_setup') end,
         },
 
         ---------------------- misc ------------------------------
