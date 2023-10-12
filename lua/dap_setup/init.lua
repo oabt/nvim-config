@@ -156,10 +156,14 @@ dap.configurations.cpp = {
         --    ignoreFailures = false 
         --},
     },
-
-    -- load the dap configs for specific project
-    require("dap_setup.config_template"), -- this is only a template, DO NOT launch
 }
+-- cpp_templates/init.lua should return a table,
+-- containing all the cpp configs that need to be loaded
+local cpp_templates = require('dap_setup.cpp_templates')
+for _, v in pairs(cpp_templates) do
+    table.insert(dap.configurations.cpp, v)
+end
+
 
 dap.configurations.c = dap.configurations.cpp
 
