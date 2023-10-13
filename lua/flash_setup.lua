@@ -15,8 +15,10 @@ flash.setup({
         uppercase = true,
         reuse = "lowercase"
     },
-    modes = { -- do not trigger flash on {'f', 'F', 't', 'T', ',', ';'}
-        enabled = false,
+    modes = {
+        char = { -- do not trigger flash on {'f', 'F', 't', 'T', ',', ';'}
+            enabled = false,
+        }
     },
 
 })
