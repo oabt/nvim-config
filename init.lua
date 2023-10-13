@@ -112,7 +112,7 @@ require("lazy").setup(
         {"nvim-telescope/telescope.nvim",
             cmd = "Telescope",
             keys = { -- the keys configured in telescope-setup.lua
-                "<C-p>", "<leader>d",
+                "<C-p>", "<leader>d", "<leader>f",
                 "f<C-p>", "ff<C-p>",
                 "<leader>a", "f<leader>a",
                 "<leader><leader>a", "f<leader><leader>a",

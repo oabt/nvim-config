@@ -82,6 +82,15 @@ vim.keymap.set('n', '<Leader>d',
     {desc="launch the telescope builtin"}
 )
 
+-- fuzzy grep in current file
+vim.keymap.set('n', '<Leader>f', 
+    function()
+        builtin.current_buffer_fuzzy_find({
+            previewer = false,
+        })
+    end
+)
+
 -- finding oldfiles
 vim.keymap.set('n', '<C-p>', 
     function()
