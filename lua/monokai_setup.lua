@@ -92,6 +92,11 @@ local oabt_hl_group = {
     -- hl groups specified for nvim-tree
     NvimTreeIndentMarker = {link = 'NonText'},
 
+    -- hl groups specified for neo-tree
+    NeoTreeGitModified = {link = 'GitSignsChange'},
+    NeoTreeGitUntracked = {link = 'GitSignsAdd'},
+    NeoTreeIndentMarker = {link = 'NonText'},
+
 }
 
 monokai.setup({

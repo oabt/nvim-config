@@ -211,6 +211,7 @@ lualine_config.setup({
     },
     extensions = {
         'nvim-tree',
+        'neo-tree',
         'nvim-dap-ui',
     }
 

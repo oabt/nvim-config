@@ -135,11 +135,22 @@ require("lazy").setup(
             keys = {{"<Leader>e", mode={"n", "v"}},},
             config = function() require('flash_setup') end,
         },
-        {"nvim-tree/nvim-tree.lua",
+        -- {"nvim-tree/nvim-tree.lua",
+        --     version = "*",
+        --     cmd = "NvimTreeToggle",
+        --     keys = "<F4>",
+        --     config = function() require('nvim_tree_setup') end,
+        -- },
+        {"nvim-neo-tree/neo-tree.nvim",
             version = "*",
-            cmd = "NvimTreeToggle",
+            cmd = "Neotree",
             keys = "<F4>",
-            config = function() require('nvim_tree_setup') end,
+            dependencies = {
+                "nvim-lua/plenary.nvim",
+                "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+                "MunifTanjim/nui.nvim",
+            },
+            config = function() require('neo_tree_setup') end,
         },
 
         ------------------- LSP configs --------------------------
