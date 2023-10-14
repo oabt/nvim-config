@@ -13,6 +13,8 @@ flash.setup({
     },
     label = {
         uppercase = true,
+        after = false,
+        before = true,
         reuse = "lowercase"
     },
     modes = {
