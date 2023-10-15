@@ -1,7 +1,7 @@
 -- lazy install
 -- {
 --     "nvim-neo-tree/neo-tree.nvim",
---     branch = "v3.x",
+--     version = "*",
 --     dependencies = {
 --       "nvim-lua/plenary.nvim",
 --       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
@@ -10,6 +10,33 @@
 -- }
 
 local neo_tree = require('neo-tree')
+
+local function exist_devicons()
+    if package.loaded['nvim-web-devicons'] == nil then
+        return false
+    else
+        return true
+    end
+end
+
+local neo_tree_icons = {
+    expander_collapsed = exist_devicons() and "" or "",
+    expander_expanded = exist_devicons() and "" or "",
+    folder_closed = exist_devicons() and "" or "+",
+    folder_open = exist_devicons() and "" or "-",
+    folder_empty = exist_devicons() and "" or "-",
+    modified = exist_devicons() and "" or "[+]",
+
+    git_added = "",
+    git_modified = "",
+    git_deleted = exist_devicons() and "✖" or "x",
+    git_renamed = exist_devicons() and "󰁕" or "→",
+    git_untracked = exist_devicons() and "" or "?",
+    git_ignored = exist_devicons() and "" or "ignored",
+    git_unstaged = exist_devicons() and "󰄱" or "unstaged",
+    git_staged = exist_devicons() and "" or "staged",
+    git_conflict = exist_devicons() and "" or "conflict",
+}
 
 require("neo-tree").setup({
     use_default_mappings = false, -- disable all the default key mappings
@@ -41,22 +68,22 @@ require("neo-tree").setup({
             last_indent_marker = "└",
             highlight = "NeoTreeIndentMarker",
             -- expander config, needed for nesting files
-            with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
-            expander_collapsed = "",
-            expander_expanded = "",
+            with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+            expander_collapsed = neo_tree_icons.expander_collapsed,
+            expander_expanded = neo_tree_icons.expander_expanded,
             expander_highlight = "NeoTreeExpander",
         },
         icon = {
-            folder_closed = "",
-            folder_open = "",
-            folder_empty = "",
+            folder_closed = neo_tree_icons.folder_closed,
+            folder_open = neo_tree_icons.folder_open,
+            folder_empty = neo_tree_icons.folder_empty,
             -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
             -- then these will never be used.
             default = "*",
             highlight = "NeoTreeFileIcon"
         },
         modified = {
-            symbol = "",
+            symbol = neo_tree_icons.modified,
             highlight = "NeoTreeModified",
         },
         name = {
@@ -69,20 +96,20 @@ require("neo-tree").setup({
                 -- Change type
                 added     = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
                 modified  = "", -- or "", but this is redundant info if you use git_status_colors on the name
-                deleted   = "✖",-- this can only be used in the git_status source
-                renamed   = "󰁕",-- this can only be used in the git_status source
+                deleted   = neo_tree_icons.git_deleted,-- this can only be used in the git_status source
+                renamed   = neo_tree_icons.git_renamed,-- this can only be used in the git_status source
                 -- Status type
-                untracked = "",
-                ignored   = "",
-                unstaged  = "󰄱",
-                staged    = "",
-                conflict  = "",
+                untracked = neo_tree_icons.git_untracked,
+                ignored   = neo_tree_icons.git_ignored,
+                unstaged  = neo_tree_icons.git_unstaged,
+                staged    = neo_tree_icons.git_staged,
+                conflict  = neo_tree_icons.git_conflict,
             }
         },
         -- If you don't want to use these columns, you can set `enabled = false` for each of them individually
         file_size = {
             enabled = true,
-            required_width = 60, -- min width of window required to show this column
+            required_width = 50, -- min width of window required to show this column
         },
         type = {
             enabled = true,
@@ -90,11 +117,11 @@ require("neo-tree").setup({
         },
         last_modified = {
             enabled = true,
-            required_width = 75, -- min width of window required to show this column
+            required_width = 65, -- min width of window required to show this column
         },
         created = {
             enabled = true,
-            required_width = 110, -- min width of window required to show this column
+            required_width = 100, -- min width of window required to show this column
         },
         symlink_target = {
             enabled = true,
