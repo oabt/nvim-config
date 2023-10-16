@@ -68,7 +68,7 @@ require("neo-tree").setup({
             last_indent_marker = "└",
             highlight = "NeoTreeIndentMarker",
             -- expander config, needed for nesting files
-            with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+            with_expanders = exist_devicons(), -- if nil and file nesting is enabled, will enable expanders
             expander_collapsed = neo_tree_icons.expander_collapsed,
             expander_expanded = neo_tree_icons.expander_expanded,
             expander_highlight = "NeoTreeExpander",
@@ -133,7 +133,7 @@ require("neo-tree").setup({
     commands = {},
     window = {
         position = "left",
-        width = 30,
+        width = 40,
         mapping_options = {
             noremap = true,
             nowait = true,
@@ -299,5 +299,5 @@ require("neo-tree").setup({
 })
 
 
-vim.keymap.set('n', '<F4>', "<cmd>Neotree left toggle filesystem %:p:h<Cr>", {remap=false})
+vim.keymap.set('n', '<F4>', "<cmd>Neotree left toggle filesystem . <Cr>", {remap=false})
 
