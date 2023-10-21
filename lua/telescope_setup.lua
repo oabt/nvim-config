@@ -11,9 +11,14 @@ telescope_config.setup({
         scroll_strategy = "limit",
         mappings = {
             i = {
-                ["<Cr>"] = {"<Esc>", type = "command"},
+                -- ["<Cr>"] = {"<Esc>", type = "command"},
                 ["<C-u>"] = false,
                 ["<C-c>"] = actions.close,
+                ["<Cr>"] = actions.select_default,
+                ["<C-o>"] = actions.select_default,
+                ["<C-v>"] = actions.select_vertical,
+                ["<C-s>"] = actions.select_horizontal,
+                ["<C-t>"] = actions.select_tab,
             },
             n = {
                 ["i"] = {"i<Right>", type = "command"},
