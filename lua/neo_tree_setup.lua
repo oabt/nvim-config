@@ -109,7 +109,7 @@ require("neo-tree").setup({
         -- If you don't want to use these columns, you can set `enabled = false` for each of them individually
         file_size = {
             enabled = true,
-            required_width = 50, -- min width of window required to show this column
+            required_width = 60, -- min width of window required to show this column
         },
         type = {
             enabled = true,
@@ -117,7 +117,7 @@ require("neo-tree").setup({
         },
         last_modified = {
             enabled = true,
-            required_width = 65, -- min width of window required to show this column
+            required_width = 80, -- min width of window required to show this column
         },
         created = {
             enabled = true,
@@ -155,12 +155,20 @@ require("neo-tree").setup({
             ["s"] = "open_split",
             ["v"] = "open_vsplit",
             ["t"] = "open_tabnew",
-            ["T"] = function(state)
+            ["T"] = function(state) -- open the node in new tab in background
                 local node = state.tree:get_node()
                 if node.type ~= "directory" then
+                    vim.cmd("wincmd l") -- switch to normal buffer
                     vim.cmd("tabnew " .. node.path)
-                    vim.cmd("set signcolumn=auto")
                     vim.cmd("tabprevious")
+                    vim.cmd("wincmd h")
+                end
+            end,
+            ["M"] = function(state) -- toggle the wide/narrow view
+                if vim.fn.winwidth(0) < 80 then
+                    vim.cmd("vertical resize 81")
+                else
+                    vim.cmd("vertical resize 40")
                 end
             end,
 
@@ -179,7 +187,7 @@ require("neo-tree").setup({
             ["yy"] = "copy_to_clipboard",
             ["dd"] = "cut_to_clipboard",
             ["pp"] = "paste_from_clipboard",
-            ["rn"] = "move", -- takes text input for destination, also accepts the optional config.show_path option like "add".
+            ["mv"] = "move", -- takes text input for destination, also accepts the optional config.show_path option like "add".
             ["R"] = "refresh",
 
             -- sorting
