@@ -81,6 +81,8 @@ keymap('n', "<M-j>", "<C-w>-", {remap=false})
 keymap('n', "<C-Left>", "<cmd>tabprevious<CR>")
 keymap('n', "<C-Right>", "<cmd>tabnext<CR>")
 
+keymap('n', "<Leader>m", "<cmd>AsyncRun make<cr>")
+
 local function Compile() -- compile or pre-process the current file
     vim.cmd("w")
     if vim.bo.filetype == 'c' then
@@ -151,6 +153,14 @@ local function Run()
     end
 end
 
+local function MakeClean()
+    if os_uname == 'Windows_NT' then
+        vim.cmd("AsyncRun make clean & del /Q %:r.exe %:r.vvp")
+    elseif os_uname == 'Linux' then
+        vim.cmd("AsyncRun make clean ; rm -f ./%:r.run ./%:r.vvp")
+    end
+end
+
 local function DeleteInactiveBufs()
     local tablist = {}
     -- appending the buf No. appering in each tab
@@ -180,8 +190,10 @@ local function DeleteInactiveBufs()
     print(nWipeouts, ' buffer(s) wiped out.')
 end
 
+keymap('n', '<F7>', MakeClean, {desc="Run default make"})
 keymap('n', '<F6>', Compile, {desc='execute the Compile function'})
 keymap('n', '<F5>', Run, {desc='execute the Run function'})
+-- keymap <F4> is reserved for the tree-style file manager plugin
 keymap('n', '<F3>', DeleteInactiveBufs, {desc='delete the unused buffers'})
 keymap('n', '<F2>',
     function()
@@ -190,7 +202,8 @@ keymap('n', '<F2>',
         end
         vim.cmd('e $MYVIMRC')
         --vim.cmd('vs vim-legacy.vim')
-    end
+    end,
+    {desc="open the default VIMRC (init.vim or init.lua)"}
 )
 
 
