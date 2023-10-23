@@ -155,22 +155,28 @@ require("neo-tree").setup({
             ["s"] = "open_split",
             ["v"] = "open_vsplit",
             ["t"] = "open_tabnew",
-            ["T"] = function(state) -- open the node in new tab in background
-                local node = state.tree:get_node()
-                if node.type ~= "directory" then
-                    vim.cmd("wincmd l") -- switch to normal buffer
-                    vim.cmd("tabnew " .. node.path)
-                    vim.cmd("tabprevious")
-                    vim.cmd("wincmd h")
-                end
-            end,
-            ["M"] = function(state) -- toggle the wide/narrow view
-                if vim.fn.winwidth(0) < 80 then
-                    vim.cmd("vertical resize 81")
-                else
-                    vim.cmd("vertical resize 40")
-                end
-            end,
+            ["T"] = { -- open the node in new tab in background
+                function(state)
+                    local node = state.tree:get_node()
+                    if node.type ~= "directory" then
+                        vim.cmd("wincmd l") -- switch to normal buffer
+                        vim.cmd("tabnew " .. node.path)
+                        vim.cmd("tabprevious")
+                        vim.cmd("wincmd h")
+                    end
+                end,
+                desc = "tabnew in background"
+            },
+            ["M"] = { -- toggle the wide/narrow view
+                function(state)
+                    if vim.fn.winwidth(0) < 80 then
+                        vim.cmd("vertical resize 81")
+                    else
+                        vim.cmd("vertical resize 40")
+                    end
+                end,
+                desc = "toggle neotree window width"
+            },
 
             -- FS related operations
             ["ma"] = { 
