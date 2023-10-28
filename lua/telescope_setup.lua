@@ -54,6 +54,31 @@ telescope_config.setup({
             hidden = true,
             no_ignore = true,
             follow = true,
+        },
+        jumplist = {
+            fname_width = 40,
+        },
+        lsp_references = {
+            fname_width = 40,
+        },
+        lsp_incoming_calls = {
+            fname_width = 40,
+        },
+        lsp_implementations = {
+            fname_width = 40,
+        },
+        lsp_document_symbols = {
+            fname_width = 40,
+            symbol_width = 40,
+            symbol_type_width = 20,
+        },
+        lsp_workspace_symbols = {
+            fname_width = 40,
+            symbol_width = 40,
+            symbol_type_width = 20,
+        },
+        lsp_dynamic_workspace_symbols = {
+            fname_width = 40,
         }
         --builtin = {
         --    mappings = {
