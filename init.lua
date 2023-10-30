@@ -65,6 +65,17 @@ require("lazy").setup(
             config = function() require('bufferline_setup') end,
         },
 
+        {"echasnovski/mini.animate",
+            event = "VeryLazy",
+            cond = function()
+                if vim.fn.has('gui_running') == 1 then
+                    return false
+                else
+                    return true
+                end
+            end,
+            config = function() require('mini_animate_setup') end,
+        },
         ------------------ auto completion ----------------------
         {"hrsh7th/nvim-cmp",
             event = {"InsertEnter", "CmdlineEnter"},
