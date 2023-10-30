@@ -182,8 +182,7 @@ end
 
 
 vim.api.nvim_create_autocmd( -- automatically change cwd to the file in current buffer
-    -- {"BufEnter", "WinEnter"},
-    {"BufWinEnter"},
+    {"BufEnter"},
     {
         pattern = {"*"},
         callback = function(ev)
