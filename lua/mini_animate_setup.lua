@@ -1,5 +1,22 @@
 local animate = require('mini.animate')
 -- No need to copy this inside `setup()`. Will be used automatically.
+
+local os_uname = vim.loop.os_uname().sysname
+local function cursor_duration()
+    if os_uname == "Windows_NT" then
+        return 25
+    elseif os_uname == "Linux" then
+        return 125
+    end
+end
+local function scroll_duration()
+    if os_uname == "Windows_NT" then
+        return 20
+    elseif os_uname == "Linux" then
+        return 100
+    end
+end
+
 animate.setup(
 {
     -- Cursor path
@@ -8,7 +25,7 @@ animate.setup(
         enable = true,
 
         -- Timing of animation (how steps will progress in time)
-        timing = animate.gen_timing.quadratic({duration=25, unit='total'}),
+        timing = animate.gen_timing.quadratic({duration=cursor_duration(), unit='total'}),
 
         -- Path generator for visualized cursor movement
         -- path = --<function: implements shortest line path>,
@@ -20,7 +37,7 @@ animate.setup(
         enable = true,
 
         -- Timing of animation (how steps will progress in time)
-        timing = animate.gen_timing.quadratic({duration=20, unit='total'}),
+        timing = animate.gen_timing.quadratic({duration=scroll_duration(), unit='total'}),
 
         -- Subscroll generator based on total scroll
         -- subscroll = --<function: implements equal scroll with at most 60 steps>,
@@ -112,7 +129,7 @@ local function hint_cursor()
         popup = {
             delay_ms = 0, -- delay before popup displays
             inc_ms = 25, -- time increments used for fade/resize effects 
-            blend = 80, -- starting blend, between 0-100 (fully transparent), see :h winblend
+            blend = 100, -- starting blend, between 0-100 (fully transparent), see :h winblend
             width = 10,
             winhl = "Cursor",
             fader = oabt_fader,
@@ -172,8 +189,10 @@ local function hint_cursor()
                 vim.api.nvim_win_set_width(win_id, dm[1])
             end
             if bl == nil and dm == nil then -- Done blending and resizing
+                local buf_id = vim.fn.winbufnr(win_id)
                 vim.loop.close(timer)
                 vim.api.nvim_win_close(win_id, true)
+                vim.api.nvim_buf_delete(buf_id, {force=true})
             end
             cnt = cnt+1
         end
