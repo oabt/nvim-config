@@ -162,32 +162,22 @@ local function MakeClean()
 end
 
 local function DeleteInactiveBufs()
-    local tablist = {}
-    -- appending the buf No. appering in each tab
-    for tab = 1, vim.fn.tabpagenr("$") do
-        for k,v in pairs(vim.fn.tabpagebuflist(tab)) do
-            tablist[#tablist + 1] = v
-        end
-    end
-
     local nWipeouts = 0
-    for buf = 1, vim.fn.bufnr("$") do
-        -- if the buffer exist in any tabs
-        local not_in_tabs = true
-        for k, v in pairs(tablist) do
-            if buf == v then
-                not_in_tabs = false
-                break
+    local bufinfo_dict = vim.fn.getbufinfo()
+    for _, buf_info in pairs(bufinfo_dict) do
+        local to_be_deleted = false
+        if buf_info['changed'] == 0 and #buf_info['windows'] == 0 then
+            -- not displayed in any windows, delete the buffer
+            assert(buf_info['listed'] == 0 or buf_info['hidden'] == 1,
+                "@oabt: Buffer should be either unlisted or hidden!")
+            vim.api.nvim_buf_delete(buf_info['bufnr'], {force=true})
+            nWipeouts = nWipeouts + 1
+
+            if buf_info['listed'] == 0 or buf_info['hidden'] == 1 then
             end
         end
-
-        -- if buf No. exists and buf not modified and buf not appears in any tabs, then wipe out
-        if vim.fn.bufexists(buf) and vim.fn.getbufvar(buf, "&mod")==0 and not_in_tabs then
-            vim.cmd("silent exec 'bwipeout!'" .. tostring(buf))
-            nWipeouts = nWipeouts + 1
-        end
     end
-    print(nWipeouts, ' buffer(s) wiped out.')
+    print(nWipeouts, "buffer(s) wiped out.")
 end
 
 keymap('n', '<F7>', MakeClean, {desc="Run default make"})
