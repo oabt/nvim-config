@@ -167,6 +167,7 @@ local function hint_cursor()
             if not closed then
                 pcall(vim.loop.close, timer)
                 pcall(vim.api.nvim_win_close, win_id, true)
+                pcall(vim.api.nvim_buf_delete, bufh, {force=true})
 
                 -- Callbacks might stack up before the timer actually gets closed, track that state
                 -- internally here instead
@@ -189,10 +190,9 @@ local function hint_cursor()
                 vim.api.nvim_win_set_width(win_id, dm[1])
             end
             if bl == nil and dm == nil then -- Done blending and resizing
-                local buf_id = vim.fn.winbufnr(win_id)
                 vim.loop.close(timer)
                 vim.api.nvim_win_close(win_id, true)
-                vim.api.nvim_buf_delete(buf_id, {force=true})
+                vim.api.nvim_buf_delete(bufh, {force=true})
             end
             cnt = cnt+1
         end
@@ -201,12 +201,13 @@ end
 
 
 vim.api.nvim_create_autocmd( -- automatically change cwd to the file in current buffer
-    {"BufEnter"},
+    {"WinEnter"},
     {
         pattern = {"*"},
         callback = function(ev)
             hint_cursor()
-        end
+        end,
+        desc = "hint the cursor position",
     }
 )
 
