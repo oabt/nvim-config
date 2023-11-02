@@ -168,8 +168,10 @@ local function DeleteInactiveBufs()
         local to_be_deleted = false
         if buf_info['changed'] == 0 and #buf_info['windows'] == 0 then
             -- not displayed in any windows, delete the buffer
-            assert(buf_info['listed'] == 0 or buf_info['hidden'] == 1,
-                "@oabt: Buffer should be either unlisted or hidden!")
+            assert(
+                buf_info['listed'] == 0 or buf_info['hidden'] == 1,
+                string.format("@oabt: Buffer %d should be either unlisted or hidden!", buf_info['bufnr'])
+            )
             vim.api.nvim_buf_delete(buf_info['bufnr'], {force=true})
             nWipeouts = nWipeouts + 1
 
