@@ -6,6 +6,7 @@ flash.setup({
 
     multi_window = true,
     search = {
+        multi_window = true,
         mode = "exact",
     },
     jump = {
@@ -20,7 +21,10 @@ flash.setup({
     modes = {
         char = { -- do not trigger flash on {'f', 'F', 't', 'T', ',', ';'}
             enabled = false,
-        }
+        },
+        search = {
+            enabled = false,
+        },
     },
 
 })
