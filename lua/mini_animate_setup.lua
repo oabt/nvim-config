@@ -34,7 +34,7 @@ animate.setup(
     -- Vertical scroll
     scroll = {
         -- Whether to enable this animation
-        enable = true,
+        enable = false,
 
         -- Timing of animation (how steps will progress in time)
         timing = animate.gen_timing.quadratic({duration=scroll_duration(), unit='total'}),
