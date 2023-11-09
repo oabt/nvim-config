@@ -169,3 +169,31 @@ dap.configurations.c = dap.configurations.cpp
 
 vim.cmd[[au FileType dap-repl lua require('dap.ext.autocompl').attach()]]
 
+vim.keymap.set('n', '<M-5>', function()
+    if dap.session() then
+        dap.continue()
+    end
+end,
+{desc="Dap Continue"})
+
+vim.keymap.set('n', '<M-6>', function()
+    if dap.session() then
+        dap.step_over()
+    end
+end,
+{desc="Dap StepOver"})
+
+vim.keymap.set('n', '<M-=>', function()
+    if dap.session() then
+        dap.step_into()
+    end
+end,
+{desc="Dap StepInto"})
+
+vim.keymap.set('n', '<M-->', function()
+    if dap.session() then
+        dap.step_out()
+    end
+end,
+{desc="Dap StepOut"})
+
