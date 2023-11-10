@@ -101,6 +101,8 @@ local oabt_hl_group = {
     ['@comment'] = {link = 'Comment'},
     ['@constructor'] = {link = 'Function'},
     ['@method'] = {link = 'Function'},
+    ['@method.call'] = {link = 'Function'},
+    ['@function'] = {link = 'Function'},
     ['@function.call'] = {link = 'Function'},
 
     -- ['@function'] = {link = 'Function'},
