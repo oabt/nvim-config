@@ -97,6 +97,17 @@ local oabt_hl_group = {
     NeoTreeGitUntracked = {link = 'GitSignsAdd'},
     NeoTreeIndentMarker = {link = 'NonText'},
 
+    -- override the tree-sitter highligh groups
+    ['@comment'] = {link = 'Comment'},
+    ['@constructor'] = {link = 'Function'},
+    ['@method'] = {link = 'Function'},
+    ['@function.call'] = {link = 'Function'},
+
+    -- ['@function'] = {link = 'Function'},
+    -- ['@function.builtin'] = {link = 'Function'},
+    -- ['@function.macro'] = {link = 'Macro'},
+    -- ['@constant'] = {link = 'Macro'},
+
 }
 
 monokai.setup({
