@@ -34,11 +34,15 @@ require("lazy").setup(
             lazy = false,
             config = function() require('monokai_setup') end,
         },
-        {"sheerun/vim-polyglot",
+        -- {"sheerun/vim-polyglot", -- vim-polyglot can be a fall back of tree-sitter
+        --     event = "VeryLazy",
+        --     config = function()
+        --         vim.cmd([[runtime vim_legacy/vim-polyglot-setup.vim]])
+        --     end,
+        -- },
+        {"nvim-treesitter/nvim-treesitter",
             event = "VeryLazy",
-            config = function()
-                vim.cmd([[runtime vim_legacy/vim-polyglot-setup.vim]])
-            end,
+            config = function() require("nvim_treesitter_setup") end,
         },
 
         ------------ UI related ------------------------------
@@ -49,7 +53,7 @@ require("lazy").setup(
             end,
         },
         {"nvim-tree/nvim-web-devicons",
-            --enabled = false,
+            -- cond = false,
             lazy = true,
             config = function() require('nvim_webdevicons_setup') end,
         },
