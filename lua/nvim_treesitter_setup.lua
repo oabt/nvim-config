@@ -4,7 +4,7 @@
 --     config = function() require("nvim_treesitter_setup") end,
 -- },
 
-require'nvim-treesitter.configs'.setup {
+require'nvim-treesitter.configs'.setup({
     -- A list of parser names, or "all" (the five listed parsers should always be installed)
     -- ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
 
@@ -19,7 +19,8 @@ require'nvim-treesitter.configs'.setup {
     -- ignore_install = { "javascript" },
 
     ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-    -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+    -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+    parser_install_dir = vim.env.HOME .. "/.nvim/lazy_plug/nvim-treesitter", -- already in runtimepath
 
     highlight = {
         enable = true,
@@ -31,7 +32,7 @@ require'nvim-treesitter.configs'.setup {
         -- disable = { "c", "rust" },
         -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
         disable = function(lang, buf)
-            local max_filesize = 1024 * 1024 -- 1MB size limit
+            local max_filesize = 1024 * 1024 * 10 -- 10MB size limit
             local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
             if ok and stats and stats.size > max_filesize then
                 return true
@@ -44,5 +45,8 @@ require'nvim-treesitter.configs'.setup {
         -- Instead of true it can also be a list of languages
         additional_vim_regex_highlighting = false,
     },
-}
+})
+
+-- force git download through proxy is easier
+require("nvim-treesitter.install").prefer_git = true
 

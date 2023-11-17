@@ -104,6 +104,7 @@ local oabt_hl_group = {
     ['@method.call'] = {link = 'Function'},
     ['@function'] = {link = 'Function'},
     ['@function.call'] = {link = 'Function'},
+    ['@keyword.function'] = {link = 'Keyword'},
 
     -- ['@function'] = {link = 'Function'},
     -- ['@function.builtin'] = {link = 'Function'},
