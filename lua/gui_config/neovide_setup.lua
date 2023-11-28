@@ -1,11 +1,11 @@
 vim.cmd('set title titlestring=Neovim')
-vim.o.guifont = "DejaVuSansM Nerd Font Mono:h12:#e-antialias"
+vim.o.guifont = "DejaVuSansM Nerd Font Mono,SimHei:h12:#e-antialias"
 vim.opt.linespace = 0
 
 -- animation
-vim.g.neovide_cursor_animation_length = 0.06
+vim.g.neovide_cursor_animation_length = 0.1
 vim.g.neovide_cursor_trail_size = 0.1
-vim.g.neovide_scroll_animation_length = 0.3  -- scroll animation require 'multigrid' feature enabled
+vim.g.neovide_scroll_animation_length = 0.1  -- scroll animation require 'multigrid' feature enabled
 vim.g.neovide_refresh_rate = 60
 
 -- display
@@ -36,16 +36,20 @@ vim.api.nvim_create_autocmd({ "CmdlineEnter", "CmdlineLeave" }, {
     callback = set_ime
 })
 
+-- change the scaling
 vim.g.neovide_scale_factor = 1.0
---local change_scale_factor = function(delta)
---    vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
---end
---vim.keymap.set("n", "<C-<Up>>", function()
---    change_scale_factor(1.25)
---end)
---vim.keymap.set("n", "<C-<Down>>", function()
---  change_scale_factor(1/1.25)
---end)
+local scale_multipier = 1.1
+local function change_scale_factor(delta)
+   vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
+end
+vim.keymap.set("n", "<C-=>", function()
+    change_scale_factor(scale_multipier)
+    print("scaling to ", vim.g.neovide_scale_factor)
+end)
+vim.keymap.set("n", "<C-->", function()
+    change_scale_factor(1 / scale_multipier)
+    print("scaling to ", vim.g.neovide_scale_factor)
+end)
 
 local function toggle_full_screen()
     if vim.g.neovide_fullscreen then
