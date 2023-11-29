@@ -18,6 +18,7 @@ local oabt_scheme = {
     telescope_prompt = '#2D2E28',
 
     -- customized
+    oabt_dark_bg = '#242520',
     oabt_search_yellow = '#D7AF5F',
     oabt_macro = '#C4BE89',
 }
@@ -96,6 +97,8 @@ local oabt_hl_group = {
     NeoTreeGitModified = {link = 'GitSignsChange'},
     NeoTreeGitUntracked = {link = 'GitSignsAdd'},
     NeoTreeIndentMarker = {link = 'NonText'},
+    NeoTreeNormal = {bg = oabt_scheme.oabt_dark_bg},
+    NeoTreeNormalNC = {bg = oabt_scheme.oabt_dark_bg},
 
     -- override the tree-sitter highligh groups
     ['@comment'] = {link = 'Comment'},

@@ -14,6 +14,7 @@ telescope_config.setup({
                 -- ["<Cr>"] = {"<Esc>", type = "command"},
                 ["<C-u>"] = false,
                 ["<C-c>"] = actions.close,
+                ["<Esc>"] = actions.close,
                 ["<Cr>"] = actions.select_default,
                 ["<C-o>"] = actions.select_default,
                 ["<C-v>"] = actions.select_vertical,
