@@ -167,6 +167,21 @@ require("neo-tree").setup({
                 end,
                 desc = "tabnew in background"
             },
+            ["S"] = {
+                function(state)
+                    local node = state.tree:get_node()
+                    if node.type ~= "directory" then
+                        os.execute(node.path)
+                    else
+                        if (vim.loop.os_uname().sysname == "Windows_NT") then
+                            os.execute("explorer " .. node.path)
+                        elseif (vim.loop.os_uname().sysname == "Linxu") then
+                            -- TODO @oabt: open directory in Linux
+                        end
+                    end
+                end,
+                desc = "open with system method"
+            },
             ["M"] = { -- toggle the wide/narrow view
                 function(state)
                     if vim.fn.winwidth(0) < 80 then

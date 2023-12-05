@@ -2,7 +2,7 @@
 "startify settings
 let g:startify_session_dir = '~/.nvim/sessions'
 let g:startify_disable_at_vimenter = 0
-let g:startify_enable_unsafe = 1
+let g:startify_enable_unsafe = 0
 let g:startify_custom_header = [
             \'                  ,---------------------------,                        ', 
             \'                  |  /---------------------\  |                        ', 

@@ -37,3 +37,13 @@ return { -- TEMPLATE ONLY
         ["/home/wujj/proj/gem5_src/build/X86/"] = "/home/wujj/proj/gem5_src/src/",
     },
 }
+
+-- to load the template, init.lua in this directory is required
+-- example:
+-- local templates = 'dap_setup.cpp_templates.'
+-- return {
+--     require(templates .. 'config_template'),
+--     -- other templates to load
+-- }
+--
+
