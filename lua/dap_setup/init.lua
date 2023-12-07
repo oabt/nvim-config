@@ -5,14 +5,14 @@ dap.listeners.after.event_initialized["dapui_config"] = function()
     require('dapui').open({})
 end
 
---dap.listeners.before.event_terminated["dapui_config"] = function()
---    require('dapui').close({})
---end
+dap.listeners.before.event_terminated["dapui_config"] = function()
+    require('dapui').close({})
+end
 
 
---dap.listeners.before.event_exited["dapui_config"] = function()
---    require('dapui').close({})
---end
+-- dap.listeners.before.event_exited["dapui_config"] = function()
+--     require('dapui').close({})
+-- end
 
 ------------------ C/C++ adapters and configuration ------------------------
 dap.adapters.codelldb = {
@@ -102,6 +102,7 @@ dap.configurations.cpp = {
         end,
 
         stopOnEntry = false,
+        expressions = "native",
     },
 
     { ----------------------- using cpptools as debugger ----------------------

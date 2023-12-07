@@ -36,6 +36,8 @@ return { -- TEMPLATE ONLY
         ["/home/wujj/proj/gem5_src/build/X86/victim_cache"] = "/home/wujj/proj/extra_gem5/src/victim_cache",
         ["/home/wujj/proj/gem5_src/build/X86/"] = "/home/wujj/proj/gem5_src/src/",
     },
+
+    expressions = "native",
 }
 
 -- to load the template, init.lua in this directory is required
