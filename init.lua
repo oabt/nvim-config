@@ -166,6 +166,10 @@ require("lazy").setup(
             },
             config = function() require('neo_tree_setup') end,
         },
+        {"nvim-treesitter/nvim-treesitter-context",
+            event = "VeryLazy",
+            config = function() require('treesitter_context') end,
+        },
 
         ------------------- LSP configs --------------------------
         {"neovim/nvim-lspconfig",

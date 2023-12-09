@@ -12,7 +12,6 @@ local oabt_scheme = {
     pmenu_sel_bg = '#808080',
     search_bg = '#D7AF5F',
     visual_bg = '#595656',
-    cursor_line_bg = '#424136',
     vert_split_fg = '#444444',
     telescope_bg = '#2D2E28',
     telescope_prompt = '#2D2E28',
@@ -99,6 +98,14 @@ local oabt_hl_group = {
     NeoTreeIndentMarker = {link = 'NonText'},
     NeoTreeNormal = {bg = oabt_scheme.oabt_dark_bg},
     NeoTreeNormalNC = {bg = oabt_scheme.oabt_dark_bg},
+
+    -- hl groups specified for treesitter-context
+    TreesitterContextBottom = {
+        bg = oabt_scheme.background,
+        underline = true,
+        sp = oabt_scheme.oabt_search_yellow
+    },
+    TreesitterContext = {bg = oabt_scheme.background},
 
     -- override the tree-sitter highligh groups
     ['@comment'] = {link = 'Comment'},
