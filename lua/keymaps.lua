@@ -165,7 +165,6 @@ local function DeleteInactiveBufs()
     local nWipeouts = 0
     local bufinfo_dict = vim.fn.getbufinfo()
     for _, buf_info in pairs(bufinfo_dict) do
-        local to_be_deleted = false
         if buf_info['changed'] == 0 and #buf_info['windows'] == 0 then
             -- not displayed in any windows, delete the buffer
             assert(
@@ -174,9 +173,6 @@ local function DeleteInactiveBufs()
             )
             vim.api.nvim_buf_delete(buf_info['bufnr'], {force=true})
             nWipeouts = nWipeouts + 1
-
-            if buf_info['listed'] == 0 or buf_info['hidden'] == 1 then
-            end
         end
     end
     print(nWipeouts, "buffer(s) wiped out.")
