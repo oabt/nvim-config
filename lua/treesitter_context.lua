@@ -4,12 +4,9 @@
         --     config = function() require('treesitter_context') end,
         -- }
 
-
--- vim.keymap.set('n', '<leader>b', '<cmd>TSContextEnable<cr>')
-
 local oabt_context_group = vim.api.nvim_create_augroup('oabt_context_enable', {})
 
-local oabt_context_status = false
+local oabt_context_status = false -- initialize as disabled
 
 local function oabt_enable_context()
     require('treesitter-context').enable()

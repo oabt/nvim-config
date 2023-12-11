@@ -101,11 +101,12 @@ local oabt_hl_group = {
 
     -- hl groups specified for treesitter-context
     TreesitterContextBottom = {
-        bg = oabt_scheme.background,
+        bg = oabt_scheme.pmenu_bg,
         underline = true,
         sp = oabt_scheme.oabt_search_yellow
     },
-    TreesitterContext = {bg = oabt_scheme.background},
+    TreesitterContext = {bg = oabt_scheme.pmenu_bg},
+    TreesitterContextLineNumber = {link = 'TreesitterContext'},
 
     -- override the tree-sitter highligh groups
     ['@comment'] = {link = 'Comment'},
