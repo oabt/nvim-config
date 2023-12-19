@@ -29,11 +29,11 @@ local function oabt_toggle_context()
     if oabt_context_status then
         oabt_disable_context()
         oabt_context_status = false
-        print("treesitter-context disabled")
+        vim.notify("treesitter-context disabled")
     else
         oabt_enable_context()
         oabt_context_status = true
-        print("treesitter-context enabled")
+        vim.notify("treesitter-context enabled")
     end
 end
 

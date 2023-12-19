@@ -44,11 +44,11 @@ local function change_scale_factor(delta)
 end
 vim.keymap.set("n", "<C-=>", function()
     change_scale_factor(scale_multipier)
-    print("scaling to ", vim.g.neovide_scale_factor)
+    vim.notify("scaling to " .. tostring(vim.g.neovide_scale_factor))
 end)
 vim.keymap.set("n", "<C-->", function()
     change_scale_factor(1 / scale_multipier)
-    print("scaling to ", vim.g.neovide_scale_factor)
+    vim.notify("scaling to " .. tostring(vim.g.neovide_scale_factor))
 end)
 
 local function toggle_full_screen()

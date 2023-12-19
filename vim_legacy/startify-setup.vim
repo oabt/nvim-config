@@ -26,9 +26,9 @@ let g:startify_custom_header = [
             \]
 function s:startify_plugin_list() "the list of Plugin Manager Operations
     return [
-                \{'line': 'Plugin Status', 'cmd': 'exec "Lazy"'},
-                \{'line': 'Plugin Update', 'cmd': 'exec "Lazy update"'},
-                \{'line': 'Plugin Profiling', 'cmd': 'exec "Lazy profile"'},
+                \{'line': ' Plugin Status', 'cmd': 'Lazy'},
+                \{'line': ' Plugin Update', 'cmd': 'Lazy update'},
+                \{'line': 'Plugin Profiling', 'cmd': 'Lazy profile'},
                 \]
 endfunction
 

@@ -175,7 +175,7 @@ local function DeleteInactiveBufs()
             nWipeouts = nWipeouts + 1
         end
     end
-    print(nWipeouts, "buffer(s) wiped out.")
+    vim.notify(tostring(nWipeouts) .. " buffer(s) wiped out.")
 end
 
 keymap('n', '<F7>', MakeClean, {desc="Run default make"})
