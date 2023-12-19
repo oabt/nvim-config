@@ -82,7 +82,7 @@ cmp.setup({
                         end
                     }
                 },
-                { name = 'path' },
+                { name = 'async_path' },
         })
     })
 
@@ -110,7 +110,7 @@ cmp.setup.cmdline(':', {
         ['<C-p>'] = cmp.config.disable,
     }),
     sources = cmp.config.sources({
-        { name = 'path' },
+        { name = 'async_path' },
         { name = 'cmdline' }, 
     })
 })

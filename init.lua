@@ -87,7 +87,7 @@ require("lazy").setup(
                 "hrsh7th/cmp-nvim-lsp",
                 "hrsh7th/cmp-nvim-lsp-signature-help",
                 "hrsh7th/cmp-buffer",
-                "hrsh7th/cmp-path",
+                "FelipeLema/cmp-async-path",
                 "hrsh7th/cmp-cmdline",
                 "notomo/cmp-neosnippet",
                 "Shougo/neosnippet.vim",
