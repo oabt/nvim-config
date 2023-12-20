@@ -41,6 +41,26 @@ local oabt_hl_group = {
     Folded = {
         bg = oabt_scheme.background,
     },
+    PmenuSel = {
+        fg = oabt_scheme.background,
+        bg = oabt_scheme.search_bg,
+        bold = true,
+    },
+
+    -- terminal winhighlight: set in auto_commands.lua
+    TermNormal = {
+        fg = monokai.scheme.white,
+        bg = oabt_scheme.oabt_dark_bg,
+    },
+    TermLineNr = {
+        fg = '#6c6c6c',
+        bg = oabt_scheme.oabt_dark_bg,
+    },
+    TermCursorLineNr = {
+        fg = monokai.scheme.yellow,
+        bg = oabt_scheme.oabt_dark_bg,
+    },
+
 
     StorageClass = {
         fg = monokai.scheme.aqua,
@@ -78,6 +98,28 @@ local oabt_hl_group = {
     },
     TelescopeResultsTitle = {
         fg = monokai.scheme.white,
+    },
+    TelescopeMatching = {
+        fg = monokai.scheme.orange,
+        underline = true,
+        bold = true,
+    },
+
+    -- nvim-cmp hl groups
+    CmpItemAbbrMatch = {
+        fg = monokai.scheme.orange,
+    },
+    CmpItemAbbrMatchFuzzy = {
+        fg = monokai.scheme.orange,
+    },
+    CmpItemKindFunction = {
+        fg = monokai.scheme.green,
+    },
+    CmpItemKindMethod = {
+        fg = monokai.scheme.green,
+    },
+    CmpItemKindField = {
+        fg = monokai.scheme.aqua,
     },
 
     -- hl groups specified for Gitsigns

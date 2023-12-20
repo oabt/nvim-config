@@ -21,3 +21,19 @@ vim.api.nvim_create_autocmd( -- jump to the position of last access
 
     }
 )
+
+-- set highlight of the terminal buffers
+vim.api.nvim_create_autocmd(
+    {"TermOpen"},
+    {
+        callback = function(ev)
+            if vim.bo.buftype == 'terminal' then
+                vim.cmd("set winhighlight="..
+                    "Normal:TermNormal,"..
+                    "LineNr:TermLineNr,"..
+                    "CursorLineNr:TermCursorLineNr")
+            end
+        end,
+    }
+)
+
