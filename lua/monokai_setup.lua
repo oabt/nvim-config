@@ -102,7 +102,6 @@ local oabt_hl_group = {
     TelescopeMatching = {
         fg = monokai.scheme.orange,
         underline = true,
-        bold = true,
     },
 
     -- nvim-cmp hl groups
@@ -140,6 +139,7 @@ local oabt_hl_group = {
     NeoTreeIndentMarker = {link = 'NonText'},
     NeoTreeNormal = {bg = oabt_scheme.oabt_dark_bg},
     NeoTreeNormalNC = {bg = oabt_scheme.oabt_dark_bg},
+    NeoTreeFloatNormal = {bg = oabt_scheme.background},
 
     -- hl groups specified for treesitter-context
     TreesitterContextBottom = {
