@@ -13,6 +13,11 @@ vim.g.neovide_transparency = 1.0
 
 vim.g.neovide_hide_mouse_when_typing = true
 
+vim.g.neovide_floating_shadow = true
+vim.g.neovide_floating_z_height = 10
+vim.g.neovide_light_angle_degrees = 45
+vim.g.neovide_light_radius = 5
+
 -- only enable IME in insert and cmdline mode
 local function set_ime(args)
     if args.event:match("Enter$") then

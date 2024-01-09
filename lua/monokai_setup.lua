@@ -46,6 +46,7 @@ local oabt_hl_group = {
         bg = oabt_scheme.search_bg,
         bold = true,
     },
+    CursorColumn = { link = 'CursorLine' },
 
     -- terminal winhighlight: set in auto_commands.lua
     TermNormal = {
