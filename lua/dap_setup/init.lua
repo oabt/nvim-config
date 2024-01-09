@@ -170,6 +170,14 @@ dap.configurations.c = dap.configurations.cpp
 
 vim.cmd[[au FileType dap-repl lua require('dap.ext.autocompl').attach()]]
 
+vim.api.nvim_create_user_command('DapCondBreakpoint',
+    function(opts) dap.set_breakpoint(opts.args) end,
+    {
+        nargs = "*",
+        desc = "Set conditional breakpoint",
+    }
+)
+
 vim.keymap.set('n', '<M-5>', function()
     if dap.session() then
         dap.continue()

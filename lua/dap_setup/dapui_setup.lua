@@ -80,9 +80,10 @@ dapui.setup({
     }
 })
 
--- TODO: mapping for debugger: step-into step-out step-over contiue
-
-vim.cmd([[command! DapToggleUI exec "lua require'dapui'.toggle()"]])
+vim.api.nvim_create_user_command('DapToggleUI',
+    function(opts) dapui.toggle() end,
+    { desc = "toggle the DAP UI" }
+)
 
 -- set the signs/icons for dap w/t and w/o web-devicons
 if exist_devicons() then
