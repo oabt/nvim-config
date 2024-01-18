@@ -4,6 +4,9 @@
 --     config = function() require("nvim_treesitter_setup") end,
 -- },
 
+-- force git download through proxy is easier
+require("nvim-treesitter.install").prefer_git = true
+
 require'nvim-treesitter.configs'.setup({
     -- A list of parser names, or "all" (the five listed parsers should always be installed)
     -- ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
@@ -46,7 +49,4 @@ require'nvim-treesitter.configs'.setup({
         additional_vim_regex_highlighting = false,
     },
 })
-
--- force git download through proxy is easier
-require("nvim-treesitter.install").prefer_git = true
 
