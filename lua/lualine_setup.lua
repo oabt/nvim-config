@@ -64,7 +64,7 @@ lualine_config.setup({
         },
         ignore_focus = {},
         always_divide_middle = true,
-        globalstatus = false,
+        globalstatus = true,
         refresh = {
             statusline = 1000,
             tabline = 1000,
@@ -123,8 +123,26 @@ lualine_config.setup({
                 end
             },
         },
-        --lualine_c = {'diff', 'diagnostics'},
-        lualine_c = {'diff'},
+        lualine_c = {
+            {'diff'
+            }, 
+            {'diagnostics',
+                diagnostics_color = {
+                    error = 'DiagnosticSignError',
+                    warn = 'DiagnosticSignWarn',
+                    info = 'DiagnosticSignInfo',
+                    hint = 'DiagnosticSignHint',
+                },
+                symbols = {
+                    error = exist_devicons() and ':' or 'E:',
+                    warn = exist_devicons() and ':' or 'W:',
+                    info = exist_devicons() and '󰋽:' or 'I',
+                    hint = exist_devicons() and '󰌶:' or 'H',
+                },
+                always_visible = true,
+            },
+        },
+        -- lualine_c = {'diff'},
 
         lualine_x = {
             {'searchcount',
