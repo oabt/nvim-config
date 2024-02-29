@@ -81,21 +81,10 @@ local function exist_devicons()
     end
 end
 
-local function oabt_error_icon()
-    if exist_devicons() then
-        return ""
-    else
-        return "E"
-    end
-end
-
-local function oabt_warn_icon()
-    if exist_devicons() then
-        return ""
-    else
-        return "W"
-    end
-end
+local oabt_error_icon = exist_devicons() and "" or "E"
+local oabt_warn_icon = exist_devicons() and "" or "W"
+local oabt_info_icon = exist_devicons() and "󰋽" or "I"
+local oabt_hint_icon = exist_devicons() and "󰌶" or "H"
 
 local diagnostic_config = {
     virtual_text = false,
@@ -112,11 +101,19 @@ for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
     vim.api.nvim_set_hl(0, group, {})
 end
 
+vim.cmd([[ sign define DiagnosticSignError text=]]
+    .. oabt_error_icon ..
+    [[ texthl=DiagnosticSignError linehl= numhl= ]])
+
 vim.cmd([[sign define DiagnosticSignWarn text=]]
-    .. oabt_warn_icon() ..
+    .. oabt_warn_icon ..
     [[ texthl=DiagnosticSignWarn linehl= numhl= ]])
 
-vim.cmd([[ sign define DiagnosticSignError text=]]
-    .. oabt_error_icon() ..
-    [[ texthl=DiagnosticSignError linehl= numhl= ]])
+vim.cmd([[sign define DiagnosticSignInfo text=]]
+    .. oabt_info_icon ..
+    [[ texthl=DiagnosticSignInfo linehl= numhl= ]])
+
+vim.cmd([[sign define DiagnosticSignHint text=]]
+    .. oabt_hint_icon ..
+    [[ texthl=DiagnosticSignHint linehl= numhl= ]])
 

@@ -64,7 +64,10 @@ require("lazy").setup(
         },
         {'nvim-lualine/lualine.nvim',
             event = "VeryLazy",
-            dependencies = {"nvim-tree/nvim-web-devicons"},
+            dependencies = {
+                "nvim-tree/nvim-web-devicons",
+                "linrongbin16/lsp-progress.nvim",
+            },
             config = function() require('lualine_setup') end,
         },
         {"akinsho/bufferline.nvim",
@@ -183,6 +186,10 @@ require("lazy").setup(
             dependencies = {"nvim-tree/nvim-web-devicons"},
             event = {"VeryLazy"},
             config = function() require('lspconfig_setup') end,
+        },
+        {"linrongbin16/lsp-progress.nvim",
+            lazy = true,
+            config = function() require('lsp_progress_setup') end
         },
 
         ------------------- DAP configs --------------------------

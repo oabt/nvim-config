@@ -49,6 +49,14 @@ local function oabt_readonly_icon()
     end
 end
 
+-- listen lsp-progress event and refresh lualine
+vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
+vim.api.nvim_create_autocmd("User", {
+    group = "lualine_augroup",
+    pattern = "LspProgressStatusUpdated",
+    callback = require("lualine").refresh,
+})
+
 lualine_config.setup({
     options = {
         icons_enabled = exist_devicons(),
@@ -136,8 +144,8 @@ lualine_config.setup({
                 symbols = {
                     error = exist_devicons() and ':' or 'E:',
                     warn = exist_devicons() and ':' or 'W:',
-                    info = exist_devicons() and '󰋽:' or 'I',
-                    hint = exist_devicons() and '󰌶:' or 'H',
+                    info = exist_devicons() and '󰋽:' or 'I:',
+                    hint = exist_devicons() and '󰌶:' or 'H:',
                 },
                 always_visible = true,
             },
@@ -159,12 +167,13 @@ lualine_config.setup({
                 separator = '',
                 fmt = function(str)
                     if exist_devicons() and string.len(str) > 0 then
-                        return '' .. str
+                        return ':' .. str
                     else
                         return str
                     end
                 end,
             },
+            { require('lsp-progress').progress },
         },
         lualine_y = {
             {'encoding',
