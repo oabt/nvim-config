@@ -85,7 +85,7 @@ lualine_config.setup({
         lualine_a = {
             {'mode',
                 fmt = function(str) -- show only the first letter when winwidth is small
-                    if vim.fn.winwidth(0) < 70 then
+                    if vim.fn.winwidth(0) < 70 and vim.o.laststatus < 3 then
                         return str:sub(1,1)
                     else
                         return str
@@ -97,7 +97,7 @@ lualine_config.setup({
             {'branch',
                 icon='',
                 fmt = function(str) -- show only the first letter when winwidth is small
-                    if vim.fn.winwidth(0) < 60 and string.len(str) > 2 then
+                    if vim.fn.winwidth(0) < 60 and string.len(str) > 2 and vim.o.laststatus < 3 then
                         return '..'
                     else
                         return str
@@ -123,7 +123,7 @@ lualine_config.setup({
             },
             {'filetype',
                 fmt = function(str) -- hide the filetype when winwidth is small
-                    if vim.fn.winwidth(0) < 50 then
+                    if vim.fn.winwidth(0) < 50 and vim.o.laststatus < 3 then
                         return ''
                     else
                         return str
@@ -179,7 +179,7 @@ lualine_config.setup({
             {'encoding',
                 separator = '',
                 fmt = function(str)
-                    if vim.fn.winwidth(0) < 70 then
+                    if vim.fn.winwidth(0) < 70 and vim.o.laststatus < 3 then
                         return ''
                     else
                         return str
@@ -193,7 +193,7 @@ lualine_config.setup({
         --lualine_z = {{'%1p%%  %2l:%-2v'}}
         lualine_z = {{'%1p%% %2l:%-2v',
                 fmt = function(str)
-                    if vim.fn.winwidth(0) < 70 then
+                    if vim.fn.winwidth(0) < 70 and vim.o.laststatus < 3 then
                         return str:sub(7)
                     else
                         return str
