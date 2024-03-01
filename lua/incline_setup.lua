@@ -81,6 +81,18 @@ incline_config.setup {
         local ft_str = ft_icon and (' ' .. ft_icon .. ' ') or ''
         local win_ft_color = focused and ft_color or inactive_bg
 
+        -- truncate the filename for terminal buffer
+        if vim.bo[props.buf].buftype == 'terminal' then
+            local term_filename = {}
+            -- split the filename by ":"
+            for str in string.gmatch(filename, "([^" .. ":" .. "]+)") do
+                table.insert(term_filename, str)
+            end
+            -- use only the firt section ("term") and the last section (command)
+            -- as the new filename for terminal
+            filename = term_filename[1] .. ":" .. term_filename[#term_filename]
+        end
+
         local filename_str =  ' ' .. filename .. ' '
             .. (non_modifiable and readonly_icon or '')
             .. (modified and modified_icon or '')
