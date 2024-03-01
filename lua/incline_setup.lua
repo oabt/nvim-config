@@ -47,6 +47,13 @@ incline_config.setup {
                 return true
             end
         end,
+        filetypes = {
+            "incline",
+            "neo-tree",
+            "startify",
+            "dapui_scopes", "dapui_watches", "dapui_console", "dap-repl", "dapui_breakpoints", "dapui_stacks",
+            "qf",
+        },
     },
     render = function(props)
         -- local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
