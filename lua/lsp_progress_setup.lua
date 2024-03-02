@@ -74,6 +74,19 @@ require('lsp-progress').setup({
     format = function(client_messages)
         -- icon: nf-fa-gear \uf013
         local sign = has_devicons and " LSP" or "LSP"
+        local buf_clients = vim.lsp.get_active_clients({bufnr=0})
+        for i, client in pairs(buf_clients) do
+            if i==1 then
+                sign = sign .. ":["
+            else
+                sign = sign .. ", "
+            end
+            sign = sign .. client.name .. "-" .. client.id
+            if i == #buf_clients then
+                sign = sign .. "]"
+            end
+        end
+        
         if #client_messages > 0 then
             return sign .. " " .. table.concat(client_messages, " ")
         end
