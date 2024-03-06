@@ -174,7 +174,15 @@ vim.api.nvim_create_user_command('DapCondBreakpoint',
     function(opts) dap.set_breakpoint(opts.args) end,
     {
         nargs = "*",
-        desc = "Set conditional breakpoint",
+        desc = "DAP: Set conditional breakpoint",
+    }
+)
+
+vim.api.nvim_create_user_command('DapRunToCursor',
+    function(opts) dap.run_to_cursor(opts.args) end,
+    {
+        nargs = "*",
+        desc = "DAP: run to cursor",
     }
 )
 
