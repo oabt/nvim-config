@@ -31,6 +31,8 @@ telescope_config.setup({
                 ["p"] = require('telescope.actions.layout').toggle_preview,
                 ["<C-n>"] = actions.move_selection_next,
                 ["<C-p>"] = actions.move_selection_previous,
+                ["<C-d>"] = actions.results_scrolling_down,
+                ["<C-u>"] = actions.results_scrolling_up,
                 ["q"] = actions.close,
                 ["Q"] = actions.close,
                 ["<C-c>"] = actions.close,
@@ -45,6 +47,7 @@ telescope_config.setup({
             height = 0.5,
             width = 0.5, -- not working for 'bottom_pane' layout
             preview_cutoff = 2,
+            scroll_speed = 5,
         },
 
     },
