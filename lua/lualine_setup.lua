@@ -8,6 +8,16 @@ local lualine_config = require('lualine')
 --        return [[]]
 --    end
 --end
+--
+
+local function oabt_macro()
+    macro = vim.fn.reg_recording()
+    if macro == '' then
+        return ''
+    else
+        return 'recording @' .. macro
+    end
+end
 
 local function exist_devicons()
     if package.loaded['nvim-web-devicons'] == nil then
@@ -132,7 +142,8 @@ lualine_config.setup({
             },
         },
         lualine_c = {
-            {'diff'
+            {'diff',
+                separator = '│'
             }, 
             {'diagnostics',
                 diagnostics_color = {
@@ -153,6 +164,12 @@ lualine_config.setup({
         -- lualine_c = {'diff'},
 
         lualine_x = {
+            {'%S', -- not enabled yet: need to set vim.opt.showcmdloc = 'laststatus'
+                separator = '│',
+            },
+            {oabt_macro,
+                separator = '│',
+            },
             {'searchcount',
                 separator = '',
                 fmt = function(str)
