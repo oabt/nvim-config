@@ -1,6 +1,6 @@
 return { -- TEMPLATE ONLY
     name = "DO NOT launch this template",
-    type = "codelldb",
+    type = "lldb",
     request = "launch",
 
     program = "/home/wujj/proj/gem5_src/build/X86/gem5.debug",
@@ -25,7 +25,8 @@ return { -- TEMPLATE ONLY
     },
 
     -- whether to stop on beginning
-    stopOnEntry = false,
+    stopOnEntry = false, -- for lldb, codelldb
+    -- stopAtBeginningOfMainSubprogram = true, -- for gdb
 
     -- "path": add breakpoints to file with exact full path (default)
     -- "file": add breakpoints to all the files with exact file name

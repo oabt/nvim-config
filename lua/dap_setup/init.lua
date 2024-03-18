@@ -9,12 +9,76 @@ dap.listeners.before.event_terminated["dapui_config"] = function()
     require('dapui').close({})
 end
 
+local function input_program(back_slash)
+    -- input the executable, converse the back slash to slash if back_slash is true
+    local exe_path = ""
+    local default_path = vim.fn.getcwd()
+    if back_slash == true then
+        default_path = string.gsub(default_path, "(\\)", "/")
+    end
+    vim.ui.input(
+        {
+            prompt = 'Path to executable: ',
+            default = default_path .. '/',
+            copmletion = 'file', -- TODO: not working with nvim-cmp
+        },
+        function(input) exe_path = input end
+    )
+    return exe_path
+end
+
+local function input_args()
+    -- input the args
+    local args_list = {}
+    vim.ui.input(
+        {
+            prompt = 'args to be passed to program: ',
+            default = '',
+            --copmletion = 'file',
+        },
+        function(input) -- split the input by 'space'
+            -- %S represents the non-space characters, %w represents all alphanumeric characters
+            for arg in input:gmatch("%S+") do table.insert(args_list, arg) end
+        end
+    )
+
+    return args_list
+end
+
+local function input_cwd()
+    -- input the CWD for execution
+    local cwd_input = ""
+    vim.ui.input(
+        {
+            prompt = 'Enter the CWD: ',
+            default = vim.fn.getcwd(),
+            completion = 'file', -- TODO: not working with nvim-cmp
+        },
+        function(input) cwd_input = input end
+    )
+    return cwd_input
+end
+
 
 -- dap.listeners.before.event_exited["dapui_config"] = function()
 --     require('dapui').close({})
 -- end
 
 ------------------ C/C++ adapters and configuration ------------------------
+dap.adapters.gdb = {
+    -- require gdb 14.1+
+    type = "executable",
+    command = "gdb",
+    args = {"-i", "dap"}, 
+}
+
+dap.adapters.lldb = {
+    -- could be rename to lldb-dap in the future
+    type = "executable",
+    command = "lldb-vscode",
+    name = "lldb",
+}
+
 dap.adapters.codelldb = {
     type = 'server',
     port = "${port}",
@@ -33,129 +97,46 @@ dap.adapters.codelldb = {
 
 }
 
-dap.adapters.cppdbg = {
-    id = 'cppdbg',
-    type = 'executable',
-    command = 'OpenDebugAD7',
-    options = {
-        detached = false,
-        --detached = function ()
-            --if vim.loop.os_uname().sysname == "Windows_NT" then
-                --return false
-            --else
-                --return true
-            --end
-        --end,
-    }
-}
-
 dap.configurations.cpp = {
+    {
+        name = "Launch with lldb-vscode",
+        type = "lldb",
+        request = "launch",
+
+        program = input_program,
+
+        args = input_args,
+
+        cwd = input_cwd,
+
+        stopOnEntry = false,
+    },
+    {
+        name = "Launch with gdb native",
+        type = "gdb",
+        request = "launch",
+
+        program = function() return input_program(true) end,
+
+        args = input_args,
+
+        cwd = input_cwd,
+
+        stopAtBeginningOfMainSubprogram = false,
+    },
     { ----------------------- using codelldb as debugger ----------------------
         name = "Launch file with codelldb",
         type = "codelldb",
         request = "launch",
 
-        program = function()
-            -- input the path of the executable
-            local exe_path = ""
-            vim.ui.input(
-                {
-                    prompt = 'Path to executable: ',
-                    default = vim.fn.getcwd() .. '/',
-                    copmletion = 'file', -- TODO: not working with nvim-cmp
-                },
-                function(input) exe_path = input end
-            )
-            return exe_path
-        end,
+        program = input_program,
 
-        args = function ()
-            -- input the args
-            local args_list = {}
-            vim.ui.input(
-                {
-                    prompt = 'args to be passed to program: ',
-                    default = '',
-                    --copmletion = 'file',
-                },
-                function(input) -- split the input by 'space'
-                    -- %S represents the non-space characters, %w represents all alphanumeric characters
-                    for arg in input:gmatch("%S+") do table.insert(args_list, arg) end
-                end
-            )
+        args = input_args,
 
-            return args_list
-        end,
-
-        cwd = function()
-            -- input the CWD for execution
-            local cwd_input = ""
-            vim.ui.input(
-                {
-                    prompt = 'Enter the CWD: ',
-                    default = vim.fn.getcwd(),
-                    completion = 'file', -- TODO: not working with nvim-cmp
-                },
-                function(input) cwd_input = input end
-            )
-            return cwd_input
-        end,
+        cwd = input_cwd,
 
         stopOnEntry = false,
         expressions = "native",
-    },
-
-    { ----------------------- using cpptools as debugger ----------------------
-        name = "Launch file with cpptools",
-        type = "cppdbg",
-        request = "launch",
-        program = function()
-            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-        end,
-        cwd = '${workspaceFolder}',
-        args = function ()
-            -- input the args
-            args_str = vim.fn.input('args to be passed to program: ')
-            args_list = {}
-
-            -- %S represents the non-space characters, %w represents all alphanumeric characters
-            for arg in args_str:gmatch("%S+") do table.insert(args_list, arg) end
-
-            return args_list
-        end,
-        stopAtEntry = false,
-        --setupCommands = { 
-        --    text = '-enable-pretty-printing',
-        --    description =  'enable pretty printing',
-        --    ignoreFailures = false 
-        --},
-    },
-    { ----------------------- Attach to gdb server ----------------------
-        name = 'Attach to gdbserver :1234',
-        type = 'cppdbg',
-        request = 'launch',
-        MIMode = 'gdb',
-        miDebuggerServerAddress = 'localhost:1234',
-        miDebuggerPath = 'gdb',
-        cwd = '${workspaceFolder}',
-        program = function()
-            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-        end,
-        args = function ()
-            -- input the args
-            args_str = vim.fn.input('args to be passed to program: ')
-            args_list = {}
-
-            -- %S represents the non-space characters, %w represents all alphanumeric characters
-            for arg in args_str:gmatch("%S+") do table.insert(args_list, arg) end
-
-            return args_list
-        end,
-        --setupCommands = { 
-        --    text = '-enable-pretty-printing',
-        --    description =  'enable pretty printing',
-        --    ignoreFailures = false 
-        --},
     },
 }
 -- cpp_templates/init.lua should return a table,
