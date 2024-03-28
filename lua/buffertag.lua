@@ -26,14 +26,14 @@ local focused_hl = {
     bg = default_hl.active_bg,
     bold = true,
     italic = true,
-    underdouble = true,
+    underline = true,
 }
 local focused_modified_hl = {
     fg = default_hl.modified_fg,
     bg = default_hl.active_bg,
     bold = true,
     italic = true,
-    underdouble = true,
+    underline = true,
 }
 local unfocused_hl = {
     fg = default_hl.inactive_fg,
@@ -43,6 +43,7 @@ local unfocused_hl = {
 local unfocused_modified_hl = {
     fg = default_hl.modified_fg,
     bg = default_hl.inactive_bg,
+    italic = true,
     blend = 30,
 }
 
