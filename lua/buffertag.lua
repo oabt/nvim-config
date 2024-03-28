@@ -26,20 +26,24 @@ local focused_hl = {
     bg = default_hl.active_bg,
     bold = true,
     italic = true,
+    underdouble = true,
 }
 local focused_modified_hl = {
     fg = default_hl.modified_fg,
     bg = default_hl.active_bg,
     bold = true,
     italic = true,
+    underdouble = true,
 }
 local unfocused_hl = {
     fg = default_hl.inactive_fg,
     bg = default_hl.inactive_bg,
+    blend = 30,
 }
 local unfocused_modified_hl = {
     fg = default_hl.modified_fg,
     bg = default_hl.inactive_bg,
+    blend = 30,
 }
 
 local bt_active = vim.api.nvim_create_namespace("BufferTag_A")
@@ -91,10 +95,10 @@ local function decorated_bufname(cur_buf)
         buf_name = buf_name  .. default_config.readonly_icon
     end
 
-    return buf_name, buf_modified, buf_readonly
+    return buf_name, buf_modified
 end
 
-local function devicons_symbol(cur_buf, focused)
+local function devicons_symbol(cur_buf)
     local buf_name = vim.api.nvim_buf_get_name(cur_buf)
     buf_name = vim.fn.fnamemodify(buf_name, ":~:.")
 
@@ -110,7 +114,6 @@ local function devicons_symbol(cur_buf, focused)
     else
         ft_icon = ""
     end
-    -- ft_color = focused and ft_color or default_hl.inactive_bg
 
     -- from incline.nvim
     local contrast_color
@@ -143,8 +146,8 @@ end
 
 local function create_tag_float(parent_win, focused, existed_float_win)
     local cur_buf = vim.api.nvim_win_get_buf(parent_win)
-    local buf_name, buf_modified, buf_readonly = decorated_bufname(cur_buf)
-    local ft_icon, ft_color, contrast_color = devicons_symbol(cur_buf, focused)
+    local buf_name, buf_modified = decorated_bufname(cur_buf)
+    local ft_icon, ft_color, contrast_color = devicons_symbol(cur_buf)
 
     -- couldn't determine a buffer name, for whatever reason, just return and dont
     -- tag the buffer.
