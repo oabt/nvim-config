@@ -69,13 +69,13 @@ dap.adapters.gdb = {
     -- require gdb 14.1+
     type = "executable",
     command = "gdb",
-    args = {"-i", "dap"}, 
+    args = {"-i", "dap"},
 }
 
 dap.adapters.lldb = {
     -- could be rename to lldb-dap in the future
     type = "executable",
-    command = "lldb-vscode",
+    command = vim.fn.executable("lldb-dap") and "lldb-dap" or "lldb-vscode",
     name = "lldb",
 }
 
