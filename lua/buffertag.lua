@@ -248,8 +248,8 @@ end
 
 function M.display_buffertags()
     local wins_to_tag = {}
-    -- M.remove_buffertags()
-    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    local win_list = vim.api.nvim_tabpage_list_wins(0)
+    for _, win in ipairs(win_list) do
         local bufnr = vim.api.nvim_win_get_buf(win)
         local buf_info = vim.fn.getbufinfo(bufnr)
         -- print(vim.inspect(buf_info))
@@ -267,7 +267,6 @@ function M.display_buffertags()
     end
 
     -- @oabt: close the float win belongs to the invisible windows (no in this tab)
-    local cleanup_idx = {}
     for idx, floats in ipairs(float_wins) do
         if (not tableContains(wins_to_tag, floats[2])) then
             if vim.api.nvim_win_is_valid(floats[1]) then
@@ -283,8 +282,9 @@ function M.display_buffertags()
     for _, win in ipairs(wins_to_tag) do
         local existed_float_win = nil
         for _i, float_pair in ipairs(float_wins) do
-            if win == float_pair[2] then
+            if win == float_pair[2] and tableContains(win_list, float_pair[1]) then
                 existed_float_win = float_pair[1];
+                break
             end
         end
         create_tag_float(win, win==cur_win, existed_float_win)
