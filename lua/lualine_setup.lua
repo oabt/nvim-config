@@ -11,7 +11,7 @@ local lualine_config = require('lualine')
 --
 
 local function oabt_macro()
-    macro = vim.fn.reg_recording()
+    local macro = vim.fn.reg_recording()
     if macro == '' then
         return ''
     else
@@ -144,7 +144,7 @@ lualine_config.setup({
         lualine_c = {
             {'diff',
                 separator = '│'
-            }, 
+            },
             {'diagnostics',
                 diagnostics_color = {
                     error = 'DiagnosticSignError',
@@ -165,13 +165,13 @@ lualine_config.setup({
 
         lualine_x = {
             {'%S', -- not enabled yet: need to set vim.opt.showcmdloc = 'laststatus'
-                separator = '│',
+                separator = '',
             },
             {oabt_macro,
                 separator = '│',
             },
             {'searchcount',
-                separator = '',
+                separator = '│',
                 fmt = function(str)
                     if exist_devicons() and string.len(str) > 0 then
                         return ':' .. str:sub(2,-2)
@@ -179,9 +179,9 @@ lualine_config.setup({
                         return str
                     end
                 end,
-            }, 
+            },
             {'selectioncount',
-                separator = '',
+                separator = '│',
                 fmt = function(str)
                     if exist_devicons() and string.len(str) > 0 then
                         return ':' .. str
@@ -190,7 +190,9 @@ lualine_config.setup({
                     end
                 end,
             },
-            { require('lsp-progress').progress },
+            { require('lsp-progress').progress,
+                separator = '│',
+            },
         },
         lualine_y = {
             {'encoding',
@@ -260,6 +262,9 @@ lualine_config.setup({
     }
 
 })
+
+-- @oabt: setup the buffertag
+require('buffertag').setup()
 
 --let g:lightline.separator = { 'left': '', 'right': '' }
 --let g:lightline.subseparator = { 'left': '', 'right': '' }
