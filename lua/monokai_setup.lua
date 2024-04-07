@@ -1,4 +1,4 @@
-monokai = require('ofirkai')
+local monokai = require('ofirkai')
 
 local oabt_scheme = {
     -- override
@@ -164,6 +164,24 @@ local oabt_hl_group = {
     -- ['@function.builtin'] = {link = 'Function'},
     -- ['@function.macro'] = {link = 'Macro'},
     -- ['@constant'] = {link = 'Macro'},
+
+    -- @oabt: temporary remap for the upstream treesitter capture name update
+    -- reference: https://github.com/nvim-treesitter/nvim-treesitter/issues/4799
+    ['@variable.parameter'] = {link = '@parameter'},
+    ['@variable.member'] = {link = '@field'},
+    ['@module'] = {link = '@namespace'},
+    ['@number.float'] = {link = '@float'},
+    ['@string.special.symbol'] = {link = '@symbol'},
+    ['@string.regexp'] = {link = '@string.regex'},
+    ['@markup.strong'] = {link = '@text.strong'},
+    ['@markup.italic'] = {link = '@text.italic'},
+    ['@markup.strikethrough'] = {link = '@text.strikethrough'},
+    ['@markup.heading'] = {link = '@text.title'},
+    ['@markup.raw'] = {link = '@text.literal'},
+    ['@markup.link'] = {link = '@text.reference'},
+    ['@markup.link.url'] = {link = '@text.uri'},
+    ['@markup.link.label'] = {link = '@string.special'},
+    ['@markup.list'] = {link = '@punctuation.special'},
 
 }
 
