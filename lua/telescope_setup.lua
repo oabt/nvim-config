@@ -196,6 +196,7 @@ vim.keymap.set('n', '<Leader>a',
             builtin.grep_string({
                 previewer = false,
                 cwd = './',
+                prompt_title = "finding word: " .. input_str .. " in ./",
                 search = input_str,
             })
         end
@@ -213,6 +214,7 @@ vim.keymap.set('n', 'f<Leader>a',
             builtin.grep_string({
                 previewer = false,
                 cwd = '../',
+                prompt_title = "finding word: " .. input_str .. " in ../",
                 search = input_str,
             })
         end
