@@ -21,7 +21,9 @@ return { -- TEMPLATE ONLY
     -- in addition to the vars inherited from the parent process
     env = {
         --EXAMPLE: existing var can be refer by ${env:NAME}
-        ["MY_VAR"] = "${env:HOME}/bin:${env:PATH}",
+        ["MY_VAR"] = "${env:HOME}/bin:${env:PATH}", -- env setting for codelldb, gdb
+        GDB_VAR = "GDB_ENV_SETTING:$GDB_VAR", -- env seting for gdb
+        "LLDB_VAR=LLDB_ENV_SETTING:$LLDB_VAR", -- env setting for lldb
     },
 
     -- whether to stop on beginning
