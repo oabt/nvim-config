@@ -45,7 +45,7 @@ end
 
 local function oabt_modified_icon()
     if exist_devicons() then
-        return ''
+        return '' -- f111
     else
         return '[+]'
     end

@@ -50,7 +50,7 @@ dapui.setup({
         { -- left components
             elements = {
                 { id = "scopes", size = 0.75 },
-                { id = "watches", size = 0.25 } 
+                { id = "watches", size = 0.25 }
             },
             position = "left",
             size = 40
@@ -89,7 +89,7 @@ vim.api.nvim_create_user_command('DapToggleUI',
 if exist_devicons() then
     vim.fn.sign_define('DapBreakpoint', {text='', texthl='Debug', linehl='', numhl=''})
     vim.fn.sign_define('DapBreakpointCondition', {text='', texthl='Debug', linehl='', numhl=''})
-    vim.fn.sign_define('DapStopped', {text='', texthl='Debug', linehl='', numhl=''})
+    vim.fn.sign_define('DapStopped', {text='', texthl='Debug', linehl='', numhl=''})
 else
     vim.fn.sign_define('DapBreakpoint', {text='B', texthl='Debug', linehl='', numhl=''})
     vim.fn.sign_define('DapBreakpointCondition', {text='C', texthl='Debug', linehl='', numhl=''})
