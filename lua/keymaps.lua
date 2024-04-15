@@ -18,9 +18,6 @@ keymap('i', 'fd', '<Esc><Esc><Right>')
 keymap('n', '<Leader>w', '<cmd>w<cr>')
 keymap('n', '<Leader>/', '<cmd>nohlsearch<cr>')
 
--- should be moved to plugin settings
-keymap('n', ';t', '<cmd>tabnew<cr><cmd>Startify<cr>')
-
 if os_uname == 'Windows_NT' then
     keymap('n', 'f<C-f>', '<cmd>silent! !explorer .<cr>')
     keymap('n', '<C-t>', '<cmd>split term://cmd<cr>i')
@@ -185,7 +182,7 @@ keymap('n', '<F5>', Run, {desc='execute the Run function'})
 keymap('n', '<F3>', DeleteInactiveBufs, {desc='delete the unused buffers'})
 keymap('n', '<F2>',
     function()
-        if vim.bo.filetype ~= 'startify' or vim.fn.winnr('$') > 1 then
+        if vim.bo.filetype ~= 'dashboard' or vim.fn.winnr('$') > 1 then
             vim.cmd('tabnew')
         end
         vim.cmd('e $MYVIMRC')

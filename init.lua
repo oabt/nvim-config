@@ -46,11 +46,9 @@ require("lazy").setup(
         },
 
         ------------ UI related ------------------------------
-        {"mhinz/vim-startify",
-            lazy = false,
-            config = function()
-                vim.cmd([[runtime vim_legacy/startify-setup.vim]])
-            end,
+        {"nvimdev/dashboard-nvim",
+            event = "VimEnter",
+            config = function() require('dashboard_setup') end,
         },
         {"nvim-tree/nvim-web-devicons",
             -- cond = false,
