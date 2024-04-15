@@ -21,6 +21,9 @@ end
 
 function dbs.complete_list()
     local list = session_list()
+    if #list == 1 and list[1] == "" then
+        return {}
+    end
     list = vim.tbl_map(function(k)
         local tbl = vim.split(k, path_sep(), { trimempty = true })
         return vim.fn.fnamemodify(tbl[#tbl], ':r')
