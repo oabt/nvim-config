@@ -113,7 +113,8 @@ local function devicons_symbol(cur_buf)
             ft_icon, ft_color = '', '#6d8086'
         end
     else
-        ft_icon = ""
+        return nil, nil, nil
+        -- ft_icon = ""
     end
 
     -- from incline.nvim
@@ -194,7 +195,7 @@ local function create_tag_float(parent_win, focused, existed_float_win)
         focusable = false,
         zindex = default_config.zindex,
         style = "minimal",
-        border = focused and {"", "", "", {" ", "BuffertagIcon"}, "", "", "", {ft_icon, "BuffertagIcon"} } or "none",
+        border = (focused and has_devicons) and {"", "", "", {" ", "BuffertagIcon"}, "", "", "", {ft_icon, "BuffertagIcon"} } or "none",
         row = 0,
         col = vim.api.nvim_win_get_width(parent_win),
         title = vim.api.nvim_buf_get_option(cur_buf, "filetype")
@@ -227,20 +228,16 @@ local function create_tag_float(parent_win, focused, existed_float_win)
         vim.api.nvim_win_set_config(existed_float_win, popup_conf)
     end
 
-    if focused then
+    if focused and has_devicons then
         vim.api.nvim_set_hl(0, "BuffertagIcon", {fg = contrast_color, bg = ft_color})
     end
     if focused and buf_modified then
-        -- vim.api.nvim_set_hl(bt_active_m, "BuffertagIcon", {fg = contrast_color, bg = ft_color})
         vim.api.nvim_win_set_hl_ns(float_win, bt_active_m)
     elseif focused and (not buf_modified) then
-        -- vim.api.nvim_set_hl(bt_active, "BuffertagIcon", {fg = contrast_color, bg = ft_color})
         vim.api.nvim_win_set_hl_ns(float_win, bt_active)
     elseif (not focused) and buf_modified then
-        -- vim.api.nvim_set_hl(bt_inactive_m, "BuffertagIcon", {fg = contrast_color, bg = ft_color})
         vim.api.nvim_win_set_hl_ns(float_win, bt_inactive_m)
     else
-        -- vim.api.nvim_set_hl(bt_active, "BuffertagIcon", {fg = contrast_color, bg = ft_color})
         vim.api.nvim_win_set_hl_ns(float_win, bt_inactive)
     end
 end
