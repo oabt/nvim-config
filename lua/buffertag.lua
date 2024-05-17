@@ -66,17 +66,17 @@ local function tableContains(table, value)
     return false
 end
 
--- holds any currently open {parent_win, float_win} paris displaying buffer tags
+-- holds any currently open {float_win, parent_win} paris displaying buffer tags
 local float_wins = {}
 
 local function decorated_bufname(cur_buf)
     local buf_name = vim.api.nvim_buf_get_name(cur_buf)
     buf_name = vim.fn.fnamemodify(buf_name, ":~:.")
 
-    local buf_modified = vim.api.nvim_buf_get_option(cur_buf, "modified")
-    local buf_readonly = vim.api.nvim_buf_get_option(cur_buf, "readonly") or
-        (not vim.api.nvim_buf_get_option(cur_buf, "modifiable"))
-    local buftype = vim.api.nvim_buf_get_option(cur_buf, "buftype")
+    local buf_modified = vim.api.nvim_get_option_value("modified", {buf=cur_buf})
+    local buf_readonly = vim.api.nvim_get_option_value("readonly", {buf=cur_buf}) or
+        (not vim.api.nvim_get_option_value("modifiable", {buf=cur_buf}))
+    local buftype = vim.api.nvim_get_option_value("buftype", {buf=cur_buf})
 
     if buftype == 'terminal' then
         local term_filename = {}
@@ -91,9 +91,9 @@ local function decorated_bufname(cur_buf)
 
     buf_name = " " .. buf_name .. " "
     if buf_modified then
-        buf_name = buf_name  .. default_config.modified_icon
+        buf_name = buf_name .. default_config.modified_icon
     elseif buf_readonly then
-        buf_name = buf_name  .. default_config.readonly_icon
+        buf_name = buf_name .. default_config.readonly_icon
     end
 
     return buf_name, buf_modified
@@ -157,8 +157,8 @@ local function create_tag_float(parent_win, focused, existed_float_win)
         return
     end
 
-    local buftype = vim.api.nvim_buf_get_option(cur_buf, "buftype")
-    local filetype = vim.api.nvim_buf_get_option(cur_buf, "filetype")
+    local buftype = vim.api.nvim_get_option_value("buftype", {buf=cur_buf})
+    local filetype = vim.api.nvim_get_option_value("filetype", {buf=cur_buf})
     if  tableContains(default_config.ignored_buftype, buftype) or
         tableContains(default_config.ignored_filetype, filetype) then
         return
@@ -198,7 +198,7 @@ local function create_tag_float(parent_win, focused, existed_float_win)
         border = (focused and has_devicons) and {"", "", "", {" ", "BuffertagIcon"}, "", "", "", {ft_icon, "BuffertagIcon"} } or "none",
         row = 0,
         col = vim.api.nvim_win_get_width(parent_win),
-        title = vim.api.nvim_buf_get_option(cur_buf, "filetype")
+        title = vim.api.nvim_get_option_value("filetype", {buf=cur_buf}),
     }
 
     local float_win = existed_float_win
@@ -213,11 +213,11 @@ local function create_tag_float(parent_win, focused, existed_float_win)
         -- get the bufnr according to the existed_float_win
        float_buf = vim.api.nvim_win_get_buf(existed_float_win)
     end
-    vim.api.nvim_buf_set_option(float_buf, 'bufhidden', 'hide')
-    vim.api.nvim_buf_set_option(float_buf, 'filetype', 'buffertag')
-    vim.api.nvim_buf_set_option(float_buf, 'modifiable', true)
-    vim.api.nvim_buf_set_lines( float_buf, 0, 0, false, {popup_text})
-    vim.api.nvim_buf_set_option(float_buf, 'modifiable', false)
+    vim.api.nvim_set_option_value('bufhidden', 'hide', {buf=float_buf})
+    vim.api.nvim_set_option_value('filetype', 'buffertag', {buf=float_buf})
+    vim.api.nvim_set_option_value('modifiable', true, {buf=float_buf})
+    vim.api.nvim_buf_set_lines(float_buf, 0, 1, false, {popup_text})
+    vim.api.nvim_set_option_value('modifiable', false, {buf=float_buf})
 
     if existed_float_win == nil then
         -- create a new floating window
@@ -252,7 +252,7 @@ function M.display_buffertags()
         -- print(vim.inspect(buf_info))
 
         -- @oabt: avoid nested (buffer tag on a buffer tag)
-        if vim.api.nvim_buf_get_option(bufnr, 'filetype') ~= 'buffertag' and
+        if vim.api.nvim_get_option_value("filetype", {buf=bufnr}) ~= 'buffertag' and
             buf_info[1]['listed'] == 1 then
             table.insert(wins_to_tag, win)
         end
@@ -280,7 +280,7 @@ function M.display_buffertags()
         local existed_float_win = nil
         for _i, float_pair in ipairs(float_wins) do
             if win == float_pair[2] and tableContains(win_list, float_pair[1]) then
-                existed_float_win = float_pair[1];
+                existed_float_win = float_pair[1]
                 break
             end
         end
