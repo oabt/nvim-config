@@ -38,7 +38,7 @@ local neo_tree_icons = {
     git_conflict = exist_devicons() and "" or "conflict",
 }
 
-require("neo-tree").setup({
+neo_tree.setup({
     use_default_mappings = false, -- disable all the default key mappings
     close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
     popup_border_style = "rounded",
@@ -108,7 +108,7 @@ require("neo-tree").setup({
         -- If you don't want to use these columns, you can set `enabled = false` for each of them individually
         file_size = {
             enabled = true,
-            required_width = 60, -- min width of window required to show this column
+            required_width = 80, -- min width of window required to show this column
         },
         type = {
             enabled = true,
@@ -116,11 +116,11 @@ require("neo-tree").setup({
         },
         last_modified = {
             enabled = true,
-            required_width = 80, -- min width of window required to show this column
+            required_width = 100, -- min width of window required to show this column
         },
         created = {
             enabled = true,
-            required_width = 100, -- min width of window required to show this column
+            required_width = 110, -- min width of window required to show this column
         },
         symlink_target = {
             enabled = true,
@@ -139,8 +139,8 @@ require("neo-tree").setup({
         },
         mappings = {
             -- operations on node
-            ["<space>"] = { 
-                "toggle_node", 
+            ["<space>"] = {
+                "toggle_node",
                 nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use 
             },
             ["q"] = "close_window",
@@ -172,9 +172,9 @@ require("neo-tree").setup({
                     if node.type ~= "directory" then
                         os.execute(node.path)
                     else
-                        if (vim.loop.os_uname().sysname == "Windows_NT") then
+                        if (vim.uv.os_uname().sysname == "Windows_NT") then
                             os.execute("explorer " .. node.path)
-                        elseif (vim.loop.os_uname().sysname == "Linxu") then
+                        elseif (vim.uv.os_uname().sysname == "Linxu") then
                             -- TODO @oabt: open directory in Linux
                         end
                     end
@@ -183,8 +183,8 @@ require("neo-tree").setup({
             },
             ["M"] = { -- toggle the wide/narrow view
                 function(state)
-                    if vim.fn.winwidth(0) < 80 then
-                        vim.cmd("vertical resize 81")
+                    if vim.fn.winwidth(0) < 100 then
+                        vim.cmd("vertical resize 101")
                     else
                         vim.cmd("vertical resize 40")
                     end
@@ -193,7 +193,7 @@ require("neo-tree").setup({
             },
 
             -- FS related operations
-            ["ma"] = { 
+            ["ma"] = {
                 "add",
                 -- this command supports BASH style brace expansion ("x{a,b,c}" -> xa,xb,xc). see `:h neo-tree-file-actions` for details
                 -- some commands may take optional config options, see `:h neo-tree-mappings` for details

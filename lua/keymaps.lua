@@ -1,7 +1,7 @@
 -- general keymap settings
 
 local keymap = vim.keymap.set
-local os_uname = vim.loop.os_uname().sysname
+local os_uname = vim.uv.os_uname().sysname
 
 -- using <Space> as the leader key
 vim.g.mapleader = ' '
