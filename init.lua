@@ -1,7 +1,7 @@
 
 --local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 local lazypath = vim.env.HOME .. "/.nvim/lazy_plug/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
     vim.fn.system({
         "git",
         "clone",
@@ -190,7 +190,6 @@ require("lazy").setup(
             lazy = true,
             config = function() require('dap_setup') end,
         },
-        
         {"rcarriga/nvim-dap-ui",
             cmd = {
                 "DapContinue",

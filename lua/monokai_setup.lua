@@ -142,6 +142,11 @@ local oabt_hl_group = {
     NeoTreeNormalNC = {bg = oabt_scheme.oabt_dark_bg},
     NeoTreeFloatNormal = {bg = oabt_scheme.background},
 
+    -- hl groups specified for dapui
+    -- the control hl groups of dapui-repl depends on WinBar & WinBarNC
+    -- default WinBar & WinBarNC have different bg in Nvim 0.10
+    WinBarNC = {bg = oabt_scheme.background},
+
     -- hl groups specified for treesitter-context
     TreesitterContextBottom = {
         bg = oabt_scheme.pmenu_bg,
