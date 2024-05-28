@@ -145,7 +145,8 @@ local oabt_hl_group = {
     -- hl groups specified for dapui
     -- the control hl groups of dapui-repl depends on WinBar & WinBarNC
     -- default WinBar & WinBarNC have different bg in Nvim 0.10
-    WinBarNC = {bg = oabt_scheme.background},
+    WinBar = {bg = oabt_scheme.winbar_bg},
+    WinBarNC = {bg = oabt_scheme.winbar_bg},
 
     -- hl groups specified for treesitter-context
     TreesitterContextBottom = {
