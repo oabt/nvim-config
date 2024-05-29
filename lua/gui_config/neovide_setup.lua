@@ -1,5 +1,14 @@
 vim.cmd('set title titlestring=Neovim')
-vim.o.guifont = "DejaVuSansM Nerd Font Mono,SimHei:h12:#e-antialias"
+-- vim.o.guifont = "DejaVuSansM Nerd Font Mono,SimHei:h12:#e-antialias"
+vim.o.guifont = "CaskaydiaCove Nerd Font Mono,SimHei:h12:#e-antialias"
+-- vim.o.guifont = "JetBrainsMono Nerd Font Mono,SimHei:h12:#e-antialias"
+-- vim.o.guifont = "SauceCodePro Nerd Font Mono,SimHei:h12:#e-antialias"
+
+-- NOTE: ligatures can be disabled in neovide config.toml,
+-- with ["-calt"] font feature appended
+
+-- TODO: use a UI select to choose different gui fonts
+
 vim.opt.linespace = 0
 
 -- animation
