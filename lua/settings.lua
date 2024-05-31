@@ -25,7 +25,7 @@ opt.wildmenu = true
 opt.viminfo = "'250,<50,s10,h,rA:,rB:"
 
 opt.showtabline = 2
-opt.laststatus = 2
+opt.laststatus = 3
 opt.undodir = vim.env.HOME .. "/.nvim/undo"
 opt.termguicolors = true
 

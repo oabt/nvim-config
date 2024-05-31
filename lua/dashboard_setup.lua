@@ -74,7 +74,7 @@ local db_config = {
     theme = "doom",
     disable_move = true,    --  default is false disable move keymap for hyper
     hide = {
-        statusline = false,
+        statusline = true,
         tabline = false,
     },
     config = {
