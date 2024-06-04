@@ -96,10 +96,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.keymap.set('n', '<Leader>h', vim.diagnostic.goto_prev)
             vim.keymap.set('n', '<Leader>l', vim.diagnostic.goto_next)
             vim.keymap.set('n', '<M-e>', function()
-                    if vim.diagnostic.is_disabled() then
+                    if not vim.diagnostic.is_enabled() then
                         vim.diagnostic.enable()
                     else
-                        vim.diagnostic.disable()
+                        vim.diagnostic.enable(false)
                     end
                 end, opts)
         end

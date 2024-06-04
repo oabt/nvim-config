@@ -6,6 +6,7 @@
 
 -- force git download through proxy is easier
 require("nvim-treesitter.install").prefer_git = true
+require("nvim-treesitter.install").compilers = {"gcc", "clang"}
 
 require'nvim-treesitter.configs'.setup({
     -- A list of parser names, or "all" (the five listed parsers should always be installed)

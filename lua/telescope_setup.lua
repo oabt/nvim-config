@@ -41,7 +41,7 @@ telescope_config.setup({
         layout_strategy = 'center',
         --layout_strategy = 'bottom_pane',
         sorting_strategy = "ascending",
-        --winblend = 30, -- transparence of the telescope UI
+        winblend = 5, -- transparence of the telescope UI
         layout_config = {
             anchor = "S", -- "S" for South: align to the bottom edge, not working for 'bottom_pane'
             height = 0.5,

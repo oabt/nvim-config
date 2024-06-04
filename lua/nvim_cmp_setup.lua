@@ -21,7 +21,7 @@ cmp.setup({
             documentation = {
                 border = 'single',
                 winhighlight = 'Normal:CmpFloat,FloatBorder:CmpFloatBorder,CursorLine:PmenuSel,Search:None',
-                zindex = 1001,
+                zindex = 1002,
             },
         },
         mapping = {
