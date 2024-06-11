@@ -71,7 +71,7 @@ end
 
 local db_config = {
     shortcut_type = "number",
-    theme = "doom",
+    theme = "doom_nosep", -- @oabt: use customized theme forked from "doom"
     disable_move = true,    --  default is false disable move keymap for hyper
     hide = {
         statusline = false,

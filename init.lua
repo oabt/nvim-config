@@ -46,7 +46,7 @@ require("lazy").setup(
         },
 
         ------------ UI related ------------------------------
-        {"nvimdev/dashboard-nvim",
+        {"oabt/dashboard-nvim",
             event = "VimEnter",
             config = function() require('dashboard_setup') end,
         },
