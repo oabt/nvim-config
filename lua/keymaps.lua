@@ -20,7 +20,11 @@ keymap('n', '<Leader>/', '<cmd>nohlsearch<cr>')
 
 if os_uname == 'Windows_NT' then
     keymap('n', 'f<C-f>', '<cmd>silent! !explorer .<cr>')
-    keymap('n', '<C-t>', '<cmd>split term://cmd<cr>i')
+    if (vim.fn.executable('pwsh')) then -- try pwsh first
+        keymap('n', '<C-t>', '<cmd>split term://pwsh<cr>i')
+    else -- fall back to cmd
+        keymap('n', '<C-t>', '<cmd>split term://cmd<cr>i')
+    end
 else if os_uname == 'Linux' then
     keymap('n', '<C-t>', '<cmd>split term://bash<cr>i') end
 end
