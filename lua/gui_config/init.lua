@@ -8,3 +8,8 @@ if vim.g.gonvim_running then
     require('gui_config.goneovim-setup')
 end
 
+-- neoray gui config
+if vim.g.neoray then
+    require('gui_config.neoray_setup')
+end
+
