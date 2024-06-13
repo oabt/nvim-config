@@ -53,6 +53,9 @@ vim.api.nvim_set_hl(bt_ns, 'BTActiveM', focused_modified_hl)
 vim.api.nvim_set_hl(bt_ns, 'BTInactive', unfocused_hl)
 vim.api.nvim_set_hl(bt_ns, 'BTInactiveM', unfocused_modified_hl)
 
+-- @oabt: clear the 'Search' for the buffertag (namespace: bt_ns)
+vim.api.nvim_set_hl(bt_ns, "Search", {})
+
 local function tableContains(tab, value)
     for i = 1, #tab do
         if tab[i] == value then
