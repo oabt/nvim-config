@@ -7,8 +7,8 @@ local default_config = {
     border = "none",
     zindex = 10,
     limit_width = false,
-    modified_icon = has_devicons and "" or "[+]",
-    readonly_icon = has_devicons and "" or "[-]",
+    modified_icon = has_devicons and " " or "[+] ",
+    readonly_icon = has_devicons and " " or "[-] ",
     ignored_buftype = {},
     ignored_filetype = {},
 }
@@ -47,19 +47,15 @@ local unfocused_modified_hl = {
     blend = 30,
 }
 
-local bt_active = vim.api.nvim_create_namespace("BufferTag_A")
-local bt_active_m = vim.api.nvim_create_namespace("BufferTag_AM")
-local bt_inactive = vim.api.nvim_create_namespace("BufferTag_I")
-local bt_inactive_m = vim.api.nvim_create_namespace("BufferTag_IM")
+local bt_ns = vim.api.nvim_create_namespace("BufferTag_NS")
+vim.api.nvim_set_hl(bt_ns, 'BTActive', focused_hl)
+vim.api.nvim_set_hl(bt_ns, 'BTActiveM', focused_modified_hl)
+vim.api.nvim_set_hl(bt_ns, 'BTInactive', unfocused_hl)
+vim.api.nvim_set_hl(bt_ns, 'BTInactiveM', unfocused_modified_hl)
 
-vim.api.nvim_set_hl(bt_active, 'NormalFloat', focused_hl)
-vim.api.nvim_set_hl(bt_active_m, 'NormalFloat', focused_modified_hl)
-vim.api.nvim_set_hl(bt_inactive, 'NormalFloat', unfocused_hl)
-vim.api.nvim_set_hl(bt_inactive_m, 'NormalFloat', unfocused_modified_hl)
-
-local function tableContains(table, value)
-    for i = 1, #table do
-        if table[i] == value then
+local function tableContains(tab, value)
+    for i = 1, #tab do
+        if tab[i] == value then
             return true
         end
     end
@@ -157,6 +153,14 @@ local function create_tag_float(parent_win, focused, existed_float_win)
         return
     end
 
+    local icon_header = ''
+    if has_devicons and focused then
+        icon_header = ' ' .. ft_icon .. ' '
+    elseif has_devicons then
+        icon_header = ' ' .. ft_icon
+    end
+    buf_name = icon_header .. buf_name
+
     local buftype = vim.api.nvim_get_option_value("buftype", {buf=cur_buf})
     local filetype = vim.api.nvim_get_option_value("filetype", {buf=cur_buf})
     if  tableContains(default_config.ignored_buftype, buftype) or
@@ -166,7 +170,9 @@ local function create_tag_float(parent_win, focused, existed_float_win)
 
     local popup_text = buf_name
     -- By default, the popup width is the same as the length of the buffer text we want to show.
-    local popup_width = #buf_name
+    -- @oabt: do not use #buf_name, use vim.api.nvim_strwidth
+    -- because '#' is the number of bytes instead of the number of chars
+    local popup_width = vim.api.nvim_strwidth(buf_name)
 
     local window_width = vim.api.nvim_win_get_width(parent_win)
     -- Subtract 5 here to give the window a bit of padding - otherwise it can
@@ -195,7 +201,7 @@ local function create_tag_float(parent_win, focused, existed_float_win)
         focusable = false,
         zindex = default_config.zindex,
         style = "minimal",
-        border = (focused and has_devicons) and {"", "", "", {" ", "BuffertagIcon"}, "", "", "", {ft_icon, "BuffertagIcon"} } or "none",
+        border = "none",
         row = 0,
         col = vim.api.nvim_win_get_width(parent_win),
         title = vim.api.nvim_get_option_value("filetype", {buf=cur_buf}),
@@ -228,17 +234,25 @@ local function create_tag_float(parent_win, focused, existed_float_win)
         vim.api.nvim_win_set_config(existed_float_win, popup_conf)
     end
 
-    if focused and has_devicons then
-        vim.api.nvim_set_hl(0, "BuffertagIcon", {fg = contrast_color, bg = ft_color})
+    -- @oabt: set the namespace for the float_win
+    vim.api.nvim_win_set_hl_ns(float_win, bt_ns)
+
+    local filename_col = 0
+    if has_devicons and focused then
+        -- @oabt: set the hl of the filetype icon
+        filename_col = #icon_header
+        vim.api.nvim_set_hl(bt_ns, "BTIcon", {fg = contrast_color, bg = ft_color})
+        vim.api.nvim_buf_add_highlight(float_buf, bt_ns, 'BTIcon', 0, 0, filename_col)
     end
+
     if focused and buf_modified then
-        vim.api.nvim_win_set_hl_ns(float_win, bt_active_m)
+        vim.api.nvim_buf_add_highlight(float_buf, bt_ns, 'BTActiveM', 0, filename_col, -1)
     elseif focused and (not buf_modified) then
-        vim.api.nvim_win_set_hl_ns(float_win, bt_active)
+        vim.api.nvim_buf_add_highlight(float_buf, bt_ns, 'BTActive', 0, filename_col, -1)
     elseif (not focused) and buf_modified then
-        vim.api.nvim_win_set_hl_ns(float_win, bt_inactive_m)
+        vim.api.nvim_buf_add_highlight(float_buf, bt_ns, 'BTInactiveM', 0, filename_col, -1)
     else
-        vim.api.nvim_win_set_hl_ns(float_win, bt_inactive)
+        vim.api.nvim_buf_add_highlight(float_buf, bt_ns, 'BTInactive', 0, filename_col, -1)
     end
 end
 
@@ -263,7 +277,7 @@ function M.display_buffertags()
         end
     end
 
-    -- @oabt: close the float win belongs to the invisible windows (no in this tab)
+    -- @oabt: close the float win belongs to the invisible windows (not shown in this tab)
     for idx, floats in ipairs(float_wins) do
         if (not tableContains(wins_to_tag, floats[2])) then
             if vim.api.nvim_win_is_valid(floats[1]) then
@@ -276,7 +290,8 @@ function M.display_buffertags()
     end
 
     local cur_win = vim.api.nvim_get_current_win()
-    for _, win in ipairs(wins_to_tag) do
+    for _, win in ipairs(wins_to_tag) do -- @oabt: create float_win for windows to be tagged
+        -- @oabt: check whether a float window already exists to reuse for the window
         local existed_float_win = nil
         for _i, float_pair in ipairs(float_wins) do
             if win == float_pair[2] and tableContains(win_list, float_pair[1]) then
