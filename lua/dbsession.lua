@@ -45,7 +45,7 @@ local function session_save(session_name)
             {
                 prompt = "Input session name: ",
                 default = loaded_session,
-                copmletion = dbs.complete_list, -- TODO: not working with nvim-cmp
+                copmletion = dbs.complete_list, -- use existed session as candidates
             },
             function(input) file_name = input end
         )
@@ -64,6 +64,7 @@ local function session_save(session_name)
             if vim.fn.getcharstr() == "y" then
                 break
             else
+                vim.notify("[SessionSave]: NOT confirmed!", vim.log.levels.WARN)
                 return
             end
         end
@@ -115,7 +116,6 @@ local function session_load(session_name)
         end
         vim.cmd([[ noautocmd silent! %bwipeout!]])
         vim.api.nvim_command('silent! source ' .. file_path)
-        -- print('[dbsession] load session ' .. file_path)
         loaded_session = session_name
         return
     end

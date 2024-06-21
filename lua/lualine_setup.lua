@@ -19,6 +19,41 @@ local function oabt_macro()
     end
 end
 
+local function oabt_selcount() -- @oabt: modified from the lualine components selectioncount
+    local mode = vim.fn.mode(true)
+    local line_start, col_start, char_col_start =
+        vim.fn.line('v'), vim.fn.col('v'), vim.fn.charcol('v')
+    local line_end, col_end, char_col_end =
+        vim.fn.line('.'), vim.fn.col('.'), vim.fn.charcol('.')
+    local function oabt_expand(cstart, cend)
+        local expand = (cend > cstart) and (cend - cstart) or (cstart - cend + 1)
+        return expand
+    end
+    if mode:match('') then -- @oabt: visual block
+        local char_col_expand = oabt_expand(char_col_start, char_col_end)
+        local col_expand = oabt_expand(col_start, col_end)
+        if (char_col_expand ~= col_expand) then
+            return string.format('%dx%d(%d)',
+                math.abs(line_start - line_end) + 1, char_col_expand, col_expand)
+        else
+            return string.format('%dx%d',
+                math.abs(line_start - line_end) + 1, char_col_expand)
+        end
+    elseif mode:match('V') or line_start ~= line_end then
+        return math.abs(line_start - line_end) + 1
+    elseif mode:match('v') then
+        local char_col_expand = math.abs(char_col_start - char_col_end)
+        local col_expand = math.abs(col_start - col_end)
+        if (char_col_expand == col_expand) then
+            return char_col_expand
+        else
+            return string.format('%d(%d)', char_col_expand, col_expand)
+        end
+    else
+        return ''
+    end
+end
+
 local function exist_devicons()
     if package.loaded['nvim-web-devicons'] == nil then
         return false
@@ -30,6 +65,7 @@ end
 local function oabt_component_separators()
     if exist_devicons() then
         return { left = '', right = ''}
+        -- return { left = '', right = ''}
     else
         return { left = '│', right = '│'}
     end
@@ -38,6 +74,7 @@ end
 local function oabt_section_separators()
     if exist_devicons() then
         return { left = '', right = ''}
+        -- return { left = '', right = ''}
     else
         return { left = '', right = ''}
     end
@@ -169,6 +206,7 @@ lualine_config.setup({
             },
             {oabt_macro,
                 separator = '│',
+                color = {fg="f8f8f0"}
             },
             {'searchcount',
                 separator = '│',
@@ -180,7 +218,7 @@ lualine_config.setup({
                     end
                 end,
             },
-            {'selectioncount',
+            {oabt_selcount,
                 separator = '│',
                 fmt = function(str)
                     if exist_devicons() and string.len(str) > 0 then
