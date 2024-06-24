@@ -205,11 +205,13 @@ lualine_config.setup({
                 separator = '',
             },
             {oabt_macro,
-                separator = '│',
+                -- separator = '│',
+                separator = '',
                 color = {fg="f8f8f0"}
             },
             {'searchcount',
-                separator = '│',
+                -- separator = '│',
+                separator = '',
                 fmt = function(str)
                     if exist_devicons() and string.len(str) > 0 then
                         return ':' .. str:sub(2,-2)
@@ -219,7 +221,8 @@ lualine_config.setup({
                 end,
             },
             {oabt_selcount,
-                separator = '│',
+                -- separator = '│',
+                separator = '',
                 fmt = function(str)
                     if exist_devicons() and string.len(str) > 0 then
                         return ':' .. str
@@ -229,7 +232,8 @@ lualine_config.setup({
                 end,
             },
             { require('lsp-progress').progress,
-                separator = '│',
+                -- separator = '│',
+                separator = '',
             },
         },
         lualine_y = {
