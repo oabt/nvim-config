@@ -1,5 +1,13 @@
 local lualine_config = require('lualine')
 
+local function exist_devicons()
+    if package.loaded['nvim-web-devicons'] == nil then
+        return false
+    else
+        return true
+    end
+end
+
 --local function is_readonly()
 --    local buf = vim.api.nvim_win_get_buf(0)
 --    if vim.bo[buf].readonly then
@@ -54,11 +62,20 @@ local function oabt_selcount() -- @oabt: modified from the lualine components se
     end
 end
 
-local function exist_devicons()
-    if package.loaded['nvim-web-devicons'] == nil then
-        return false
+local function oabt_dap_status()
+    if package.loaded['dap'] == nil then
+        return ""
     else
-        return true
+        local dap_stat = require('dap').status()
+        if #dap_stat > 0 then
+            dap_stat = "DAP:[" .. dap_stat .. "]"
+            if exist_devicons() then
+                dap_stat = " " .. dap_stat
+            end
+            return dap_stat
+        else
+            return ""
+        end
     end
 end
 
@@ -235,6 +252,10 @@ lualine_config.setup({
                 -- separator = '│',
                 separator = '',
             },
+            {oabt_dap_status,
+                separator = '',
+                color = {fg='#fd971f'}
+            }
         },
         lualine_y = {
             {'encoding',
