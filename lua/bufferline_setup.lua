@@ -1,3 +1,10 @@
+        -- {"akinsho/bufferline.nvim",
+        --     event = "VeryLazy",
+        --     dependencies = {"nvim-tree/nvim-web-devicons"},
+        --     version = "*",
+        --     config = function() require('bufferline_setup') end,
+        -- },
+
 local bufferline = require("bufferline")
 
 local function exist_devicons()
