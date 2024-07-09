@@ -131,6 +131,11 @@ local oabt_hl_group = {
     LuaLineDiffDelete = {link = 'GitSignsDelete'},
     LuaLineDiffChange = {link = 'GitSignsChange'},
 
+    -- hl groups for tabline/tabby
+    TabbyLineFill = {bg = '#000000'},
+    TabbyLine = {fg = oabt_scheme.comment_fg, bg = '#111111'},
+    TabbyLineSel = {fg = '#ffffff', bg = oabt_scheme.background, bold = true, italic = true},
+
     -- hl groups specified for nvim-tree
     NvimTreeIndentMarker = {link = 'NonText'},
 
