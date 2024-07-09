@@ -76,7 +76,7 @@ tabby.setup({
                 if tab_modified(tab.id) then
                     close_modified = {tabline_symbols.modified_icon,
                         hl=tab.is_current() and 'String'
-                        or 'TabbyLine'
+                        or {fg=get_hex('String', 'fg'), bg=get_hex('TabbyLine', 'bg')}
                     }
                 else
                     close_modified = {tab.close_btn(tabline_symbols.close_icon),
