@@ -70,9 +70,12 @@ tabby.setup({
 
                 local hl = tab.is_current() and 'TabbyLineSel' or 'TabbyLine'
 
+                local tab_width = 20
+                local screen_col = vim.o.columns
+                local max_num_tabs = math.floor(screen_col / tab_width)
+                local surround_tabs = math.floor(max_num_tabs / 2)
+
                 -- render the tabs around the current tab
-                local surround_tabs = 4
-                local max_num_tabs = 2 * surround_tabs + 1
                 local min_tabid = math.min(vim.fn.tabpagenr() - surround_tabs, vim.fn.tabpagenr('$') - max_num_tabs)
                 local max_tabid = math.max(vim.fn.tabpagenr() + surround_tabs, max_num_tabs)
                 if tab.number() > max_tabid or tab.number() < min_tabid then
