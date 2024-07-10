@@ -67,13 +67,27 @@ tabby.setup({
         return {
 
             line.tabs().foreach(function(tab)
+
                 local hl = tab.is_current() and 'TabbyLineSel' or 'TabbyLine'
+
+                -- render the tabs around the current tab
+                local surround_tabs = 4
+                local max_num_tabs = 2 * surround_tabs + 1
+                local min_tabid = math.min(vim.fn.tabpagenr() - surround_tabs, vim.fn.tabpagenr('$') - max_num_tabs)
+                local max_tabid = math.max(vim.fn.tabpagenr() + surround_tabs, max_num_tabs)
+                if tab.number() > max_tabid or tab.number() < min_tabid then
+                    -- do not render the tabs that are far from the current tab
+                    return {}
+                end
+
+                local truncate_point = (tab.number() == max_tabid - 1) and line.truncate_point() or ""
+
                 local cur_buf = tab.current_win().buf().id
 
                 local file_name, ft_icon, ft_color = devicons_symbol(cur_buf)
 
                 local close_modified = {}
-                if tab_modified(tab.id) then
+                if tab_modified(tab.number()) then
                     close_modified = {tabline_symbols.modified_icon,
                         hl=tab.is_current() and 'String'
                         or {fg=get_hex('String', 'fg'), bg=get_hex('TabbyLine', 'bg')}
@@ -101,6 +115,8 @@ tabby.setup({
                     file_name, -- name of the tab
 
                     close_modified, -- close or modified symbol
+
+                    truncate_point,
 
                     line.sep(tabline_symbols.right_sep, hl, 'TabbyLineFill'),
 
