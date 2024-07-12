@@ -3,6 +3,12 @@ local M = {}
 local has_devicons = package.loaded['nvim-web-devicons']
 local devicons = has_devicons and require('nvim-web-devicons') or nil
 
+local function get_hex(hlgroup_name, attr) -- reference nvim-cokeline
+    local hlgroup_ID = vim.fn.synIDtrans(vim.fn.hlID(hlgroup_name))
+    local hex = vim.fn.synIDattr(hlgroup_ID, attr)
+    return hex ~= "" and hex or "NONE"
+end
+
 local default_config = {
     border = "none",
     zindex = 10,
@@ -14,11 +20,11 @@ local default_config = {
 }
 
 local default_hl = {
-    modified_fg = "#e6db74",
+    modified_fg = get_hex('String', 'fg'),
     active_fg = "#ffffff",
-    inactive_fg = "#8f908a",
+    inactive_fg = get_hex('Conceal', 'fg'),
     active_bg = "#606060",
-    inactive_bg = "#424136",
+    inactive_bg = get_hex('NormalFloat', 'bg'),
 }
 
 local focused_hl = {

@@ -11,7 +11,7 @@ local devicons = has_devicons and require('nvim-web-devicons') or nil
 
 local tabline_symbols = {
     left_sep = has_devicons and '' or '',
-    right_sep = has_devicons and '' or '',
+    right_sep = has_devicons and '' or ' ',
     close_icon = has_devicons and '󱎘' or '[x]',
     modified_icon = has_devicons and '' or '[+]',
 }
@@ -39,7 +39,7 @@ local function devicons_symbol(cur_buf)
             ft_icon, ft_color = '', '#6d8086'
         end
     else
-        return nil, nil, nil
+        return file_name, nil, nil -- only return filename if devicons is not enabled
     end
     return file_name, ft_icon, ft_color
 end
@@ -76,8 +76,12 @@ tabby.setup({
                 local surround_tabs = math.floor(max_num_tabs / 2)
 
                 -- render the tabs around the current tab
-                local min_tabid = math.min(vim.fn.tabpagenr() - surround_tabs, vim.fn.tabpagenr('$') - max_num_tabs)
-                local max_tabid = math.max(vim.fn.tabpagenr() + surround_tabs, max_num_tabs)
+                local min_tabid = math.min(
+                    vim.fn.tabpagenr() - surround_tabs,
+                    vim.fn.tabpagenr('$') - max_num_tabs)
+                local max_tabid = math.max(
+                    vim.fn.tabpagenr() + surround_tabs,
+                    max_num_tabs)
                 if tab.number() > max_tabid or tab.number() < min_tabid then
                     -- do not render the tabs that are far from the current tab
                     return {}

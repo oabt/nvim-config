@@ -11,31 +11,25 @@
 
 local neo_tree = require('neo-tree')
 
-local function exist_devicons()
-    if package.loaded['nvim-web-devicons'] == nil then
-        return false
-    else
-        return true
-    end
-end
+local has_devicons = package.loaded['nvim-web-devicons']
 
 local neo_tree_icons = {
-    expander_collapsed = exist_devicons() and "" or "",
-    expander_expanded = exist_devicons() and "" or "",
-    folder_closed = exist_devicons() and "" or "+",
-    folder_open = exist_devicons() and "" or "-",
-    folder_empty = exist_devicons() and "" or "-",
-    modified = exist_devicons() and "" or "[+]",
+    expander_collapsed = has_devicons and "" or "",
+    expander_expanded = has_devicons and "" or "",
+    folder_closed = has_devicons and "" or "+",
+    folder_open = has_devicons and "" or "-",
+    folder_empty = has_devicons and "" or "-",
+    modified = has_devicons and "" or "[+]",
 
     git_added = "",
     git_modified = "",
-    git_deleted = exist_devicons() and "✖" or "x",
-    git_renamed = exist_devicons() and "󰁕" or "→",
-    git_untracked = exist_devicons() and "" or "?",
-    git_ignored = exist_devicons() and "" or "ignored",
-    git_unstaged = exist_devicons() and "󰄱" or "unstaged",
-    git_staged = exist_devicons() and "" or "staged",
-    git_conflict = exist_devicons() and "" or "conflict",
+    git_deleted = has_devicons and "󰆴" or "x",
+    git_renamed = has_devicons and "󰁕" or "→",
+    git_untracked = has_devicons and "" or "?",
+    git_ignored = has_devicons and "" or "ignored",
+    git_unstaged = has_devicons and "󰄱" or "unstaged",
+    git_staged = has_devicons and "" or "staged",
+    git_conflict = has_devicons and "" or "conflict",
 }
 
 neo_tree.setup({
@@ -67,7 +61,7 @@ neo_tree.setup({
             last_indent_marker = "└",
             highlight = "NeoTreeIndentMarker",
             -- expander config, needed for nesting files
-            with_expanders = exist_devicons(), -- if nil and file nesting is enabled, will enable expanders
+            with_expanders = has_devicons, -- if nil and file nesting is enabled, will enable expanders
             expander_collapsed = neo_tree_icons.expander_collapsed,
             expander_expanded = neo_tree_icons.expander_expanded,
             expander_highlight = "NeoTreeExpander",
@@ -78,7 +72,7 @@ neo_tree.setup({
             folder_empty = neo_tree_icons.folder_empty,
             -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
             -- then these will never be used.
-            default = exist_devicons() and "" or "*",
+            default = has_devicons and "" or "*",
             highlight = "NeoTreeFileIcon"
         },
         modified = {

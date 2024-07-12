@@ -61,16 +61,10 @@ end
 
 vim.keymap.set('n', '<F4>', '<cmd>NvimTreeToggle<Cr>', {remap=false})
 
-local function exist_devicons()
-    if package.loaded['nvim-web-devicons'] == nil then
-        return false
-    else
-        return true
-    end
-end
+local has_devicons = package.loaded['nvim-web-devicons']
 
 local function folder_arrow_glyphs()
-    if exist_devicons() then
+    if has_devicons then
         return {arrow_closed = '', arrow_open = ''}
     else
         return {arrow_closed = '+', arrow_open = '-'}
@@ -104,9 +98,9 @@ require("nvim-tree").setup({
         },
         icons = {
             show = {
-                file = exist_devicons(),
-                folder = exist_devicons(),
-                modified = exist_devicons(),
+                file = has_devicons,
+                folder = has_devicons,
+                modified = has_devicons,
             },
             glyphs = {
                 modified = '',

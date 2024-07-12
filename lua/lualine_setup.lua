@@ -1,11 +1,11 @@
 local lualine_config = require('lualine')
 
-local function exist_devicons()
-    if package.loaded['nvim-web-devicons'] == nil then
-        return false
-    else
-        return true
-    end
+local has_devicons = package.loaded['nvim-web-devicons']
+
+local function get_hex(hlgroup_name, attr) -- reference nvim-cokeline
+    local hlgroup_ID = vim.fn.synIDtrans(vim.fn.hlID(hlgroup_name))
+    local hex = vim.fn.synIDattr(hlgroup_ID, attr)
+    return hex ~= "" and hex or "NONE"
 end
 
 --local function is_readonly()
@@ -69,7 +69,7 @@ local function oabt_dap_status()
         local dap_stat = require('dap').status()
         if #dap_stat > 0 then
             dap_stat = "DAP:[" .. dap_stat .. "]"
-            if exist_devicons() then
+            if has_devicons then
                 dap_stat = " " .. dap_stat
             end
             return dap_stat
@@ -80,7 +80,7 @@ local function oabt_dap_status()
 end
 
 local function oabt_component_separators()
-    if exist_devicons() then
+    if has_devicons then
         return { left = '', right = ''}
         -- return { left = '', right = ''}
     else
@@ -89,7 +89,7 @@ local function oabt_component_separators()
 end
 
 local function oabt_section_separators()
-    if exist_devicons() then
+    if has_devicons then
         return { left = '', right = ''}
         -- return { left = '', right = ''}
     else
@@ -98,7 +98,7 @@ local function oabt_section_separators()
 end
 
 local function oabt_modified_icon()
-    if exist_devicons() then
+    if has_devicons then
         return '' -- f111
     else
         return '[+]'
@@ -106,7 +106,7 @@ local function oabt_modified_icon()
 end
 
 local function oabt_readonly_icon()
-    if exist_devicons() then
+    if has_devicons then
         return ''
     else
         return '[-]'
@@ -123,7 +123,7 @@ vim.api.nvim_create_autocmd("User", {
 
 lualine_config.setup({
     options = {
-        icons_enabled = exist_devicons(),
+        icons_enabled = (has_devicons ~= nil),
         theme = 'powerline',
         component_separators = oabt_component_separators(),
         section_separators = oabt_section_separators(),
@@ -179,7 +179,7 @@ lualine_config.setup({
                 },
                 color = function(section)
                     if vim.bo.modified then
-                        return {fg = '#e6db74', gui='italic,bold'}
+                        return {fg = get_hex('String', 'fg'), gui='italic,bold'}
                     else
                         return nil
                     end
@@ -201,16 +201,16 @@ lualine_config.setup({
             },
             {'diagnostics',
                 diagnostics_color = {
-                    error = 'DiagnosticSignError',
-                    warn = 'DiagnosticSignWarn',
-                    info = 'DiagnosticSignInfo',
-                    hint = 'DiagnosticSignHint',
+                    error = {fg=get_hex('DiagnosticSignError', 'fg')},
+                    warn = {fg=get_hex('DiagnosticSignWarn', 'fg')},
+                    info = {fg=get_hex('DiagnosticSignInfo', 'fg')},
+                    hint = {fg=get_hex('DiagnosticSignHint', 'fg')},
                 },
                 symbols = {
-                    error = exist_devicons() and ':' or 'E:',
-                    warn = exist_devicons() and ':' or 'W:',
-                    info = exist_devicons() and '󰋽:' or 'I:',
-                    hint = exist_devicons() and '󰌶:' or 'H:',
+                    error = has_devicons and ':' or 'E:',
+                    warn = has_devicons and ':' or 'W:',
+                    info = has_devicons and '󰋽:' or 'I:',
+                    hint = has_devicons and '󰌶:' or 'H:',
                 },
                 always_visible = true,
             },
@@ -224,13 +224,13 @@ lualine_config.setup({
             {oabt_macro,
                 -- separator = '│',
                 separator = '',
-                color = {fg="f8f8f0"}
+                color = {fg=get_hex('Normal', 'fg')}
             },
             {'searchcount',
                 -- separator = '│',
                 separator = '',
                 fmt = function(str)
-                    if exist_devicons() and string.len(str) > 0 then
+                    if has_devicons and string.len(str) > 0 then
                         return ':' .. str:sub(2,-2)
                     else
                         return str
@@ -241,7 +241,7 @@ lualine_config.setup({
                 -- separator = '│',
                 separator = '',
                 fmt = function(str)
-                    if exist_devicons() and string.len(str) > 0 then
+                    if has_devicons and string.len(str) > 0 then
                         return ':' .. str
                     else
                         return str
@@ -254,7 +254,7 @@ lualine_config.setup({
             },
             {oabt_dap_status,
                 separator = '',
-                color = {fg='#fd971f'}
+                color = {fg=get_hex('Debug', 'fg')}
             }
         },
         lualine_y = {
@@ -299,7 +299,7 @@ lualine_config.setup({
                 },
                 color = function(section)
                     if vim.bo.modified then
-                        return {fg = '#e6db74', gui='italic,bold'}
+                        return {fg = get_hex('String', 'fg'), gui='italic,bold'}
                     else
                         return 'lualine_c_inactive'
                     end

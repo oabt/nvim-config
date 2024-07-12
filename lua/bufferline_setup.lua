@@ -7,16 +7,10 @@
 
 local bufferline = require("bufferline")
 
-local function exist_devicons()
-    if package.loaded['nvim-web-devicons'] == nil then
-        return false
-    else
-        return true
-    end
-end
+local has_devicons = package.loaded['nvim-web-devicons']
 
 local function oabt_tab_style()
-    if exist_devicons() then
+    if has_devicons then
         return "slant"
     else
         return "thin"
@@ -24,7 +18,7 @@ local function oabt_tab_style()
 end
 
 local function oabt_modified_icon()
-    if exist_devicons() then
+    if has_devicons then
         return ''
     else
         return '[+]'
@@ -32,7 +26,7 @@ local function oabt_modified_icon()
 end
 
 local function oabt_close_icon()
-    if exist_devicons() then
+    if has_devicons then
         return '󱎘'
     else
         return '[X]'

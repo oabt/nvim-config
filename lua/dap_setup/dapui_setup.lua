@@ -1,13 +1,7 @@
 
 local dapui = require('dapui')
 
-local function exist_devicons()
-    if package.loaded['nvim-web-devicons'] == nil then
-        return false
-    else
-        return true
-    end
-end
+local has_devicons = package.loaded['nvim-web-devicons']
 
 local function repl_icons()
     local repl_prompt = {
@@ -33,7 +27,7 @@ local function repl_icons()
         step_over = "StepOver",
         terminate = "Terminate",
     }
-    if exist_devicons() then
+    if has_devicons then
         return repl_prompt
     else
         return repl_prompt_no_icons
@@ -86,7 +80,7 @@ vim.api.nvim_create_user_command('DapToggleUI',
 )
 
 -- set the signs/icons for dap w/t and w/o web-devicons
-if exist_devicons() then
+if has_devicons then
     vim.fn.sign_define('DapBreakpoint', {text='', texthl='Debug', linehl='', numhl=''})
     vim.fn.sign_define('DapBreakpointCondition', {text='', texthl='Debug', linehl='', numhl=''})
     vim.fn.sign_define('DapStopped', {text='', texthl='Debug', linehl='', numhl=''})

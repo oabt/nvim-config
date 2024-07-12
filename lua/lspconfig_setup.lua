@@ -105,18 +105,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end
     })
 
-local function exist_devicons()
-    if package.loaded['nvim-web-devicons'] == nil then
-        return false
-    else
-        return true
-    end
-end
+local has_devicons = package.loaded['nvim-web-devicons']
 
-local oabt_error_icon = exist_devicons() and "" or "E"
-local oabt_warn_icon = exist_devicons() and "" or "W"
-local oabt_info_icon = exist_devicons() and "󰋽" or "I"
-local oabt_hint_icon = exist_devicons() and "󰌶" or "H"
+local oabt_error_icon = has_devicons and "" or "E"
+local oabt_warn_icon = has_devicons and "" or "W"
+local oabt_info_icon = has_devicons and "󰋽" or "I"
+local oabt_hint_icon = has_devicons and "󰌶" or "H"
 
 local diagnostic_config = {
     virtual_text = false,
