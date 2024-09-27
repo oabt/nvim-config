@@ -56,7 +56,7 @@ gitsigns_config.setup({
     end
 })
 
-vim.cmd([[command! Gvdiff exec "-tabnew % | Gitsigns diffthis"]])
+vim.cmd([[command! Gvdiff exec "-tabnew % | Gitsigns diffthis vertical=true"]])
 vim.cmd([[command! Gpreview exec "Gitsigns preview_hunk"]])
 
 --vim.cmd([[
