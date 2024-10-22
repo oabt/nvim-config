@@ -19,7 +19,7 @@ local neo_tree_icons = {
     folder_closed = has_devicons and "" or "+",
     folder_open = has_devicons and "" or "-",
     folder_empty = has_devicons and "" or "-",
-    modified = has_devicons and "" or "[+]",
+    modified = has_devicons and "" or "[+]",
 
     git_added = "",
     git_modified = "",
