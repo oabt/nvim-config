@@ -13,15 +13,19 @@ local function oabt_enable_context()
     tscontext.enable()
 
     -- @oabt: trigger the update of the attached buffer list
-    vim.cmd("doautocmd treesitter_context_update BufReadPost")
+    -- vim.cmd("doautocmd treesitter_context_update BufReadPost")
+    vim.api.nvim_exec_autocmds('BufReadPost', {group='treesitter_context_update'})
 
     -- @oabt: trigger the update of the context render
-    vim.cmd("doautocmd treesitter_context_update CursorMoved")
+    -- vim.cmd("doautocmd treesitter_context_update CursorMoved")
+    vim.api.nvim_exec_autocmds('CursorMoved', {group='treesitter_context_update'})
+
     vim.api.nvim_create_autocmd({"BufEnter", "WinEnter"},
         {
             callback = function(args)
                 -- @oabt: trigger the update of the attached buffer list
-                vim.cmd("doautocmd treesitter_context_update BufReadPost")
+                -- vim.cmd("doautocmd treesitter_context_update BufReadPost")
+                vim.api.nvim_exec_autocmds('BufReadPost', {group='treesitter_context_update'})
             end,
             group = oabt_context_group
         }
