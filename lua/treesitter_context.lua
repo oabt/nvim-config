@@ -3,17 +3,25 @@
         --     event = "VeryLazy",
         --     config = function() require('treesitter_context') end,
         -- }
+local tscontext = require('treesitter-context')
 
 local oabt_context_group = vim.api.nvim_create_augroup('oabt_context_enable', {})
 
 local oabt_context_status = false -- initialize as disabled
 
 local function oabt_enable_context()
-    require('treesitter-context').enable()
+    tscontext.enable()
+
+    -- @oabt: trigger the update of the attached buffer list
+    vim.cmd("doautocmd treesitter_context_update BufReadPost")
+
+    -- @oabt: trigger the update of the context render
+    vim.cmd("doautocmd treesitter_context_update CursorMoved")
     vim.api.nvim_create_autocmd({"BufEnter", "WinEnter"},
         {
             callback = function(args)
-                require('treesitter-context').enable()
+                -- @oabt: trigger the update of the attached buffer list
+                vim.cmd("doautocmd treesitter_context_update BufReadPost")
             end,
             group = oabt_context_group
         }
@@ -21,7 +29,7 @@ local function oabt_enable_context()
 end
 
 local function oabt_disable_context()
-    require('treesitter-context').disable()
+    tscontext.disable()
     vim.api.nvim_create_augroup('oabt_context_enable', {})
 end
 
@@ -42,8 +50,9 @@ vim.keymap.set('n', '<leader>b',
     {desc="Toggle the treesitter-context"}
 )
 
-require'treesitter-context'.setup{
+tscontext.setup{
     enable = oabt_context_status, -- Enable this plugin (Can be enabled/disabled later via commands)
+    multiwindow = false,
     max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
     min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
     line_numbers = true,
