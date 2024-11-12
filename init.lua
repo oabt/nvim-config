@@ -168,7 +168,7 @@ require("lazy").setup(
             config = function() require('neo_tree_setup') end,
         },
         {"nvim-treesitter/nvim-treesitter-context",
-            event = "VeryLazy",
+            keys = {"<Leader>b"},
             config = function() require('treesitter_context') end,
         },
 
