@@ -1,10 +1,13 @@
 
+local oabt_basic_augroup = vim.api.nvim_create_augroup('oabt_basic_augroup', {})
+
 -- vim.cmd[[autocmd BufEnter * silent! lcd %:p:h]]-- equivalent to autochdir but work better with plugins
 vim.api.nvim_create_autocmd( -- automatically change cwd to the file in current buffer
     {"BufEnter"},
     {
         pattern = {"*"},
-        command = "silent! lcd %:p:h"
+        command = "silent! lcd %:p:h",
+        group = oabt_basic_augroup,
     }
 )
 
@@ -18,6 +21,7 @@ vim.api.nvim_create_autocmd( -- jump to the position of last access
                 vim.cmd[[normal g'"]]
             end
         end,
+        group = oabt_basic_augroup,
 
     }
 )
@@ -34,6 +38,7 @@ vim.api.nvim_create_autocmd(
                     "CursorLineNr:TermCursorLineNr")
             end
         end,
+        group = oabt_basic_augroup,
     }
 )
 
