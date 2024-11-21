@@ -50,7 +50,7 @@ local function oabt_toggle_context()
 end
 
 vim.keymap.set('n', '<leader>b',
-    tscontext.toggle(),
+    tscontext.toggle,
     {desc="Toggle the treesitter-context"}
 )
 
