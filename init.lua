@@ -169,7 +169,7 @@ require("lazy").setup(
         },
         {"nvim-treesitter/nvim-treesitter-context",
             keys = {"<Leader>b"},
-            event = "VeryLazy",
+            -- event = "VeryLazy",
             config = function() require('treesitter_context') end,
         },
 
