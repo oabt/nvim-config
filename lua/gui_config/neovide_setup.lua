@@ -18,7 +18,8 @@ vim.g.neovide_scroll_animation_length = 0.1  -- scroll animation require 'multig
 vim.g.neovide_refresh_rate = 60
 
 -- display
-vim.g.neovide_transparency = 1.0
+vim.g.neovide_opacity = 1.0
+vim.g.neovide_normal_opacity = 1.0
 
 vim.g.neovide_hide_mouse_when_typing = true
 
@@ -26,6 +27,17 @@ vim.g.neovide_floating_shadow = true
 vim.g.neovide_floating_z_height = 10
 vim.g.neovide_light_angle_degrees = 45
 vim.g.neovide_light_radius = 5
+
+vim.g.neovide_floating_corner_radius = 0
+
+-- vim.g.neovide_title_background_color = string.format(
+--     "%x",
+--     vim.api.nvim_get_hl(0, {id=vim.api.nvim_get_hl_id_by_name("Normal")}).bg
+-- )
+-- vim.g.neovide_title_text_color = string.format(
+--     "%x",
+--     vim.api.nvim_get_hl(0, {id=vim.api.nvim_get_hl_id_by_name("Normal")}).fg
+-- )
 
 -- only enable IME in insert and cmdline mode
 local function set_ime(args)
