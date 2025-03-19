@@ -113,14 +113,6 @@ local function oabt_readonly_icon()
     end
 end
 
--- listen lsp-progress event and refresh lualine
-vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
-vim.api.nvim_create_autocmd("User", {
-    group = "lualine_augroup",
-    pattern = "LspProgressStatusUpdated",
-    callback = require("lualine").refresh,
-})
-
 lualine_config.setup({
     options = {
         icons_enabled = (has_devicons ~= nil),
@@ -248,8 +240,8 @@ lualine_config.setup({
                     end
                 end,
             },
-            { require('lsp-progress').progress,
-                -- separator = '│',
+            {'lsp_status',
+                icon = has_devicons and '' or '',
                 separator = '',
             },
             {oabt_dap_status,
