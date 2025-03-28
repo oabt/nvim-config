@@ -4,12 +4,12 @@ local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- override default open_floating_preview function
-local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-    opts = opts or {}
-    opts.border = opts.border or "single"
-    return orig_util_open_floating_preview(contents, syntax, opts, ...)
-end
+-- local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+-- function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+--     opts = opts or {}
+--     opts.border = opts.border or "single"
+--     return orig_util_open_floating_preview(contents, syntax, opts, ...)
+-- end
 
 lspconfig.pyright.setup{
     capabilities = capabilities,
@@ -74,11 +74,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
             -- Buffer local mappings.
             -- See `:help vim.lsp.*` for documentation on any of the below functions
             local opts = { buffer = ev.buf }
-            vim.keymap.set('n', 'gD', ':sp | vim.lsp.buf.declaration()<cr>', opts)
+            vim.keymap.set('n', 'gD', ':sp | lua vim.lsp.buf.declaration()<cr>', opts)
             --vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
             vim.keymap.set('n', 'gd', ':sp | lua vim.lsp.buf.definition()<cr>', opts)
             vim.keymap.set('n', '<C-]>', ':sp | lua vim.lsp.buf.definition()<cr>', opts)
-            vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+
+            vim.keymap.set('n', 'K', function()
+                vim.lsp.buf.hover({border="single"})
+            end, opts)
+
             vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
             vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
             --vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
@@ -93,8 +97,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
             --vim.keymap.set('n', '<space>f', function()
             --    vim.lsp.buf.format { async = true }
             --end, opts)
-            vim.keymap.set('n', '<Leader>h', vim.diagnostic.goto_prev)
-            vim.keymap.set('n', '<Leader>l', vim.diagnostic.goto_next)
+            vim.keymap.set('n', '<Leader>h', function()
+                vim.diagnostic.jump({count=-1, float=true})
+            end)
+            vim.keymap.set('n', '<Leader>l', function()
+                vim.diagnostic.jump({count=1, float=true})
+            end)
             vim.keymap.set('n', '<M-e>', function()
                     if not vim.diagnostic.is_enabled() then
                         vim.diagnostic.enable()
@@ -127,19 +135,30 @@ for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
     vim.api.nvim_set_hl(0, group, {})
 end
 
-vim.cmd([[ sign define DiagnosticSignError text=]]
-    .. oabt_error_icon ..
-    [[ texthl=DiagnosticSignError linehl= numhl= ]])
+vim.diagnostic.config({
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = oabt_error_icon,
+            [vim.diagnostic.severity.WARN] = oabt_warn_icon,
+            [vim.diagnostic.severity.INFO] = oabt_info_icon,
+            [vim.diagnostic.severity.HINT] = oabt_hint_icon,
+        }
+    }
+})
 
-vim.cmd([[sign define DiagnosticSignWarn text=]]
-    .. oabt_warn_icon ..
-    [[ texthl=DiagnosticSignWarn linehl= numhl= ]])
+-- vim.cmd([[ sign define DiagnosticSignError text=]]
+--     .. oabt_error_icon ..
+--     [[ texthl=DiagnosticSignError linehl= numhl= ]])
 
-vim.cmd([[sign define DiagnosticSignInfo text=]]
-    .. oabt_info_icon ..
-    [[ texthl=DiagnosticSignInfo linehl= numhl= ]])
+-- vim.cmd([[sign define DiagnosticSignWarn text=]]
+--     .. oabt_warn_icon ..
+--     [[ texthl=DiagnosticSignWarn linehl= numhl= ]])
 
-vim.cmd([[sign define DiagnosticSignHint text=]]
-    .. oabt_hint_icon ..
-    [[ texthl=DiagnosticSignHint linehl= numhl= ]])
+-- vim.cmd([[sign define DiagnosticSignInfo text=]]
+--     .. oabt_info_icon ..
+--     [[ texthl=DiagnosticSignInfo linehl= numhl= ]])
+
+-- vim.cmd([[sign define DiagnosticSignHint text=]]
+--     .. oabt_hint_icon ..
+--     [[ texthl=DiagnosticSignHint linehl= numhl= ]])
 
