@@ -30,14 +30,14 @@ vim.g.neovide_light_radius = 5
 
 vim.g.neovide_floating_corner_radius = 0
 
--- vim.g.neovide_title_background_color = string.format(
---     "%x",
---     vim.api.nvim_get_hl(0, {id=vim.api.nvim_get_hl_id_by_name("Normal")}).bg
--- )
--- vim.g.neovide_title_text_color = string.format(
---     "%x",
---     vim.api.nvim_get_hl(0, {id=vim.api.nvim_get_hl_id_by_name("Normal")}).fg
--- )
+vim.g.neovide_title_background_color = string.sub(string.format(
+    "%x",
+    0x1000000 + vim.api.nvim_get_hl(0, {id=vim.api.nvim_get_hl_id_by_name("TabbyLineFill")}).bg
+), 2)
+vim.g.neovide_title_text_color = string.sub(string.format(
+    "%x",
+    0x1000000 + vim.api.nvim_get_hl(0, {id=vim.api.nvim_get_hl_id_by_name("Normal")}).fg
+), 2)
 
 -- only enable IME in insert and cmdline mode
 local function set_ime(args)
