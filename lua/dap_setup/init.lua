@@ -80,20 +80,33 @@ dap.adapters.lldb = {
 }
 
 dap.adapters.codelldb = {
-    type = 'server',
-    port = "${port}",
-    executable = {
-        command =  "codelldb",
-        args = {"--port", "${port}"},
+    -- @oabt: for codelldb < v1.11.0
+    -- type = 'server',
+    -- port = "${port}",
+    -- executable = {
+    --     command =  "codelldb",
+    --     args = {"--port", "${port}"},
 
-        detached = function ()
-            if vim.uv.os_uname().sysname == "Windows_NT" then
-                return false
-            else
-                return true
-            end
+    --     detached = function ()
+    --         if vim.uv.os_uname().sysname == "Windows_NT" then
+    --             return false
+    --         else
+    --             return true
+    --         end
+    --     end
+    -- },
+
+    -- @oabt: for codelldb >= v1.11.0
+    type = "executable",
+    command = "codelldb",
+    name = "codelldb",
+    detached = function ()
+        if vim.uv.os_uname().sysname == "Windows_NT" then
+            return false
+        else
+            return true
         end
-    },
+    end
 
 }
 
