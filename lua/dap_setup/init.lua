@@ -69,7 +69,7 @@ dap.adapters.gdb = {
     -- require gdb 14.1+
     type = "executable",
     command = "gdb",
-    args = {"-i", "dap"},
+    args = {"--interpreter=dap", "--eval-command", "set print pretty on"},
 }
 
 dap.adapters.lldb = {
