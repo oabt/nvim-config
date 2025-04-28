@@ -61,33 +61,78 @@ local function tab_modified(tabid)
     return false
 end
 
+local function get_min_max_tabid(line)
+    local tab_width_list = {}
+    local center_tab_width = 0
+    local center_id = 0
+
+    for _, tab in ipairs(line.tabs().tabs) do
+        local cur_buf = tab.current_win().buf().id
+        local file_name, _, _ = devicons_symbol(cur_buf)
+        local node_width = #file_name
+        if (has_devicons) then
+            node_width = node_width + 10
+        else
+            node_width = node_width + 8
+        end
+        tab_width_list[tab.id] = node_width
+        if tab.is_current() then
+            center_id = tab.id
+            center_tab_width = node_width
+        end
+    end
+
+    local min_tabid = center_id
+    local max_tabid = center_id
+    local rest_col = vim.o.columns - center_tab_width
+    for expand = 1, vim.fn.tabpagenr('$') do
+        local left_bounded = false
+        local right_bounded = false
+        if center_id - expand > 0 and rest_col - tab_width_list[center_id - expand] > 0 then
+            min_tabid = center_id - expand
+            rest_col = rest_col - tab_width_list[min_tabid]
+        else
+            left_bounded = true
+        end
+
+        if center_id + expand <= vim.fn.tabpagenr('$') and rest_col + tab_width_list[center_id + expand] > 0 then
+            max_tabid = center_id + expand
+            rest_col = rest_col - tab_width_list[max_tabid]
+        else
+            right_bounded = true
+        end
+
+        if left_bounded and right_bounded then
+            break
+        end
+    end
+    return max_tabid, min_tabid
+end
+
+
 tabby.setup({
 
     line = function(line)
+
+        local max_tabid, min_tabid = get_min_max_tabid(line)
+
         return {
+
 
             line.tabs().foreach(function(tab)
 
                 local hl = tab.is_current() and 'TabbyLineSel' or 'TabbyLine'
 
-                local tab_width = 20
-                local screen_col = vim.o.columns
-                local max_num_tabs = math.floor(screen_col / tab_width)
-                local surround_tabs = math.floor(max_num_tabs / 2)
-
-                -- render the tabs around the current tab
-                local min_tabid = math.min(
-                    vim.fn.tabpagenr() - surround_tabs,
-                    vim.fn.tabpagenr('$') - max_num_tabs)
-                local max_tabid = math.max(
-                    vim.fn.tabpagenr() + surround_tabs,
-                    max_num_tabs)
+                -- only render the tabs around the current tab
                 if tab.number() > max_tabid or tab.number() < min_tabid then
                     -- do not render the tabs that are far from the current tab
+                    if tab.number() == max_tabid + 1 or tab.number() == min_tabid - 1 then
+                        return ".."
+                    end
                     return {}
                 end
 
-                local truncate_point = (tab.number() == max_tabid - 1) and line.truncate_point() or ""
+                local truncate_point = (tab.number() == max_tabid) and line.truncate_point() or ""
 
                 local cur_buf = tab.current_win().buf().id
 
