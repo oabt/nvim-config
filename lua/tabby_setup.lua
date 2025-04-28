@@ -75,9 +75,9 @@ local function get_min_max_tabid(line)
         else
             node_width = node_width + 8
         end
-        tab_width_list[tab.id] = node_width
+        table.insert(tab_width_list, node_width)
         if tab.is_current() then
-            center_id = tab.id
+            center_id = tab.number() -- @oabt: do not use tab.id
             center_tab_width = node_width
         end
     end
@@ -95,13 +95,14 @@ local function get_min_max_tabid(line)
             left_bounded = true
         end
 
-        if center_id + expand <= vim.fn.tabpagenr('$') and rest_col + tab_width_list[center_id + expand] > 0 then
+        if center_id + expand <= vim.fn.tabpagenr('$') and rest_col - tab_width_list[center_id + expand] > 0 then
             max_tabid = center_id + expand
             rest_col = rest_col - tab_width_list[max_tabid]
         else
             right_bounded = true
         end
 
+        -- @oabt: if both left and right bounded, stop expanding
         if left_bounded and right_bounded then
             break
         end
@@ -132,7 +133,7 @@ tabby.setup({
                     return {}
                 end
 
-                local truncate_point = (tab.number() == max_tabid) and line.truncate_point() or ""
+                -- local truncate_point = (tab.number() == max_tabid) and line.truncate_point() or ""
 
                 local cur_buf = tab.current_win().buf().id
 
@@ -168,7 +169,7 @@ tabby.setup({
 
                     close_modified, -- close or modified symbol
 
-                    truncate_point,
+                    -- truncate_point,
 
                     line.sep(tabline_symbols.right_sep, hl, 'TabbyLineFill'),
 
