@@ -88,9 +88,12 @@ require("lazy").setup(
                 "hrsh7th/cmp-buffer",
                 "FelipeLema/cmp-async-path",
                 "hrsh7th/cmp-cmdline",
-                "notomo/cmp-neosnippet",
-                "Shougo/neosnippet.vim",
-                "Shougo/neosnippet-snippets",
+                -- "notomo/cmp-neosnippet",
+                -- "Shougo/neosnippet.vim",
+                -- "Shougo/neosnippet-snippets",
+                "xzbdmw/cmp-mini-snippets",
+                "echasnovski/mini.snippets",
+                "rafamadriz/friendly-snippets",
             },
             config = function() require('nvim_cmp_setup') end,
         },
@@ -100,6 +103,12 @@ require("lazy").setup(
             config = function()
                 vim.cmd("runtime vim_legacy/neosnippet-setup.vim")
             end,
+        },
+
+        {"echasnovski/mini.snippets",
+            lazy = true,
+            dependencies = {"rafamadriz/friendly-snippets"},
+            config = function() require('mini_snippet_setup') end
         },
 
         ------------------ edit ----------------------------------
