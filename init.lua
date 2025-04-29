@@ -98,12 +98,12 @@ require("lazy").setup(
             config = function() require('nvim_cmp_setup') end,
         },
 
-        {"Shougo/neosnippet.vim",
-            lazy = true,
-            config = function()
-                vim.cmd("runtime vim_legacy/neosnippet-setup.vim")
-            end,
-        },
+        -- {"Shougo/neosnippet.vim",
+        --     lazy = true,
+        --     config = function()
+        --         vim.cmd("runtime vim_legacy/neosnippet-setup.vim")
+        --     end,
+        -- },
 
         {"echasnovski/mini.snippets",
             lazy = true,

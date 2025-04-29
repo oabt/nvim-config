@@ -10,7 +10,7 @@ cmp.setup({
                 -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
 
                 local mini_snip = require('mini.snippets')
-                local insert = mini_snip.config.exapnd.inert or mini_snip.default_insert
+                local insert = mini_snip.config.expand.insert or mini_snip.default_insert
                 insert({body = args.body})
             end,
         },
@@ -79,7 +79,7 @@ cmp.setup({
                       only_show_in_line_start = false,
                   }
                 },
-                --{ name = 'vsnip' }, -- For vsnip users.
+                -- { name = 'vsnip' }, -- For vsnip users.
                 -- { name = 'luasnip' }, -- For luasnip users.
                 -- { name = 'ultisnips' }, -- For ultisnips users.
                 -- { name = 'snippy' }, -- For snippy users.
@@ -121,7 +121,7 @@ cmp.setup.cmdline(':', {
     }),
     sources = cmp.config.sources({
         { name = 'async_path' },
-        { name = 'cmdline' }, 
+        { name = 'cmdline' },
     })
 })
 

@@ -12,5 +12,15 @@ mini_snip.setup({
         stop = '<C-c>',
         jump_next = '<C-k>',
         jump_prev = '',
-    }
+    },
+    expand = {
+        -- Resolve raw config snippets at context
+        prepare = nil,
+        -- Match resolved snippets at cursor position
+        match = nil,
+        -- Possibly choose among matched snippets
+        select = nil,
+        -- Insert selected snippet
+        insert = nil,
+    },
 })
