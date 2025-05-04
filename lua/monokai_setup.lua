@@ -122,6 +122,71 @@ local oabt_hl_group = {
         fg = monokai.scheme.aqua,
     },
 
+    -- blink-cmp hl groups
+    BlinkCmpMenuBorder = {
+        link = 'FloatBorder',
+    },
+    BlinkCmpKindKeyword = {
+        link ='CmpItemKindKeyword',
+    },
+    BlinkCmpKindVariable = {
+        link ='CmpItemKindVariable',
+    },
+    BlinkCmpKindConstant = {
+        link ='CmpItemKindConstant',
+    },
+    BlinkCmpKindReference = {
+        link ='CmpItemKindReference',
+    },
+    BlinkCmpKindValue = {
+        link ='CmpItemKindValue',
+    },
+    BlinkCmpKindFunction = {
+        link ='CmpItemKindFunction',
+    },
+    BlinkCmpKindMethod = {
+        link ='CmpItemKindMethod',
+    },
+    BlinkCmpKindConstructor = {
+        link ='CmpItemKindConstructor',
+    },
+    BlinkCmpKindClass = {
+        link ='CmpItemKindClass',
+    },
+    BlinkCmpKindInterface = {
+        link ='CmpItemKindInterface',
+    },
+    BlinkCmpKindStruct = {
+        link ='CmpItemKindStruct',
+    },
+    BlinkCmpKindEvent = {
+        link ='CmpItemKindEvent',
+    },
+    BlinkCmpKindEnum = {
+        link ='CmpItemKindEnum',
+    },
+    BlinkCmpKindUnit = {
+        link ='CmpItemKindUnit',
+    },
+    BlinkCmpKindModule = {
+        link ='CmpItemKindModule',
+    },
+    BlinkCmpKindProperty = {
+        link ='CmpItemKindProperty',
+    },
+    BlinkCmpKindField = {
+        link ='CmpItemKindField',
+    },
+    BlinkCmpKindTypeParameter = {
+        link ='CmpItemKindTypeParameter',
+    },
+    BlinkCmpKindEnumMember = {
+        link ='CmpItemKindEnumMember',
+    },
+    BlinkCmpKindOperator = {
+        link ='CmpItemKindOperator',
+    },
+
     -- hl groups specified for Gitsigns
     GitSignsAdd = { fg = '#87ff5f', ctermfg = 119,},
     GitSignsDelete = { fg = '#d75f5f', ctermfg = 167,},
