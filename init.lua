@@ -81,6 +81,7 @@ require("lazy").setup(
         },
         ------------------ auto completion ----------------------
         {"saghen/blink.cmp",
+            cond = true,
             event = {"InsertEnter", "CmdlineEnter"},
             dependencies = {
                 "rafamadriz/friendly-snippets",
@@ -89,35 +90,36 @@ require("lazy").setup(
             config = function() require('blink_cmp_setup') end,
         },
 
-        -- {"hrsh7th/nvim-cmp",
-        --     event = {"InsertEnter", "CmdlineEnter"},
-        --     dependencies = {
-        --         "hrsh7th/cmp-nvim-lsp",
-        --         "hrsh7th/cmp-nvim-lsp-signature-help",
-        --         "hrsh7th/cmp-buffer",
-        --         "FelipeLema/cmp-async-path",
-        --         "hrsh7th/cmp-cmdline",
-        --         -- "notomo/cmp-neosnippet",
-        --         -- "Shougo/neosnippet.vim",
-        --         -- "Shougo/neosnippet-snippets",
-        --         "xzbdmw/cmp-mini-snippets",
-        --         "echasnovski/mini.snippets",
-        --         "rafamadriz/friendly-snippets",
-        --     },
-        --     config = function() require('nvim_cmp_setup') end,
-        -- },
+        {"hrsh7th/nvim-cmp",
+            cond = false,
+            event = {"InsertEnter", "CmdlineEnter"},
+            dependencies = {
+                "hrsh7th/cmp-nvim-lsp",
+                "hrsh7th/cmp-nvim-lsp-signature-help",
+                "hrsh7th/cmp-buffer",
+                "FelipeLema/cmp-async-path",
+                "hrsh7th/cmp-cmdline",
+                -- "notomo/cmp-neosnippet",
+                -- "Shougo/neosnippet.vim",
+                -- "Shougo/neosnippet-snippets",
+                "xzbdmw/cmp-mini-snippets",
+                "echasnovski/mini.snippets",
+                "rafamadriz/friendly-snippets",
+            },
+            config = function() require('nvim_cmp_setup') end,
+        },
+
+        {"echasnovski/mini.snippets",
+            lazy = true,
+            dependencies = {"rafamadriz/friendly-snippets"},
+            config = function() require('mini_snippet_setup') end
+        },
 
         -- {"Shougo/neosnippet.vim",
         --     lazy = true,
         --     config = function()
         --         vim.cmd("runtime vim_legacy/neosnippet-setup.vim")
         --     end,
-        -- },
-
-        -- {"echasnovski/mini.snippets",
-        --     lazy = true,
-        --     dependencies = {"rafamadriz/friendly-snippets"},
-        --     config = function() require('mini_snippet_setup') end
         -- },
 
         ------------------ edit ----------------------------------

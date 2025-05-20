@@ -14,8 +14,14 @@ local menu_columns_no_icon = {
 blink_cmp.setup({
 
 fuzzy = {
-    -- implementation = "prefer_rust_with_warning",
-    implementation = "lua",
+    implementation = "prefer_rust_with_warning",
+    -- implementation = "lua",
+
+    prebuilt_binaries = {
+        proxy = {
+            url = "127.0.0.1:1080",
+        }
+    },
 },
 
 completion = {
@@ -34,7 +40,10 @@ completion = {
         }
     },
 
-    documentation = { window = { border = 'single' } },
+    documentation = {
+        auto_show = true,
+        window = { border = 'single' }
+    },
 
     list = {
         selection = {
@@ -57,11 +66,11 @@ sources = {
                 -- get_bufnrs = vim.api.nvim_list_bufs
 
                 -- or (recommended) filter to only "normal" buffers
-                get_bufnrs = function()
-                    return vim.tbl_filter(function(bufnr)
-                        return vim.bo[bufnr].buftype == ''
-                    end, vim.api.nvim_list_bufs())
-                end
+                -- get_bufnrs = function()
+                --     return vim.tbl_filter(function(bufnr)
+                --         return vim.bo[bufnr].buftype == ''
+                --     end, vim.api.nvim_list_bufs())
+                -- end
             },
         },
 
