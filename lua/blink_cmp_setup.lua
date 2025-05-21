@@ -61,6 +61,12 @@ sources = {
 
     providers = {
         buffer = {
+            should_show_items = function(ctx)
+                return ctx.trigger.initial_kind ~= 'trigger_character'
+            end,
+
+            min_keyword_length = 2,
+
             opts = {
                 -- get all buffers, even ones like neo-tree
                 -- get_bufnrs = vim.api.nvim_list_bufs
@@ -82,7 +88,13 @@ sources = {
             opts = {
                 trailing_slash = false,
             }
-        }
+        },
+
+        snippets = {
+            should_show_items = function(ctx)
+                return ctx.trigger.initial_kind ~= 'trigger_character'
+            end,
+        },
     }
 },
 
