@@ -1,9 +1,31 @@
 local blink_cmp = require('blink.cmp')
 
+local files = require('blink.cmp.fuzzy.download.files')
+
+-- @oabt: get the version from the recent released tag (abbrev=0)
+local function get_git_tag()
+    local repo_dir = vim.fs.root(files.root_dir, '.git')
+    if not repo_dir then return nil end
+
+    local git_ret = vim.system({
+        'git',
+        '--git-dir', vim.fs.joinpath(repo_dir, '.git'),
+        '--work-tree', repo_dir,
+        'describe', '--tags',
+        '--abbrev=0',
+    }, { cwd = files.root_dir}):wait(500)
+
+    -- if ~git_ret then return nil end
+    if git_ret == nil or git_ret.code ~= 0 then return nil end
+    return vim.split(git_ret.stdout, '\n')[1]
+end
+
+local recent_ver = get_git_tag()
+
 local has_devicons = package.loaded['nvim-web-devicons']
 
 local menu_columns_icon = {
-    { "label", "label_description", gap = 1 }, { "kind_icon", "kind" }
+    { "label", "label_description", gap = 1 }, { "kind_icon", "kind", gap = 1 }
 }
 
 local menu_columns_no_icon = {
@@ -18,6 +40,7 @@ fuzzy = {
     -- implementation = "lua",
 
     prebuilt_binaries = {
+        force_version = recent_ver,
         proxy = {
             url = "127.0.0.1:1080",
         }
@@ -77,6 +100,7 @@ sources = {
                 --         return vim.bo[bufnr].buftype == ''
                 --     end, vim.api.nvim_list_bufs())
                 -- end
+                max_async_buffer_size = 1000000,
             },
         },
 
