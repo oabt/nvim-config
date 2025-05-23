@@ -398,4 +398,11 @@ function()
 end
 )
 
+vim.api.nvim_create_user_command('PickerExplorer',
+function()
+    require('snacks').picker.explorer(picker_explorer_config)
+end,
+{}
+)
+
 return picker_config
