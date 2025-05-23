@@ -105,6 +105,16 @@ local oabt_hl_group = {
         underline = true,
     },
 
+    SnacksPicker = {
+        link = "Normal"
+    },
+    SnacksPickerMatch = {
+        link = "TelescopeMatching",
+    },
+    SnacksPickerListCursorLine = {
+        link = "SnacksPickerCursorLine",
+    },
+
     -- nvim-cmp hl groups
     CmpItemAbbrMatch = {
         fg = monokai.scheme.orange,
