@@ -143,8 +143,15 @@ require("lazy").setup(
             config = function() require('nvim_surround_setup') end,
         },
 
+        {"folke/snacks.nvim",
+            cond = true,
+            lazy = false,
+            config = function() require("snacks_setup") end,
+        },
+
         ---------------- navigation -----------------------------
         {"nvim-telescope/telescope.nvim",
+            cond = false,
             cmd = "Telescope",
             keys = { -- the keys configured in telescope-setup.lua
                 "<C-p>", "<leader>d", "<leader>f",
