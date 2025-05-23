@@ -41,7 +41,7 @@ local picker_explorer_config = {
         file = { filename_only = true },
         severity = { pos = "right" },
     },
-    matcher = { sort_empty = false, fuzzy = false },
+    matcher = { sort_empty = false, fuzzy = true },
     config = function(opts)
         return require("snacks.picker.source.explorer").setup(opts)
     end,

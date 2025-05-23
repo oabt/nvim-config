@@ -46,6 +46,7 @@ win = {
             ["<CR>"] = { "confirm", mode = { "n", "i" } },
             ["<S-CR>"] = { { "pick_win", "jump" } },
             ["<c-o>"] = { "drop", mode = { "n", "i" } },
+            ["o"] = { "drop", mode = { "n" } },
             ["<c-s>"] = { "edit_split", mode = { "i", "n" } },
             ["s"] = { "edit_split", mode = { "n" } },
             ["<c-v>"] = { "edit_vsplit", mode = { "i", "n" } },
