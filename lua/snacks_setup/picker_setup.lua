@@ -45,7 +45,7 @@ win = {
 
             ["<CR>"] = { "confirm", mode = { "n", "i" } },
             ["<S-CR>"] = { { "pick_win", "jump" } },
-            ["<c-o>"] = { "confirm", mode = { "n", "i" } },
+            ["<c-o>"] = { "drop", mode = { "n", "i" } },
             ["<c-s>"] = { "edit_split", mode = { "i", "n" } },
             ["s"] = { "edit_split", mode = { "n" } },
             ["<c-v>"] = { "edit_vsplit", mode = { "i", "n" } },
@@ -105,6 +105,7 @@ win = {
 
             ["<2-LeftMouse>"] = "confirm",
             ["<CR>"] = "confirm",
+            ["<c-o>"] = "drop",
             ["<S-CR>"] = { { "pick_win", "jump" } },
             ["<c-s>"] = "edit_split",
             ["s"] = { "edit_split", mode = { "n" } },
@@ -346,11 +347,13 @@ local picker_explorer_config = {
             keys = {
                 ["u"] = "explorer_up",
                 ["o"] = "confirm",
+                ["l"] = false,
                 ["s"] = "edit_split",
                 ["v"] = "edit_vsplit",
                 ["t"] = "tab",
                 ["T"] = "tabdrop",
                 ["x"] = "explorer_close", -- close directory
+                ["h"] = false,
                 ["X"] = "explorer_close_all",
 
                 ["ma"] = "explorer_add",
