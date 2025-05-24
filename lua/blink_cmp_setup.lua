@@ -39,6 +39,21 @@ fuzzy = {
     implementation = "prefer_rust_with_warning",
     -- implementation = "lua",
 
+    -- sort = {
+
+    --     function(a, b)
+    --         local source_prior = {
+    --             path = 4,
+    --             lsp = 3,
+    --             snippets = 2,
+    --             buffer = 1
+    --         }
+    --         return source_prior[a.source_id] < source_prior[b.source_id]
+    --     end,
+    --     "score",
+    --     "sort_text",
+    -- },
+
     prebuilt_binaries = {
         force_version = recent_ver,
         proxy = {
@@ -84,11 +99,19 @@ sources = {
 
     providers = {
         buffer = {
-            should_show_items = function(ctx)
-                return ctx.trigger.initial_kind ~= 'trigger_character'
-            end,
+            -- should_show_items = function(ctx)
+            --     return ctx.trigger.initial_kind ~= 'trigger_character'
+            -- end,
 
-            min_keyword_length = 2,
+            score_offset = -10,
+
+            min_keyword_length = function(ctx)
+                if ctx.trigger.initial_kind ~= 'trigger_character' then
+                    return 0
+                else
+                    return 3
+                end
+            end,
 
             opts = {
                 -- get all buffers, even ones like neo-tree
