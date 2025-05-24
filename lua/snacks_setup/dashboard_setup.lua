@@ -11,7 +11,8 @@ local function get_sections()
     for index, session_name in ipairs(session_names) do
         local session = {
             text = {
-                {'Session: ' .. session_name, hl = "Identifier", width = 50},
+                {'Session: ', hl = "Identifier"},
+                {session_name, hl = "Identifier", width = 40},
                 {'[' .. tostring(index - 1) .. ']', hl = 'Number'},
             },
             action = ':SLoad ' .. session_name,
@@ -67,7 +68,7 @@ local dashboard_configs = {
         keys = {
             { icon = " ", key = "q", desc = "Quit", action = ":q" },
             { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
-            { icon = " ", key = "U", desc = "Lazy", action = ":Lazy update", enabled = package.loaded.lazy ~= nil },
+            { icon = " ", key = "U", desc = "Lazy Update", action = ":Lazy update", enabled = package.loaded.lazy ~= nil },
         },
     },
     sections = get_sections(),
