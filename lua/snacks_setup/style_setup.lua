@@ -1,4 +1,6 @@
 local style_configs = {
+
+dashboard = {
     zindex = 10,
     height = 0,
     width = 0,
@@ -6,7 +8,7 @@ local style_configs = {
         bufhidden = "wipe",
         buftype = "nofile",
         buflisted = false,
-        filetype = "snacks_dashboard",
+        filetype = "dashboard",
         swapfile = false,
         undofile = false,
     },
@@ -31,6 +33,8 @@ local style_configs = {
 
         wrap = false,
     },
+},
+
 }
 
 return style_configs
