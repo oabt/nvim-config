@@ -221,7 +221,7 @@ local function create_tag_float(parent_win, focused, existed_float_win)
     if existed_float_win == nil then
         float_buf = vim.api.nvim_create_buf(false, true)
         if float_buf == 0 then
-            vim.api.nvim_err_writeln("details_popup: could not create details buffer")
+            vim.api.nvim_echo({"details_popup: could not create details buffer"}, true, {err=true})
             return nil
         end
     else
@@ -251,17 +251,29 @@ local function create_tag_float(parent_win, focused, existed_float_win)
         -- @oabt: set the hl of the filetype icon
         filename_col = #icon_header
         vim.api.nvim_set_hl(bt_ns, "BTIcon", {fg = contrast_color, bg = ft_color})
-        vim.api.nvim_buf_add_highlight(float_buf, bt_ns, 'BTIcon', 0, 0, filename_col)
+
+        vim.hl.range(float_buf, bt_ns, 'BTIcon', {0, 0}, {0, filename_col})
+        -- -- Deprecated in nvim-0.11
+        -- vim.api.nvim_buf_add_highlight(float_buf, bt_ns, 'BTIcon', 0, 0, filename_col)
+
     end
 
     if focused and buf_modified then
-        vim.api.nvim_buf_add_highlight(float_buf, bt_ns, 'BTActiveM', 0, filename_col, -1)
+        vim.hl.range(float_buf, bt_ns, 'BTActiveM', {0, filename_col}, {0, -1})
+        -- -- Deprecated in nvim-0.11
+        -- vim.api.nvim_buf_add_highlight(float_buf, bt_ns, 'BTActiveM', 0, filename_col, -1)
     elseif focused and (not buf_modified) then
-        vim.api.nvim_buf_add_highlight(float_buf, bt_ns, 'BTActive', 0, filename_col, -1)
+        vim.hl.range(float_buf, bt_ns, 'BTActive', {0, filename_col}, {0, -1})
+        -- -- Deprecated in nvim-0.11
+        -- vim.api.nvim_buf_add_highlight(float_buf, bt_ns, 'BTActive', 0, filename_col, -1)
     elseif (not focused) and buf_modified then
-        vim.api.nvim_buf_add_highlight(float_buf, bt_ns, 'BTInactiveM', 0, filename_col, -1)
+        vim.hl.range(float_buf, bt_ns, 'BTInactiveM', {0, filename_col}, {0, -1})
+        -- -- Deprecated in nvim-0.11
+        -- vim.api.nvim_buf_add_highlight(float_buf, bt_ns, 'BTInactiveM', 0, filename_col, -1)
     else
-        vim.api.nvim_buf_add_highlight(float_buf, bt_ns, 'BTInactive', 0, filename_col, -1)
+        vim.hl.range(float_buf, bt_ns, 'BTInactive', {0, filename_col}, {0, -1})
+        -- -- Deprecated in nvim-0.11
+        -- vim.api.nvim_buf_add_highlight(float_buf, bt_ns, 'BTInactive', 0, filename_col, -1)
     end
 end
 
@@ -302,7 +314,7 @@ function M.display_buffertags()
     for _, win in ipairs(wins_to_tag) do -- @oabt: create float_win for windows to be tagged
         -- @oabt: check whether a float window already exists to reuse for the window
         local existed_float_win = nil
-        for _i, float_pair in ipairs(float_wins) do
+        for _, float_pair in ipairs(float_wins) do
             if win == float_pair[2] and tableContains(win_list, float_pair[1]) then
                 existed_float_win = float_pair[1]
                 break
@@ -327,6 +339,8 @@ local au_id = nil
 
 local enabled = false
 
+local bt_augroup = vim.api.nvim_create_augroup("bt_augroup", { clear = true })
+
 function M.enable()
     au_id = vim.api.nvim_create_autocmd(
         {
@@ -336,7 +350,10 @@ function M.enable()
             "CursorHoldI",
             'WinScrolled', -- VimResized detects changes in the overall terminal size
         },
-        {callback = M.display_buffertags}
+        {
+            callback = M.display_buffertags,
+            group = bt_augroup,
+        }
     )
     enabled = true
     -- run it so an initial window move isn't necessary
