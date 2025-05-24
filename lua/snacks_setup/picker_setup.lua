@@ -106,8 +106,9 @@ win = {
 
             ["<2-LeftMouse>"] = "confirm",
             ["<CR>"] = "confirm",
-            ["<c-o>"] = "drop",
             ["<S-CR>"] = { { "pick_win", "jump" } },
+            ["<c-o>"] = "drop",
+            ["o"] = {"drop", mode = { "n" }},
             ["<c-s>"] = "edit_split",
             ["s"] = { "edit_split", mode = { "n" } },
             ["<c-v>"] = "edit_vsplit",

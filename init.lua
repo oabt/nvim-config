@@ -46,10 +46,10 @@ require("lazy").setup(
         },
 
         ------------ UI related ------------------------------
-        {"oabt/dashboard-nvim",
-            event = "VimEnter",
-            config = function() require('dashboard_setup') end,
-        },
+        -- {"oabt/dashboard-nvim",
+        --     event = "VimEnter",
+        --     config = function() require('dashboard_setup') end,
+        -- },
         {"nvim-tree/nvim-web-devicons",
             -- cond = false,
             lazy = true,

@@ -60,8 +60,12 @@ local picker_explorer_config = {
                 ["X"] = "explorer_close_all",
 
                 ["ma"] = "explorer_add",
+                ["md"] = "explorer_add",
+                ["a"] = false,
+
                 ["rn"] = "explorer_rename",
-                ["c"] = false,
+                ["r"] = false,
+
                 ["S"] = "explorer_open", -- open with system application
                 ["P"] = "toggle_preview",
 
@@ -70,6 +74,7 @@ local picker_explorer_config = {
 
                 ["yy"] = { "explorer_yank", mode = { "n", "x" } },
                 ["y"] = false,
+                ["c"] = false,
 
                 ["pp"] = "explorer_paste",
                 ["p"] = false,
