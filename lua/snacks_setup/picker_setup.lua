@@ -79,7 +79,7 @@ win = {
             ["<c-w>J"] = false,
             ["<c-w>K"] = false,
             ["<c-w>L"] = false,
-            ["<leader>p"] = { "toggle_preview", mode = { "n" } },
+            ["P"] = { "toggle_preview", mode = { "n" } },
             ["<a-p>"] = false,
 
             ["<a-d>"] = "inspect",
@@ -140,7 +140,7 @@ win = {
             ["<c-w>J"] = false,
             ["<c-w>K"] = false,
             ["<c-w>L"] = false,
-            ["<leader>p"] = "toggle_preview",
+            ["P"] = "toggle_preview",
             ["<a-p>"] = false,
 
             ["<a-d>"] = "inspect",
@@ -175,6 +175,12 @@ win = {
             ["<a-w>"] = false,
         },
     },
+},
+
+sources = {
+    buffers = {
+        layout = {preview = false}
+    }
 },
 
 --TODO: how to disable all the icons
