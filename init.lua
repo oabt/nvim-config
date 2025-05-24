@@ -148,7 +148,7 @@ require("lazy").setup(
             dependencies = {
                 "nvim-tree/nvim-web-devicons"
             },
-            lazy = false,
+            event = "VeryLazy",
             config = function() require("snacks_setup") end,
         },
 

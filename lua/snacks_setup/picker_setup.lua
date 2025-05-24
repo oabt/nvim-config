@@ -175,6 +175,7 @@ win = {
             ["<ScrollWheelUp>"] = "list_scroll_wheel_up",
             ["<c-w>"] = "cycle_win",
             ["<a-w>"] = false,
+            ["?"] = "toggle_help_list",
         },
     },
 },
@@ -182,12 +183,19 @@ win = {
 sources = {
     buffers = {
         layout = {preview = false}
-    }
+    },
+
+    lines = {
+        layout = {preview = true}
+    },
 },
 
 --TODO: how to disable all the icons
 icons = {
     files = {
+        enabled = has_devicons and true or false,
+    },
+    git = {
         enabled = has_devicons and true or false,
     }
 },
