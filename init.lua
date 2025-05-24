@@ -86,7 +86,7 @@ require("lazy").setup(
             dependencies = {
                 "rafamadriz/friendly-snippets",
             },
-            version = "*",
+            -- version = "*",
             config = function() require('blink_cmp_setup') end,
         },
 
@@ -145,6 +145,9 @@ require("lazy").setup(
 
         {"folke/snacks.nvim",
             cond = true,
+            dependencies = {
+                "nvim-tree/nvim-web-devicons"
+            },
             lazy = false,
             config = function() require("snacks_setup") end,
         },

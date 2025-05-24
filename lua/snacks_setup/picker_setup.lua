@@ -1,3 +1,5 @@
+local has_devicons = package.loaded['nvim-web-devicons']
+
 local picker_config = {
 enabled = true,
 
@@ -184,7 +186,11 @@ sources = {
 },
 
 --TODO: how to disable all the icons
-icons = nil,
+icons = {
+    files = {
+        enabled = has_devicons and true or false,
+    }
+},
 
 }
 
