@@ -80,8 +80,11 @@ vim.api.nvim_create_autocmd(
     {"User"},
 {
     pattern = "SnacksDashboard*",
-    command = "set showtabline=2",
     group = augroup,
+    callback = function(ev)
+        vim.opt.showtabline = 2
+        vim.opt.laststatus = 3
+    end
 }
 )
 

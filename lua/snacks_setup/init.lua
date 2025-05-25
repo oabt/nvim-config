@@ -5,6 +5,7 @@ local explorer_configs = {explorer = require('snacks_setup.explorer_setup')}
 local dashboard_configs = {dashboard = require('snacks_setup.dashboard_setup')}
 local style_configs = {styles = require('snacks_setup.style_setup')}
 local statuscolumn_config = {statuscolumn = require('snacks_setup.statuscolumn_setup')}
+local indent_config = {indent = require('snacks_setup.indent_setup')}
 
 local snacks_configs = vim.tbl_deep_extend("force", {}
 
@@ -17,6 +18,8 @@ local snacks_configs = vim.tbl_deep_extend("force", {}
 ,dashboard_configs
 
 ,statuscolumn_config
+
+,indent_config
 
 )
 
