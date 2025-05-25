@@ -46,6 +46,11 @@ local picker_explorer_config = {
         return require("snacks.picker.source.explorer").setup(opts)
     end,
     win = {
+        input = {
+            keys = {
+                ["<Esc>"] = {"focus_list", mode = {"n", "v"}},
+            },
+        },
         list = {
             keys = {
                 ["u"] = "explorer_up",
@@ -84,7 +89,8 @@ local picker_explorer_config = {
 
                 ["R"] = "explorer_update",
                 ["cd"] = "tcd",
-                ["<leader>/"] = "picker_grep",
+                ["/"] = false,
+                ["i"] = "toggle_focus",
                 ["<c-t>"] = "terminal",
                 ["."] = "explorer_focus",
                 ["I"] = "toggle_ignored",
