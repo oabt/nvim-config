@@ -17,7 +17,7 @@ end,
 return {
     indent = {
         priority = 1,
-        enabled = false, -- enable indent guides
+        enabled = true, -- enable indent guides
         char = "┆",
         only_scope = false, -- only show indent guides of the scope
         only_current = false, -- only show indent guides in the current window
