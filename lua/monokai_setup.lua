@@ -114,6 +114,9 @@ local oabt_hl_group = {
     SnacksPickerListCursorLine = {
         link = "SnacksPickerCursorLine",
     },
+    SnacksIndentScope = {
+        link = "Comment",
+    },
 
     -- nvim-cmp hl groups
     CmpItemAbbrMatch = {
