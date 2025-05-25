@@ -92,13 +92,17 @@ vim.api.nvim_create_user_command("Dashboard", function()
     -- update session list
     dashboard_configs.sections = get_sections()
 
-    -- if there exists a dashboard, reuse the buffer instead of creating a new one
+    -- check if there exists a dashboard
     local existed_dashboard = false
     local bufinfo_dict = vim.fn.getbufinfo()
     for _, buf_info in pairs(bufinfo_dict) do
         if vim.fn.getbufvar(buf_info['bufnr'], '&filetype') == 'dashboard' then
-            existed_dashboard = true
-            vim.cmd("buffer " .. tostring(buf_info['bufnr']))
+            -- delete the existed dashboard
+            vim.api.nvim_buf_delete(buf_info['bufnr'], {force=true})
+
+            -- OR reuse the existed dashboard
+            -- existed_dashboard = true
+            -- vim.cmd("buffer " .. tostring(buf_info['bufnr']))
             break
         end
     end
