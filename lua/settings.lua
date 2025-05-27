@@ -2,6 +2,8 @@
 local opt = vim.opt
 local g = vim.g
 
+g.enable_devicons = true
+
 vim.cmd([[syntax enable]]) -- syntax enable is default in neovim
 opt.number = true
 opt.backspace = "indent,eol,start"

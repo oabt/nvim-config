@@ -32,6 +32,7 @@ require("lazy").setup(
         ------------- themes/color scheme/highlight-------------------
         {"ofirgall/ofirkai.nvim",
             lazy = false,
+            priority = 1001,
             config = function() require('monokai_setup') end,
         },
         -- {"sheerun/vim-polyglot", -- vim-polyglot can be a fall back of tree-sitter
@@ -51,7 +52,7 @@ require("lazy").setup(
         --     config = function() require('dashboard_setup') end,
         -- },
         {"nvim-tree/nvim-web-devicons",
-            -- cond = false,
+            cond = vim.g.enable_devicons,
             lazy = true,
             config = function() require('nvim_webdevicons_setup') end,
         },
@@ -145,10 +146,8 @@ require("lazy").setup(
 
         {"folke/snacks.nvim",
             cond = true,
-            dependencies = {
-                "nvim-tree/nvim-web-devicons"
-            },
-            event = "VeryLazy",
+            lazy = false,
+            priority = 1000,
             config = function() require("snacks_setup") end,
         },
 
