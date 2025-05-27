@@ -199,6 +199,9 @@ local oabt_hl_group = {
     BlinkCmpKindOperator = {
         link ='CmpItemKindOperator',
     },
+    BlinkCmpLabelMatch = {
+        fg = monokai.scheme.orange,
+    },
 
     -- hl groups specified for Gitsigns
     GitSignsAdd = { fg = '#87ff5f', ctermfg = 119,},
