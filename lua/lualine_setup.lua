@@ -123,6 +123,7 @@ lualine_config.setup({
             statusline = {
                 --'NvimTree', -- using lualine nvim-tree extension
                 'startify',
+                'dashboard',
             },
             winbar = {},
         },
@@ -130,9 +131,9 @@ lualine_config.setup({
         always_divide_middle = true,
         globalstatus = true,
         refresh = {
-            statusline = 1000,
-            tabline = 1000,
-            winbar = 1000,
+            statusline = 200,
+            tabline = 200,
+            winbar = 200,
         }
     },
 
@@ -161,8 +162,10 @@ lualine_config.setup({
                 end
             },
             {'filename',
-                path = 1, --0: only filename, 1: relative path, 2:absolute path
-                shorting_target = 40,
+                --0: only filename, 1: relative path, 2:absolute path,
+                --3: Absolute path, with tilde as the home directory, 4: Filename and parent dir, with tilde as the home directory
+                path = 3,
+                shorting_target = vim.o.columns * 0.4,
                 symbols = {
                     modified = oabt_modified_icon(),      -- Text to show when the file is modified.
                     readonly = oabt_readonly_icon(),      -- Text to show when the file is non-modifiable or readonly.
