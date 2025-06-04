@@ -39,20 +39,25 @@ fuzzy = {
     implementation = "prefer_rust_with_warning",
     -- implementation = "lua",
 
-    -- sort = {
+    -- max_typos = function() return 0 end,
 
-    --     function(a, b)
-    --         local source_prior = {
-    --             path = 4,
-    --             lsp = 3,
-    --             snippets = 2,
-    --             buffer = 1
-    --         }
-    --         return source_prior[a.source_id] < source_prior[b.source_id]
-    --     end,
-    --     "score",
-    --     "sort_text",
-    -- },
+    sorts = {
+        function(a, b)
+            local source_prior = {
+                path = 4,
+                lsp = 3,
+                snippets = 2,
+                buffer = 1
+            }
+            -- avoid cmdline indexing nil itme
+            if (source_prior[a.source_id] and source_prior[b.source_id]) then
+                return source_prior[a.source_id] > source_prior[b.source_id]
+            end
+            return nil
+        end,
+        "score",
+        "sort_text",
+    },
 
     prebuilt_binaries = {
         force_version = recent_ver,
