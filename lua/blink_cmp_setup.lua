@@ -39,7 +39,10 @@ fuzzy = {
     implementation = "prefer_rust_with_warning",
     -- implementation = "lua",
 
-    -- max_typos = function() return 0 end,
+    max_typos = function(keyword)
+        -- local length = #keyword
+        return 0
+    end,
 
     sorts = {
         function(a, b)
