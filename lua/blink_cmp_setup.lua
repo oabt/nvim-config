@@ -2,6 +2,28 @@ local blink_cmp = require('blink.cmp')
 
 local files = require('blink.cmp.fuzzy.download.files')
 
+local use_rust = true
+local fuzzy_sort_in_lua = nil
+if not use_rust then
+    fuzzy_sort_in_lua = {
+        function(a, b)
+            local source_prior = {
+                path = 4,
+                lsp = 3,
+                snippets = 2,
+                buffer = 1
+            }
+            -- avoid cmdline indexing nil itme
+            if (source_prior[a.source_id] and source_prior[b.source_id]) then
+                return source_prior[a.source_id] > source_prior[b.source_id]
+            end
+            return nil
+        end,
+        "score",
+        "sort_text",
+    }
+end
+
 -- @oabt: get the version from the recent released tag (abbrev=0)
 local function get_git_tag()
     local repo_dir = vim.fs.root(files.root_dir, '.git')
@@ -36,31 +58,14 @@ local menu_columns_no_icon = {
 blink_cmp.setup({
 
 fuzzy = {
-    implementation = "prefer_rust_with_warning",
-    -- implementation = "lua",
+    implementation = use_rust and "prefer_rust_with_warning" or "lua",
 
     max_typos = function(keyword)
         -- local length = #keyword
         return 0
     end,
 
-    sorts = {
-        function(a, b)
-            local source_prior = {
-                path = 4,
-                lsp = 3,
-                snippets = 2,
-                buffer = 1
-            }
-            -- avoid cmdline indexing nil itme
-            if (source_prior[a.source_id] and source_prior[b.source_id]) then
-                return source_prior[a.source_id] > source_prior[b.source_id]
-            end
-            return nil
-        end,
-        "score",
-        "sort_text",
-    },
+    sorts = fuzzy_sort_in_lua,
 
     prebuilt_binaries = {
         force_version = recent_ver,
@@ -132,6 +137,7 @@ sources = {
                 --     end, vim.api.nvim_list_bufs())
                 -- end
                 max_async_buffer_size = 1000000,
+                max_total_buffer_size = 1100000,
             },
         },
 
