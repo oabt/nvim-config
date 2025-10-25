@@ -57,15 +57,15 @@ local capabilities = get_lsp_capabilities()
 --     return orig_util_open_floating_preview(contents, syntax, opts, ...)
 -- end
 
-lspconfig.pyright.setup{
+vim.lsp.config.pyright = {
     capabilities = capabilities,
 }
 
-lspconfig.clangd.setup{
+vim.lsp.config.clangd = {
     capabilities = capabilities,
 }
 
-lspconfig.lua_ls.setup {
+vim.lsp.config.lua_ls = {
     on_init = function(client)
         local path = client.workspace_folders[1].name
         if vim.uv.fs_stat(path..'/.luarc.json') or vim.uv.fs_stat(path..'/.luarc.jsonc') then
@@ -97,7 +97,7 @@ lspconfig.lua_ls.setup {
     }
 }
 
---lspconfig.pylsp.setup{
+--vim.lsp.config.pylsp = {
 --  settings = {
 --    pylsp = {
 --      plugins = {
@@ -110,6 +110,9 @@ lspconfig.lua_ls.setup {
 --  }
 --}
 
+vim.lsp.enable('pyright')
+vim.lsp.enable('clangd')
+vim.lsp.enable('lua_ls')
 
 vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('UserLspConfig', {}),
