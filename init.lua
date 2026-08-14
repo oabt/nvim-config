@@ -44,6 +44,7 @@ require("lazy").setup(
         {"nvim-treesitter/nvim-treesitter",
             event = "VeryLazy",
             config = function() require("nvim_treesitter_setup") end,
+            branch = "master",
         },
 
         ------------ UI related ------------------------------
@@ -87,7 +88,7 @@ require("lazy").setup(
             dependencies = {
                 "rafamadriz/friendly-snippets",
             },
-            -- version = "*",
+            version = "1.*",
             config = function() require('blink_cmp_setup') end,
         },
 
@@ -216,6 +217,7 @@ require("lazy").setup(
         },
         {"rcarriga/nvim-dap-ui",
             cmd = {
+                "DapNew",
                 "DapContinue",
                 "DapToggleBreakpoint",
                 "DapToggleUI",
@@ -240,7 +242,31 @@ require("lazy").setup(
             event = "VeryLazy",
             version = "*",
             config = function() require('gitsigns_setup') end,
-        }
+        },
+
+        -------------------- AI coding ---------------------------
+        {"coder/claudecode.nvim",
+            -- dependencies = {"folke/snacks.nvim"},
+            config = function() require('ai_coding.claudecode') end,
+            cmd = {
+                "ClaudeCode",
+                "ClaudeCodeFocus",
+                "ClaudeCodeSelectModel",
+                "ClaudeCodeAdd",
+                "ClaudeCodeSend",
+                "ClaudeCodeTreeAdd",
+                "ClaudeCodeStatus",
+                "ClaudeCodeStart",
+                "ClaudeCodeStop",
+                "ClaudeCodeOpen",
+                "ClaudeCodeClose",
+                "ClaudeCodeDiffAccept",
+                "ClaudeCodeDiffDeny",
+                "ClaudeCodeCloseAllDiffs",
+                "ClaudeCodeLine",
+                "ClaudeCodeFile",
+            },
+        },
     },
     { -- lazy.nvim configs
         root = vim.env.HOME .. "/.nvim/lazy_plug",
