@@ -15,9 +15,11 @@ local oabt_scheme = {
     vert_split_fg = '#444444',
     telescope_bg = '#2D2E28',
     telescope_prompt = '#2D2E28',
+    picker_bg = '#2D2E28',
+    picker_prompt = '#2D2E28',
 
     -- customized
-    oabt_dark_bg = '#242520',
+    oabt_dark_bg = '#181816',
     oabt_search_yellow = '#D7AF5F',
     oabt_macro = '#C4BE89',
 }
@@ -116,6 +118,12 @@ local oabt_hl_group = {
     },
     SnacksIndentScope = {
         link = "Comment",
+    },
+    SnacksPickerInputBorder = {
+      link = "Normal",
+    },
+    SnacksPickerPreviewBorder = {
+      link = "Normal",
     },
 
     -- nvim-cmp hl groups

@@ -6,6 +6,8 @@ local dashboard_configs = {dashboard = require('snacks_setup.dashboard_setup')}
 local style_configs = {styles = require('snacks_setup.style_setup')}
 local statuscolumn_config = {statuscolumn = require('snacks_setup.statuscolumn_setup')}
 local indent_config = {indent = require('snacks_setup.indent_setup')}
+local bigfile_config = {bigfile = {}}
+local terminal_config = {terminal = {}}
 
 local snacks_configs = vim.tbl_deep_extend("force", {}
 
@@ -20,6 +22,10 @@ local snacks_configs = vim.tbl_deep_extend("force", {}
 ,statuscolumn_config
 
 ,indent_config
+
+,bigfile_config
+
+,terminal_config
 
 )
 
