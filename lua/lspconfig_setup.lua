@@ -66,6 +66,7 @@ vim.lsp.config.clangd = {
 }
 
 vim.lsp.config.lua_ls = {
+    capabilities = capabilities,
     on_init = function(client)
         local path = client.workspace_folders[1].name
         if vim.uv.fs_stat(path..'/.luarc.json') or vim.uv.fs_stat(path..'/.luarc.jsonc') then
@@ -110,9 +111,11 @@ vim.lsp.config.lua_ls = {
 --  }
 --}
 
-vim.lsp.enable('pyright')
-vim.lsp.enable('clangd')
-vim.lsp.enable('lua_ls')
+vim.lsp.enable({
+    'pyright',
+    'clangd',
+    'lua_ls',
+})
 
 vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('UserLspConfig', {}),
