@@ -44,7 +44,7 @@ require("lazy").setup(
         {"nvim-treesitter/nvim-treesitter",
             event = "VeryLazy",
             config = function() require("nvim_treesitter_setup") end,
-            branch = "master",
+            -- branch = "master",
         },
 
         ------------ UI related ------------------------------
