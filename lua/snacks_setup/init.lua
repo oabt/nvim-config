@@ -8,6 +8,7 @@ local statuscolumn_config = {statuscolumn = require('snacks_setup.statuscolumn_s
 local indent_config = {indent = require('snacks_setup.indent_setup')}
 local bigfile_config = {bigfile = {}}
 local terminal_config = {terminal = {}}
+local word_config = {words = require('snacks_setup.word_setup')}
 
 local snacks_configs = vim.tbl_deep_extend("force", {}
 
@@ -27,6 +28,7 @@ local snacks_configs = vim.tbl_deep_extend("force", {}
 
 ,terminal_config
 
+,word_config
 )
 
 snacks.setup(snacks_configs)
