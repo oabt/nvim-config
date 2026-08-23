@@ -291,6 +291,16 @@ require("lazy").setup(
                 "ClaudeCodeFile",
             },
         },
+        {"folke/sidekick.nvim",
+            config = function() require('ai_coding.sidekick_setup') end,
+            -- lazy load on first use of the custom commands defined in sidekick_setup.lua
+            cmd = {
+                "SkCliToggle",
+                "SkSendLine",
+                "SkSendFile",
+                "SkSendSelect",
+            },
+        },
     },
     { -- lazy.nvim configs
         root = vim.env.HOME .. "/.nvim/lazy_plug",
