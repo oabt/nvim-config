@@ -3,6 +3,7 @@ local sidekick = require("sidekick")
 vim.g.sidekick_nes = false
 local cli_name = "claude"
 local file_line_sep = '#L'
+local file_hint = '@'
 
 sidekick.setup({
 
@@ -180,17 +181,30 @@ end, {
     desc = "show the cli window",
 })
 
--- Build a file reference like `@file :L10` / `@file :L10-20`,
--- with the path relative to cwd (absolute when outside cwd).
+-- Build a file reference like `@file` / `@file#L10` / `@file#L10-20`,
+-- with the path relative to the git repo root when the file is inside a git repo,
+-- absolute otherwise.
+-- line1/line2 are optional: omit them for a file-only reference.
 local function buf_ref(line1, line2)
+    -- absolute path of the current buffer ("" for unnamed buffers)
     local name = vim.api.nvim_buf_get_name(0)
-    local rel = vim.fs.relpath(vim.fn.getcwd(0), name)
-    if rel and rel ~= "" then
-        name = rel
+    if name ~= "" then
+        -- find the nearest enclosing git repo, walking up from the buffer's directory
+        local git_root = vim.fs.find(".git", { upward = true, path = vim.fs.dirname(name) })[1]
+        if git_root then
+            -- repo root = dirname of the .git file/dir (also covers worktrees/submodules)
+            local rel = vim.fs.relpath(vim.fs.dirname(git_root), name)
+            if rel and rel ~= "" then
+                name = rel
+            end
+        end
     end
-    local ref = ("@%s%s%d"):format(name, file_line_sep, line1)
-    if line2 and line2 > line1 then
-        ref = ref .. ("-%d"):format(line2)
+    local ref = file_hint .. name
+    if line1 then
+        ref = ref .. ("%s%d"):format(file_line_sep, line1)
+        if line2 and line2 > line1 then
+            ref = ref .. ("-%d"):format(line2)
+        end
     end
     return ref
 end
@@ -203,7 +217,7 @@ end, {
 })
 
 vim.api.nvim_create_user_command("SkSendFile", function(opts)
-    require("sidekick.cli").send({msg = "{file}"})
+    require("sidekick.cli").send({ msg = buf_ref() })
 end, {
     desc = "Send current file to the Sidekick CLI",
 })
