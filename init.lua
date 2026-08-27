@@ -299,6 +299,7 @@ require("lazy").setup(
                 "SkSendLine",
                 "SkSendFile",
                 "SkSendSelect",
+                "SkCliLaunch",
             },
         },
     },

@@ -41,10 +41,15 @@ sidekick.setup({
             --- Here you can change window options `terminal.opts`.
             ---@param terminal sidekick.cli.Terminal
             config = function(terminal)
-                local git_root = vim.fs.root(terminal.cwd, ".git")
-                if git_root then
-                    terminal.cwd = git_root
+                local cwd = vim.g.sidekick_cwd
+                if not cwd then
+                    cwd = terminal.cwd
+                    local git_root = vim.fs.root(cwd, ".git")
+                    if git_root then
+                        cwd = git_root
+                    end
                 end
+                terminal.cwd = vim.fs.normalize(cwd)
             end,
             wo = {}, ---@type vim.wo
             bo = {}, ---@type vim.bo
@@ -235,4 +240,18 @@ end,
 {
     range = true,
     desc = "Send file reference with range to the Sidekick CLI",
+})
+
+-- Open the CLI window in a specific cwd (defaults to git root otherwise)
+vim.api.nvim_create_user_command("SkCliLaunch", function(opts)
+    if opts.args ~= "" then
+        vim.g.sidekick_cwd = vim.fs.normalize(vim.fn.expand(opts.args)) -- supports ~ and %
+    else
+        vim.g.sidekick_cwd = nil -- no args: fall back to git-root behavior
+    end
+    require("sidekick.cli").toggle({ name = cli_name, focus = true })
+end,
+{
+    nargs = "?",
+    desc = "Open Sidekick CLI in a specific cwd",
 })
