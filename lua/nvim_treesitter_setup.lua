@@ -11,14 +11,99 @@ end
 -- vim.env.http_proxy = "http://127.0.0.1:1080"
 -- vim.env.https_proxy = "http://127.0.0.1:1080"
 
+local ts_install_dir = vim.env.HOME .. "/.nvim/lazy_plug/nvim-treesitter"
 local install_lang = {}
 -- install_lang = { "c", "lua", "vim", "vimdoc", "query", "bash", "markdown", "markdown_inline", "cpp", "python", "make", "cmake" }
 
 require("nvim-treesitter").setup({
-    install_dir = vim.env.HOME .. "/.nvim/lazy_plug/nvim-treesitter", -- already in runtimepath
+    install_dir = ts_install_dir, -- already in runtimepath
 })
 
 require("nvim-treesitter").install(install_lang)
+
+-- @oabt (Claude): TSInstall exposes the plugin's shipped queries (runtime/queries/<lang>)
+-- as links under queries/<lang>: symlinks on unix, junctions on windows.
+-- Links store absolute targets (windows junctions can only be absolute) and
+-- dangle whenever the install dir moves, so replace every one of them with a
+-- plain copy for cross-platform relocatability.  Mirrors the plugin's own
+-- do_copy_queries (install.lua), which nvim-treesitter only uses for queries
+-- whose source is ephemeral -- the runtime ones are always linked.
+-- Runs at startup -- that is what actually keeps the copies fresh: lazy
+-- plugin updates change runtime/queries without any TSUpdate ever firing.
+-- The 'User TSUpdate' hook below is only a mid-session fallback for manual
+-- TS commands: the plugin fires the event at the START of
+-- TSInstall/TSUpdate/TSUninstall (install.lua reload_parsers), synchronously
+-- from the install() call above -- before the autocmd below even exists.
+-- Languages whose source is unchanged are skipped entirely: each copy carries
+-- a .sync_stamp file with a name:size:mtime signature of its source.
+local function sync_query_copies()
+    local queries_dir = vim.fs.normalize(ts_install_dir)
+    if not vim.uv.fs_stat(queries_dir) then return end
+    local root = vim.fs.dirname(queries_dir) -- the nvim-treesitter install dir
+    local stamp = '.sync_stamp'
+
+    -- signature of a query dir: the sorted "name:size:mtime" of its source files.
+    -- Stored in the copy, it skips the re-copy while the source stays unchanged
+    -- (an mtime-only check cannot work: utime cannot restore sub-second stamps).
+    local function dir_signature(src)
+        local sig = {}
+        for f in vim.fs.dir(src) do
+            local st = vim.uv.fs_stat(src .. '/' .. f)
+            sig[#sig + 1] = f .. ':' .. st.size .. ':' .. st.mtime.sec .. ':' .. st.mtime.nsec
+        end
+        table.sort(sig)
+        return table.concat(sig, '|')
+    end
+
+    local function read_stamp(path)
+        local fh = io.open(path)
+        if not fh then return end
+        local sig = fh:read('a')
+        fh:close()
+        return sig
+    end
+
+    -- snapshot the names first: links below get replaced by real directories
+    local names = {}
+    for name in vim.fs.dir(queries_dir) do
+        names[#names + 1] = name
+    end
+    for _, name in ipairs(names) do
+        local src = root .. '/runtime/queries/' .. name
+        local dst = queries_dir .. '/' .. name
+        if vim.uv.fs_stat(src) then
+            local sig = dir_signature(src)
+            if read_stamp(dst .. '/' .. stamp) == sig then
+                goto continue -- up to date
+            end
+            local lstat = vim.uv.fs_lstat(dst)
+            if lstat and lstat.type ~= 'directory' then
+                vim.uv.fs_unlink(dst) -- a symlink/junction from TSInstall
+            end
+            vim.uv.fs_mkdir(dst, 493) -- tonumber('755', 8); no-op when it exists
+            local seen = {}
+            for f in vim.fs.dir(src) do
+                seen[f] = true
+                vim.uv.fs_copyfile(src .. '/' .. f, dst .. '/' .. f)
+            end
+            for f in vim.fs.dir(dst) do -- drop files removed from the source
+                if not seen[f] and f ~= stamp then
+                    vim.uv.fs_unlink(dst .. '/' .. f)
+                end
+            end
+            local fh = io.open(dst .. '/' .. stamp, 'w')
+            if fh then fh:write(sig) fh:close() end
+        end
+        ::continue::
+    end
+end
+
+-- sync_query_copies()
+vim.api.nvim_create_autocmd('User', {
+    pattern = 'TSUpdate',
+    callback = sync_query_copies,
+    desc = "copy nvim-treesitter queries instead of linking them",
+})
 
 for i, v in ipairs(install_lang) do
     vim.api.nvim_create_autocmd('FileType', {
