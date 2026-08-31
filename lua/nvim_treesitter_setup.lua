@@ -37,7 +37,7 @@ require("nvim-treesitter").install(install_lang)
 -- Languages whose source is unchanged are skipped entirely: each copy carries
 -- a .sync_stamp file with a name:size:mtime signature of its source.
 local function sync_query_copies()
-    local queries_dir = vim.fs.normalize(ts_install_dir)
+    local queries_dir = vim.fs.normalize(ts_install_dir .. "/queries")
     if not vim.uv.fs_stat(queries_dir) then return end
     local root = vim.fs.dirname(queries_dir) -- the nvim-treesitter install dir
     local stamp = '.sync_stamp'
