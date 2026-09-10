@@ -67,7 +67,7 @@ require("lazy").setup(
         -- },
         {"nvim-treesitter/nvim-treesitter",
             event = "VeryLazy",
-            config = function() require("nvim_treesitter_setup") end,
+            config = function() require("nvim_treesitter_setup").setup() end,
             -- branch = "master",
         },
 

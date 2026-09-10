@@ -1,121 +1,136 @@
 -- @oabt: try nvim-treesitter
 -- {"nvim-treesitter/nvim-treesitter",
 --     event = "VeryLazy",
---     config = function() require("nvim_treesitter_setup") end,
+--     config = function() require("nvim_treesitter_setup").setup() end,
 -- },
+--
+-- Everything runs from setup() (loaded by lazy at VeryLazy), which repairs the
+-- queries links and then installs/configures.  Trade-off of repairing that
+-- late: after relocating the install dir, the buffer(s) opened during startup
+-- may render before the links are fixed -- call sync_query_links() from
+-- init.lua (before require("lazy").setup) if that ever matters.
 
-if vim.uv.os_uname().sysname == "Windows_NT" then
-    vim.env.CC = "gcc"
+local M = {}
+
+local install_dir = vim.fs.normalize(vim.env.HOME .. '/.nvim/lazy_plug/nvim-treesitter')
+
+--------------------------------- queries/<lang> links (see sync_query_links)
+
+-- The <install_dir>/queries/<lang> entries must stay *links* to the shipped
+-- queries (<plugin>/runtime/queries/<lang>): relative symlinks on unix,
+-- junctions on windows (junctions cannot hold relative targets).
+-- nvim-treesitter creates them that way and requires them to stay links:
+--   * do_link_queries (install.lua) replaces an entry with uv_unlink(entry)
+--     + uv_symlink(...).  uv_unlink cannot remove a real directory (EPERM on
+--     windows, EISDIR on unix), that error is discarded, and the symlink then
+--     fails with EEXIST -- the parser update reports a failure and is never
+--     retried, because its revision file was already bumped before the
+--     queries step.
+--   * needs_update (install.lua) uses "entry resolves to the same place as
+--     the shipped queries" as the up-to-date condition for languages without
+--     a pinned revision.
+-- So copies cannot work and the entries stay links; only their target is
+-- repaired here, because it is absolute on windows and dangles once the
+-- install dir moves (on unix the relative target survives the move untouched).
+
+local is_win = vim.uv.os_uname().sysname == 'Windows_NT'
+-- marks the query copies made before the switch back to links
+local legacy_marker = '.sync_stamp'
+
+-- remove a symlink, a junction or a whole directory tree (as install.lua rmpath)
+local function rmpath(path)
+    local lstat = vim.uv.fs_lstat(path)
+    if not lstat then return end
+    if lstat.type == 'directory' then
+        for f in vim.fs.dir(path) do rmpath(path .. '/' .. f) end
+        vim.uv.fs_rmdir(path)
+    else -- 'link' (symlink/junction) or regular file
+        vim.uv.fs_unlink(path)
+    end
 end
 
--- vim.env.http_proxy = "http://127.0.0.1:1080"
--- vim.env.https_proxy = "http://127.0.0.1:1080"
-
-local ts_install_dir = vim.env.HOME .. "/.nvim/lazy_plug/nvim-treesitter"
-local install_lang = {}
--- install_lang = { "c", "lua", "vim", "vimdoc", "query", "bash", "markdown", "markdown_inline", "cpp", "python", "make", "cmake" }
-
-require("nvim-treesitter").setup({
-    install_dir = ts_install_dir, -- already in runtimepath
-})
-
-require("nvim-treesitter").install(install_lang)
-
--- @oabt (Claude): TSInstall exposes the plugin's shipped queries (runtime/queries/<lang>)
--- as links under queries/<lang>: symlinks on unix, junctions on windows.
--- Links store absolute targets (windows junctions can only be absolute) and
--- dangle whenever the install dir moves, so replace every one of them with a
--- plain copy for cross-platform relocatability.  Mirrors the plugin's own
--- do_copy_queries (install.lua), which nvim-treesitter only uses for queries
--- whose source is ephemeral -- the runtime ones are always linked.
--- Runs at startup -- that is what actually keeps the copies fresh: lazy
--- plugin updates change runtime/queries without any TSUpdate ever firing.
--- The 'User TSUpdate' hook below is only a mid-session fallback for manual
--- TS commands: the plugin fires the event at the START of
--- TSInstall/TSUpdate/TSUninstall (install.lua reload_parsers), synchronously
--- from the install() call above -- before the autocmd below even exists.
--- Languages whose source is unchanged are skipped entirely: each copy carries
--- a .sync_stamp file with a name:size:mtime signature of its source.
-local function sync_query_copies()
-    local queries_dir = vim.fs.normalize(ts_install_dir .. "/queries")
+--- Make every queries entry resolve to the shipped queries again.
+--- Called at the start of M.setup and on User TSUpdate (see M.setup).
+---@param dir? string install dir, defaults to the configured one
+function M.sync_query_links(dir)
+    local queries_dir = (dir or install_dir) .. '/queries'
     if not vim.uv.fs_stat(queries_dir) then return end
-    local root = vim.fs.dirname(queries_dir) -- the nvim-treesitter install dir
-    local stamp = '.sync_stamp'
+    local src_root = vim.fs.dirname(queries_dir) .. '/runtime/queries'
 
-    -- signature of a query dir: the sorted "name:size:mtime" of its source files.
-    -- Stored in the copy, it skips the re-copy while the source stays unchanged
-    -- (an mtime-only check cannot work: utime cannot restore sub-second stamps).
-    local function dir_signature(src)
-        local sig = {}
-        for f in vim.fs.dir(src) do
-            local st = vim.uv.fs_stat(src .. '/' .. f)
-            sig[#sig + 1] = f .. ':' .. st.size .. ':' .. st.mtime.sec .. ':' .. st.mtime.nsec
+    ---@param name string language
+    local function repair(name)
+        local src = src_root .. '/' .. name
+        local dst = queries_dir .. '/' .. name
+        if not vim.uv.fs_stat(src) then return end -- nothing shipped: plugin-managed entry
+        local lstat = vim.uv.fs_lstat(dst)
+        if not lstat then return end -- never create entries: get_installed() lists this dir,
+        -- and a link without an installed parser would make the language look installed
+        if lstat.type == 'link' then
+            if vim.uv.fs_realpath(dst) == vim.uv.fs_realpath(src) then return end -- already correct
+        elseif not vim.uv.fs_stat(dst .. '/' .. legacy_marker) then
+            return -- a real directory the plugin owns (do_copy_queries); leave it alone
         end
-        table.sort(sig)
-        return table.concat(sig, '|')
+        rmpath(dst)
+        vim.uv.fs_symlink(
+            is_win and vim.fs.normalize(src) or ('../runtime/queries/' .. name),
+            dst,
+            { dir = true, junction = true }
+        )
     end
 
-    local function read_stamp(path)
-        local fh = io.open(path)
-        if not fh then return end
-        local sig = fh:read('a')
-        fh:close()
-        return sig
-    end
-
-    -- snapshot the names first: links below get replaced by real directories
+    -- snapshot the names first: entries get replaced while iterating
     local names = {}
     for name in vim.fs.dir(queries_dir) do
         names[#names + 1] = name
     end
     for _, name in ipairs(names) do
-        local src = root .. '/runtime/queries/' .. name
-        local dst = queries_dir .. '/' .. name
-        if vim.uv.fs_stat(src) then
-            local sig = dir_signature(src)
-            if read_stamp(dst .. '/' .. stamp) == sig then
-                goto continue -- up to date
-            end
-            local lstat = vim.uv.fs_lstat(dst)
-            if lstat and lstat.type ~= 'directory' then
-                vim.uv.fs_unlink(dst) -- a symlink/junction from TSInstall
-            end
-            vim.uv.fs_mkdir(dst, 493) -- tonumber('755', 8); no-op when it exists
-            local seen = {}
-            for f in vim.fs.dir(src) do
-                seen[f] = true
-                vim.uv.fs_copyfile(src .. '/' .. f, dst .. '/' .. f)
-            end
-            for f in vim.fs.dir(dst) do -- drop files removed from the source
-                if not seen[f] and f ~= stamp then
-                    vim.uv.fs_unlink(dst .. '/' .. f)
-                end
-            end
-            local fh = io.open(dst .. '/' .. stamp, 'w')
-            if fh then fh:write(sig) fh:close() end
-        end
-        ::continue::
+        repair(name)
     end
 end
 
--- sync_query_copies()
-vim.api.nvim_create_autocmd('User', {
-    pattern = 'TSUpdate',
-    callback = sync_query_copies,
-    desc = "copy nvim-treesitter queries instead of linking them",
-})
+------------------------------------------------------------------------ setup
 
-for i, v in ipairs(install_lang) do
-    vim.api.nvim_create_autocmd('FileType', {
-      pattern = {v},
-      callback = function()
-          vim.treesitter.start()
-          vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-          vim.wo[0][0].foldmethod = 'expr'
-          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-      end,
-      desc = v .. " ts highlight,fold,indent",
+function M.setup()
+    -- repair the queries links first: install() below (and every later :TS
+    -- command) assumes those entries are links to the shipped queries
+    M.sync_query_links()
+
+    if is_win then
+        vim.env.CC = "gcc"
+    end
+
+    local install_lang = {}
+    -- vim.env.http_proxy = "http://127.0.0.1:1080"
+    -- vim.env.https_proxy = "http://127.0.0.1:1080"
+    -- install_lang = { "c", "lua", "vim", "vimdoc", "query", "bash", "markdown", "markdown_inline", "cpp", "python", "make", "cmake", "cuda" }
+
+    require("nvim-treesitter").setup({
+        install_dir = install_dir, -- already in runtimepath
     })
+
+    require("nvim-treesitter").install(install_lang)
+
+    -- Mid-session fallback for the links: the plugin fires this at the START of
+    -- TSInstall/TSUpdate/TSUninstall (install.lua reload_parsers, called
+    -- synchronously from install() above).  Real care is taken at startup.
+    vim.api.nvim_create_autocmd('User', {
+        pattern = 'TSUpdate',
+        callback = function() M.sync_query_links() end,
+        desc = "keep nvim-treesitter queries links pointing at the shipped queries",
+    })
+
+    for i, v in ipairs(install_lang) do
+        vim.api.nvim_create_autocmd('FileType', {
+          pattern = {v},
+          callback = function()
+              vim.treesitter.start()
+              vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+              vim.wo[0][0].foldmethod = 'expr'
+              vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          end,
+          desc = v .. " ts highlight,fold,indent",
+        })
+    end
 end
 
 ----------------------------- nvim-treesitter cfg on archived 'master' branch
@@ -167,3 +182,4 @@ end
 --     },
 -- })
 
+return M
