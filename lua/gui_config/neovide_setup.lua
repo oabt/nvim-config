@@ -39,27 +39,35 @@ vim.g.neovide_title_text_color = string.sub(string.format(
     0x1000000 + vim.api.nvim_get_hl(0, {id=vim.api.nvim_get_hl_id_by_name("Normal")}).fg
 ), 2)
 
--- only enable IME in insert and cmdline mode
-local function set_ime(args)
-    if args.event:match("Enter$") then
-        vim.g.neovide_input_ime = true
-    else
-        vim.g.neovide_input_ime = false
+-- only enable IME where text is actually composed: Insert/Replace mode,
+-- Terminal-mode, and search command-lines. This watches ModeChanged rather
+-- than InsertEnter because Terminal-mode is not a subset of Insert mode: `i`
+-- in a terminal buffer enters Terminal-mode, so InsertEnter never fires there.
+local function ime_active(mode)
+    local kind = mode:sub(1, 1)
+    if kind == "i" or kind == "R" then
+        return true                             -- Insert ("i"/"ic"/"ix"), Replace ("R"/"Rv")
+    elseif kind == "t" then
+        return true                             -- Terminal-mode ("nt" is Terminal-Normal, => off)
+    elseif kind == "c" then
+        local cmdtype = vim.fn.getcmdtype()
+        return cmdtype == "/" or cmdtype == "?"  -- search only, not ":"
     end
+    return false                                -- Normal, Visual, i_CTRL-O, prompts, ...
 end
 
 local ime_input = vim.api.nvim_create_augroup("ime_input", { clear = true })
 
-vim.api.nvim_create_autocmd({ "InsertEnter", "InsertLeave" }, {
+vim.api.nvim_create_autocmd("ModeChanged", {
     group = ime_input,
     pattern = "*",
-    callback = set_ime
-})
-
-vim.api.nvim_create_autocmd({ "CmdlineEnter", "CmdlineLeave" }, {
-    group = ime_input,
-    pattern = "[/\\?]",
-    callback = set_ime
+    callback = function()
+        -- fired on minor mode changes too, so only poke Neovide on a real change
+        local enable = ime_active(vim.v.event.new_mode)
+        if vim.g.neovide_input_ime ~= enable then
+            vim.g.neovide_input_ime = enable
+        end
+    end
 })
 
 -- change the scaling
