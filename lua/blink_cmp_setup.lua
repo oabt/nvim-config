@@ -70,7 +70,7 @@ fuzzy = {
     prebuilt_binaries = {
         force_version = recent_ver,
         proxy = {
-            url = "127.0.0.1:1080",
+            -- url = "127.0.0.1:1080",
         }
     },
 },
